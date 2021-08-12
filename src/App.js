@@ -7,7 +7,7 @@ function App() {
 	return (
 		<Router>
 			<NavBar />
-			<div style={{minHeight:"400px", border:"solid 2px black", margin:"0 20px"}}>
+			<div style={{minHeight:"400px", margin:"20px 40px"}}>
 				<Route path="/" exact component={Body} />
 				<Route path="/store" component={Store} />
 			</div>
