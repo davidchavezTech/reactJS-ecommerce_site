@@ -18,7 +18,8 @@ const Store = () => {
         getItems()
     },[]);
 
-    const handleAddItem = async (data) => {
+    const handleAddItem = async (e, data) => {
+        e.preventDefault();
         const { itemName, imgURL, description, price } = data
         const response = await axios.post("http://localhost:5000/items/add", {
             itemName, imgURL, description, price

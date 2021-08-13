@@ -1,3 +1,5 @@
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 const router = require('express').Router();
 let User = require('../models/user.model');
 
@@ -16,5 +18,21 @@ router.route('/add').post((req,res) => {
     .then(() => res.json('User added!'))
     .catch(err => res.status(400).json('Error: ' + err));
 });
+
+router.route('/login').post(
+    //successRedirect: '/',
+    // failureRedirect: 'login',
+    //passReqToCallback: true
+    passport.authenticate('local-login', { passReqToCallback: true}),
+    function(req, res) {
+        res.json('You\'ve been logged in!');
+});
+
+router.route('/createUser').post(
+    passport.authenticate('local-signup', { passReqToCallback: true}),
+    function(req, res) {
+        res.json("User Created successfully")
+    }
+)
 
 module.exports = router;

@@ -33,7 +33,7 @@ const AddItemForm = ({onAddItem}) => {
                         />
                     </div>
 
-                    <button className="btn btn-dark" onClick={()=> onAddItem(
+                    <button className="btn btn-dark" onClick={(e)=> onAddItem(e, 
                             { itemName, imgURL, description, price }
                         )
                     }>Agregar Producto</button>
