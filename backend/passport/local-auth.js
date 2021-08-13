@@ -3,7 +3,8 @@ const LocalStrategy = require('passport-local').Strategy
 let User = require('../models/user.model');
 
 passport.serializeUser((user, done) => {
-    // done(null, user[0]._id)
+    console.log(user)
+    console.log("serializing...")
     done(null, user._id)
 })
 
@@ -16,9 +17,10 @@ passport.use('local-login', new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, async (req, email, password, done) => {
-    const user = await User.find({username: "david"})
-    console.log(user);
-    done(null, user)
+        const user = await User.findOne({userName: email})
+        if(!user) return done("Wrong credentials!", false)
+        if(!user.comparePassword(password)) return done("Wrong credentials!", false)
+        done(null, user)
 }))
 
 passport.use('local-signup', new LocalStrategy({
@@ -27,12 +29,11 @@ passport.use('local-signup', new LocalStrategy({
     passReqToCallback: true
 }, async (req, email, password, done) => {
     const foundUser = await User.findOne({userName: email})
-    if(foundUser) return done(null, false)
+    if(foundUser) return done("User already exists", false)
     const newUser = new User();
     newUser.userName = email;
     newUser.password = newUser.encryptPassword(password);
     newUser.names = req.body.names
-    await newUser.save();
-    console.log(newUser)
+    await newUser.save();   
     done(null, newUser);
 }))
