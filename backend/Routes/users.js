@@ -30,12 +30,27 @@ router.route('/add').post((req,res) => {
 // });
 router.route('/login').post((req, res, next) => {
 
-    passport.authenticate('local-login',{
-        successRedirect: '/users/createUser',
-        failureRedirect: '/signin',
-        failureFlash: true
-    })(req, res, next);
-})
+    passport.authenticate('local-login', (err, user, info) => {
+        if(err) throw err;
+        if(!user) res.send('No user exists');
+        else {
+            req.logIn(user, err=>{
+                if (err) throw err;
+                res.send("successfully authenticated")
+                console.log(req.user);
+            })
+        }
+    })(req, res, next)
+});
+//     )(req, res, function(){
+//         if(!req.user) {
+//             console.log("user not found")
+//         }else {
+//             res.redirect("http://admin.localhost:3000/")
+//             console.log(("signed in"))
+//         }
+//     });
+// })
     // passport.authenticate('local-login', { passReqToCallback: true}, function(err) {
     //     if(err) return res.json(err)
     //     res.json('You\'ve been logged in!');
@@ -55,7 +70,7 @@ router.route('/logout').post((req, res) => {
     req.logout();
     res.json(true)
 })
-router.route('/authenticateUser').get( isAuthenticated, (req, res) => {
+router.get('/authenticateUser', isAuthenticated, (req, res) => {
     console.log("user authenticated")
     res.json(true)
 })

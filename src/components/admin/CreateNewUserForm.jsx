@@ -14,12 +14,21 @@ const CreateNewUserForm = () => {
     const [repeatPassword, SetRepeatPassword] = useState('');
 
     //Check if we are logged in!
-    (async()=>{
-        const response = await axios.get("http://localhost:5000/users/authenticateUser")
-        console.log(response)
-        if(!response.data) return window.location.pathname = "/"
-        SetShow(1)
-    })()
+    useEffect(() => {
+        (async()=>{
+            // const response = await axios.get("http://localhost:5000/users/authenticateUser")
+            axios({
+                method: "GET",
+                withCredentials: true,
+                url: "http://localhost:5000/users/authenticateUser",
+            }).then((res) => console.log(res))
+            // console.log(response)
+            // if(!response.data) return window.location.pathname = "/"
+            // if(!response.data) return 
+            SetShow(1)
+        })()
+    },[]);
+    
 
     const createUser = async (e) => {
         e.preventDefault();

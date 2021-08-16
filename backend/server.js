@@ -13,15 +13,14 @@ const app = express();
 require('./passport/local-auth')
 const port = process.env.PORT || 5000;
 
-const CORSwhiteList = ['http://admin.localhost:3000']
+const CORSwhiteList = ['http://admin.localhost:3000', 'http://localhost:3000']
 
 const corsOptionsDelegate = (req, callback) => {
     let corsOptions;
     let isDomainAllowed = CORSwhiteList.indexOf(req.header('Origin')) !== -1;
-
     if (isDomainAllowed) {
         // Enable CORS for this request
-        corsOptions = { origin: true }
+        corsOptions = { origin: true, credentials: true }
     } else {
         // Disable CORS for this request
         corsOptions = { origin: false }
@@ -30,6 +29,7 @@ const corsOptionsDelegate = (req, callback) => {
 }
 
 // middlewares
+// app.use(cors(corsOptionsDelegate));
 app.use(cors(corsOptionsDelegate));
 app.use(express.json());
 app.use(session({

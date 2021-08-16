@@ -4,12 +4,16 @@ let User = require('../models/user.model');
 
 passport.serializeUser((user, done) => {
     console.log(user)
+    console.log("could it be?")
+    console.log(user._id)
     console.log("serializing...")
-    done(null, user._id)
+    done(null, user.id)
 })
 
 passport.deserializeUser(async (id, done) => {
-    await User.findById(id)
+    console.log('DEserializing')
+    const user = await User.findById(id)
+    done(null, user)
 })
 
 passport.use('local-login', new LocalStrategy({

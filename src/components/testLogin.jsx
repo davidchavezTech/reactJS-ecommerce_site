@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios'
-const LogIn = () => {
+const TestLogIn = () => {
 
     const [email, SetEmail] = useState('');
     const [password, SetPassword] = useState('');
@@ -11,11 +11,29 @@ const LogIn = () => {
         console.log(password)
         const response  = await axios.post("http://localhost:5000/users/login", {
             email, password
-        },{
+        }, {
             withCredentials: true
         })
         
         console.log(response)
+
+        // const response = await axios.get("http://localhost:5000/users/authenticateUser")
+        axios({
+            method: "GET",
+            withCredentials: true,
+            url: "http://localhost:5000/users/authenticateUser",
+        }).then((res) => console.log(res))
+        // console.log(response)
+        // if(!response.data) return window.location.pathname = "/"
+        // if(!response.data) return 
+
+    }
+    const testLogin= (e) => {
+        axios({
+            method: "GET",
+            withCredentials: true,
+            url: "http://localhost:5000/users/authenticateUser",
+        }).then((res) => console.log(res))
     }
     return (
         <>
@@ -30,7 +48,8 @@ const LogIn = () => {
             </div>
             <button onClick={(e) => login(e)} className="btn btn-primary">Entrar</button>
         </form>
+            <button onClick={(e) => testLogin(e)} className="btn btn-primary">Test</button>
         </>
     )
 }
-export default LogIn;
+export default TestLogIn;
