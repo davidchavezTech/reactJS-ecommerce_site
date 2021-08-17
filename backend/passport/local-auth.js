@@ -3,15 +3,10 @@ const LocalStrategy = require('passport-local').Strategy
 let User = require('../models/user.model');
 
 passport.serializeUser((user, done) => {
-    console.log(user)
-    console.log("could it be?")
-    console.log(user._id)
-    console.log("serializing...")
     done(null, user.id)
 })
 
 passport.deserializeUser(async (id, done) => {
-    console.log('DEserializing')
     const user = await User.findById(id)
     done(null, user)
 })

@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const exercisesRouter = require('./Routes/exercises')
 const itemsRouter = require('./Routes/items')
 const usersRouter = require('./Routes/users')
+const adminRouter = require('./Routes/admin')
 const passport = require('passport');
 const session = require('express-session')
 
@@ -51,6 +52,7 @@ connection.once('open', () => {
 app.use('/exercises', exercisesRouter);
 app.use('/users', usersRouter);
 app.use('/items', itemsRouter);
+app.use('/admin', adminRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
