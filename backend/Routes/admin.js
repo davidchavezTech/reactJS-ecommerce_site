@@ -42,8 +42,10 @@ router.route('/:id').delete((req, res) =>{
     .catch(err => res.status(400).json("Error: " + err));
 });
 
-router.route('/addAdmin').post((req,res) => {
+router.route('/addAdmin').post(async (req,res) => {
     const {userName, password, names, title, number} = req.body
+    const foundUser = await User.findOne({userName})
+    if(foundUser != null) return res.json("Usuario ya existe")
     const userData = { userName, names, title, number }
     const newUser = new User(userData);
     newUser.password = newUser.encryptPassword(password);
