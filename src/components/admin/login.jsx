@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import axios from 'axios'
-const LogIn = ({onLogIn}) => {
-    let history = useHistory();
-
+const LogIn = () => {
     const [email, SetEmail] = useState('');
     const [password, SetPassword] = useState('');
 
@@ -11,8 +8,7 @@ const LogIn = ({onLogIn}) => {
         e.preventDefault();
         const response  = await axios.post("http://localhost:5000/admin/login", { email, password },{ withCredentials: true });
         if(response.data === true) {
-            onLogIn();
-            history.push('/');
+            window.location = ('/admin');
         } else console.log('Error logging in');
     }
 
@@ -27,8 +23,7 @@ const LogIn = ({onLogIn}) => {
             url: "http://localhost:5000/users/authenticateUser",
         })
         if(response.data === true) {
-            onLogIn();
-            history.push('/');
+            window.location = ('/admin');
         } else console.log('Not logged in');
     }
     return (

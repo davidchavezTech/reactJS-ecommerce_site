@@ -1,14 +1,16 @@
-import { BrowserRouter as Router, Route, useHistory} from 'react-router-dom'
-import { useState, useEffect } from 'react';
-import styled, { createGlobalStyle } from 'styled-components'
+import { Route} from 'react-router-dom'
+import { useState } from 'react';
+import styled from 'styled-components'
+import axios from 'axios'
 //components
 import NavBar from './components/NavBar';
+import AdminNavBar from './components/admin/AdminNavBar'
 import Body from './components/Body';
 import Store from './components/Store';
 import LogIn from './components/admin/LogIn';
-import CreateNewUserForm from './components/admin/CreateNewUserForm';
-import TestLogIn from './components/testLogin';
 import Modal from './components/Modal';
+import AdminStore from './components/admin/AdminStore';
+import Admin from './components/admin/Admin'
 //css
 import GlobalStyle from './components/GlobalStyle';
 
@@ -29,40 +31,28 @@ const Button = styled.button`
 
 
 function App() {
-	// const asd = useHistory();
-	// console.log(asd)
 	const [isUserLoggedIn, SetIsUserLoggedIn] = useState(false)
 	const [toggleModal, SetToggleModal] = useState(false);
+	const [path, SetPath] = useState(window.location.pathname);
+	const admin = path.includes("admin")
+	const fireModal = () => SetToggleModal(prev => !prev);
 
-	const fireModal = () => {
-		SetToggleModal(prev => !prev);
-	}
-	const handleLogIn = () => {
-		//Activate AdminNav
-		SetIsUserLoggedIn(true)
-	}
 
-	// useEffect(()=>{
-    //     authenticateUser()
-    // },[])
-	const listOfRedirectURLs = ["/login"]
-	const location = window.location.pathname
-	// if (listOfRedirectURLs.indexOf(location) !== -1) useHistory().push('/');
-    // const authenticateUser = async () => {
-    //     const response = await axios({
-    //         method: "GET",
-    //         withCredentials: true,
-    //         url: "http://localhost:5000/users/authenticateUser",
-    //     })
-    //     if(response.data === true) {
-    //         SetIsUserLoggedIn(true)
-    //         // history.push('/');
-    //     } else console.log('Not logged in');
-    // }
+    const authenticateUser = async () => {
+        const response = await axios({
+            method: "GET",
+            withCredentials: true,
+            url: "http://localhost:5000/users/authenticateUser",
+        })
+        if(response.data === true) {
+            SetIsUserLoggedIn(true)
+            window.location = ('/admin');
+        } else console.log('Not logged in');
+    }
 	return (
-		<Router>
+		<>
 			<Modal toggleModal={toggleModal} setToggleModal={SetToggleModal} />
-			<NavBar isUserLoggedIn={isUserLoggedIn} />
+			{admin ? <AdminNavBar /> : <NavBar />}
 			
 			<Route path="/" exact component={Body} />
 			<Route path="/store" 
@@ -70,20 +60,24 @@ function App() {
 					<Store isUserLoggedIn={ isUserLoggedIn } />
 				)}
 			/>
+
+			{/*Admin routes*/}
+
 			<Route path="/login" 
 				render={(props) =>(
 					<>
-						<LogIn onLogIn={ handleLogIn } />
+						<LogIn />
 					</>
 				)}
 			/>
-		
+			<Route path="/admin" component={Admin} />
+			{/* <Route path="/admin/store" component={AdminStore} /> */}
 			<Button onClick={fireModal}>I'm a model</Button>
 			
 
 			<GlobalStyle />
-        
-		</Router>
+        </>
+		
 	);
 }
 
