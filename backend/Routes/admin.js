@@ -1,6 +1,5 @@
 const passport = require('passport');
 const router = require('express').Router();
-let User = require('../models/user.model');
 
 router.route('/login').post((req, res, next) => {
 
@@ -33,13 +32,8 @@ router.get('/logout', (req, res) => {
         res.sendStatus(200)
     })
 })
-router.get('/authenticateUser', isAuthenticated, (req, res) => {
-    res.json(true)
-})
+router.get('/authenticateUser', isAuthenticated, (req, res) => res.json(true) )
 
-function isAuthenticated(req, res, next) {
-    if(req.isAuthenticated()) return next()
-    res.json(false)
-}
+function isAuthenticated(req, res, next) { return req.isAuthenticated() ? next() : res.json(false) }
 
 module.exports = router;
