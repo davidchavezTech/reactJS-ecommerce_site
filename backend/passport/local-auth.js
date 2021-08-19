@@ -16,10 +16,10 @@ passport.use('local-login', new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, async (req, email, password, done) => {
-        const user = await User.findOne({userName: email})
-        if(!user) return done("Wrong credentials!", false)
-        if(!user.comparePassword(password)) return done("Wrong credentials!", false)
-        done(null, user)
+    const user = await User.findOne({userName: email})
+    if(!user) return done("Wrong credentials!", false)
+    if(!user.comparePassword(password)) return done("Wrong credentials!", false)
+    done(null, user)
 }))
 
 passport.use('local-signup', new LocalStrategy({

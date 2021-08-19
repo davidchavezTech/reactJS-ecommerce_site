@@ -1,5 +1,5 @@
 import { Route} from 'react-router-dom'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import axios from 'axios'
 //components
@@ -36,42 +36,40 @@ function App() {
 	const [path, SetPath] = useState(window.location.pathname);
 	const admin = path.includes("admin")
 	const fireModal = () => SetToggleModal(prev => !prev);
-
-
+	
     const authenticateUser = async () => {
         const response = await axios({
             method: "GET",
             withCredentials: true,
-            url: "http://localhost:5000/users/authenticateUser",
+            url: "http://localhost:5000/admin/authenticateUser",
         })
-        if(response.data === true) {
-            SetIsUserLoggedIn(true)
-            window.location = ('/admin');
-        } else console.log('Not logged in');
+        if(response.data === true) SetIsUserLoggedIn(true)
+        else if(admin) window.location = "/login"
     }
+	useEffect(()=>{
+		authenticateUser()
+	}, [])
 	return (
 		<>
 			<Modal toggleModal={toggleModal} setToggleModal={SetToggleModal} />
 			{admin ? <AdminNavBar /> : <NavBar />}
 			
 			<Route path="/" exact component={Body} />
-			<Route path="/store" 
-				render={(props) => (
-					<Store isUserLoggedIn={ isUserLoggedIn } />
-				)}
-			/>
+			
 
 			{/*Admin routes*/}
 
-			<Route path="/login" 
-				render={(props) =>(
-					<>
-						<LogIn />
-					</>
+			<Route path="/login" component={LogIn}/>
+
+			<Route path="/admin"
+				render={(props) => <Admin loggedIn={isUserLoggedIn} />}
+			/>
+
+			<Route path="/admin/store" 
+				render={(props) => (
+					<AdminStore isUserLoggedIn={ isUserLoggedIn } />
 				)}
 			/>
-			<Route path="/admin" component={Admin} />
-			{/* <Route path="/admin/store" component={AdminStore} /> */}
 			<Button onClick={fireModal}>I'm a model</Button>
 			
 

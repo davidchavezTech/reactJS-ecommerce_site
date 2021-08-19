@@ -21,13 +21,14 @@ const CreateNewUserForm = () => {
             withCredentials: true,
             url: "http://localhost:5000/admin/getUsers",
         });
-        SetAdminsList(list.data)
+        
+        if(list.data)SetAdminsList(list.data)
     }
     const handleDelete = async (id) => {
         const response = await axios({
             method: "DELETE",
             withCredentials: true,
-            url: `http://localhost:5000/admin/${id}`,
+            url: `http://localhost:5000/admin/delete/${id}`,
         });
         if(response.data === "Admin deleted.") loadUsers();
         else console.log(response)
@@ -35,9 +36,14 @@ const CreateNewUserForm = () => {
     const createUser = async (e) => {
         e.preventDefault();
         if(!checkFields(names, userName, password, repeatPassword, title, number)) return
-        const response  = await axios.post("http://localhost:5000/admin/addAdmin", {
-            userName, password, names, title, number
-        })
+        const response = await axios({
+            method: "POST",
+            withCredentials: true,
+            url: "http://localhost:5000/admin/addAdmin",
+            data: {
+                userName, password, names, title, number
+            }
+        });
         if(response.data === "User added!") {loadUsers(); emptyFields();}
         else if(response.data === "Usuario ya existe") SetErrorMsg(response.data)
         else console.log(response)

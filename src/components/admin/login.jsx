@@ -20,7 +20,7 @@ const LogIn = () => {
         const response = await axios({
             method: "GET",
             withCredentials: true,
-            url: "http://localhost:5000/users/authenticateUser",
+            url: "http://localhost:5000/admin/authenticateUser",
         })
         if(response.data === true) {
             window.location = ('/admin');

@@ -10,7 +10,6 @@ router.route('/login').post((req, res, next) => {
         else {
             req.logIn(user, err=>{
                 if (err) throw err;
-                console.log(req.user);
                 res.json(true)
             })
         }
@@ -18,7 +17,7 @@ router.route('/login').post((req, res, next) => {
 });
 
 //Find users
-router.route('/getUsers').get(async (req, res) =>{
+router.route('/getUsers').get(isAuthenticated, async (req, res) =>{
     try {
         let users = await User.find()
         let usersCopy = JSON.parse(JSON.stringify(users))
@@ -29,27 +28,26 @@ router.route('/getUsers').get(async (req, res) =>{
         res.status(400).json('Error: ' + err)
         }
 });
-router.route('/createUser').post(function(req, res){
+router.route('/createUser').post(isAuthenticated, function(req, res){
     passport.authenticate('local-signup', { passReqToCallback: true}, function(err) {
         if(err) res.json(err)
         res.json(true)
     })(req, res)
 })
 
-router.route('/:id').delete((req, res) =>{
+router.route('/delete/:id').delete(isAuthenticated, (req, res) =>{
     User.findByIdAndDelete(req.params.id)
     .then(() => res.json("Admin deleted."))
     .catch(err => res.status(400).json("Error: " + err));
 });
 
-router.route('/addAdmin').post(async (req,res) => {
+router.route('/addAdmin').post(isAuthenticated, async (req,res) => {
     const {userName, password, names, title, number} = req.body
     const foundUser = await User.findOne({userName})
     if(foundUser != null) return res.json("Usuario ya existe")
     const userData = { userName, names, title, number }
     const newUser = new User(userData);
     newUser.password = newUser.encryptPassword(password);
-    console.log(newUser)
     newUser.save()
     .then(() => res.json('User added!'))
     .catch(err => res.status(400).json('Error: ' + err));
@@ -57,9 +55,7 @@ router.route('/addAdmin').post(async (req,res) => {
 router.get('/logout', (req, res) => {
     req.session.destroy((err) => {
         if(err) return next(err)
-    
         req.logout()
-    
         res.sendStatus(200)
     })
 })
