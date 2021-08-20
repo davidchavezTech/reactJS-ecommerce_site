@@ -1,14 +1,17 @@
 const router = require('express').Router();
 const Item = require('../models/items.model');
 
-router.route('/add').post(async (req,res) => {
-    const {itemName, imgURL, description, price} = req.body
+router.route('/add').post(isAuthenticated, async (req,res) => {
+    const {itemName, price, fields, order, carousel, featured} = req.body
     
     const newItem = new Item({
         itemName,
-        imgURL,
-        description,
-        price
+        price,
+        fields,
+        // imgURL,
+        order,
+        carousel,
+        featured
     });
     try {
         await newItem.save()
@@ -21,5 +24,7 @@ router.route('/').get((req, res) =>{
     .then(item => res.json(item))
     .catch(err => res.status(400).json('Error: ' + err));
 });
+
+function isAuthenticated(req, res, next) { return req.isAuthenticated() ? next() : res.json(false) }
 
 module.exports = router;

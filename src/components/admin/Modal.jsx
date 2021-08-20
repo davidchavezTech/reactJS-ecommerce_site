@@ -1,7 +1,8 @@
 import React, {useState, useEffect, useRef, useCallback} from 'react';
 import {useSpring, animated} from 'react-spring';
 import styled from 'styled-components';
-import img from './modal.jpg';
+import Option from './store/Option';
+// import img from './modal.jpg';
 
 const Background = styled.div`
   z-index:99999;
@@ -65,8 +66,11 @@ const Button = styled.button`
 `
 
 
-const Modal = ({toggleModal, setToggleModal}) => {
+const Modal = ({toggleModal, setToggleModal, onNewField}) => {
     const modalRef = useRef()
+    const [fieldType, SetFieldType] = useState('')
+    const [options, SetOptions] = useState([''])
+    const [errorMsg, SetErrorMsg] = useState('')
 
     const animation = useSpring({
         config: {
@@ -80,11 +84,30 @@ const Modal = ({toggleModal, setToggleModal}) => {
             setToggleModal(false);
         }
     };
+    const setType = (e) => {
+        SetFieldType(e.target.value)
+    }
 
+    const storeOptionValue = (e, index) => {
+        const optionsCopy = [...options]
+        optionsCopy[index] = e.target.value
+        SetOptions(optionsCopy)
+    }
     const keyPress = useCallback(
         e => { if (e.key === 'Escape' && toggleModal) setToggleModal(false);}, [toggleModal, setToggleModal]
     )
-
+    const addOption = () => {
+        SetOptions([...options, ''])  
+    };
+    
+    const handleDelete = (optionIndex) => {
+        const newOptions = options.filter( item => options.indexOf(item) != optionIndex)
+        SetOptions(newOptions)
+    }
+    useEffect(() => {
+        SetErrorMsg("")
+        if(options.length === 0 ) SetOptions([''])
+    }, [options, fieldType])
     useEffect(
         () => {
             document.addEventListener('keydown', keyPress);
@@ -92,6 +115,18 @@ const Modal = ({toggleModal, setToggleModal}) => {
         },
         [keyPress]
     )
+    const generateOption = () => {
+        let newOptions
+        if(fieldType == "") SetErrorMsg("Debe de escoger un \"Tipo de campo\"")
+        else if(fieldType == "text") onNewField({fieldType});
+        else {
+            newOptions = options.filter( option => option !== "");
+            newOptions.length > 0 ? onNewField({fieldType, newOptions}) : SetErrorMsg('Debe de al menos agregar una opción');
+        }
+        setToggleModal(false);
+        SetFieldType('')
+        SetOptions([''])
+    }
     return (
         <>
         {toggleModal && (
@@ -100,17 +135,22 @@ const Modal = ({toggleModal, setToggleModal}) => {
                     <ModalWrapper>
                         {/* <ModalImg src={img} alt ="camera" /> */}
                         <ModalContent>
-                            <h1>Crear usuario</h1>
-                            <p>Nombres: </p>
-                            <input type="text" />
+                            <h1>Opciones para artículo</h1>
+
+                            <p>Nombre de opción</p>
+                            <input type="text" className="form-control" style={{marginBottom:20}} />
+                            <p>Tipo de campo</p>
+                            <select onChange={(e) => setType(e)} value={fieldType} className="form-control">
+                                <option value="">Seleccionar</option>
+                                <option value="radio">Radio</option>
+                                <option value="dropdown">Lista despegable</option>
+                                <option value="text">Texto</option>
+                            </select>
                             <br />
-                            <p>Email: </p>
-                            <input type="text" />
-                            <br />
-                            <p>Password: </p>
-                            <input type="text" />
-                            <br />
-                            <Button>Crear</Button>
+                            {(fieldType === "radio" || fieldType === "dropdown") &&  options.map( (option, index) => <Option key={index} index={index} onDelete={handleDelete} option={option} storeOptionValue={(e, index) => storeOptionValue(e, index)} /> )}
+                            { (fieldType === "radio" || fieldType === "dropdown") && <><button onClick={addOption} className="btn btn-info" style={{marginTop:20}}>Agregar opción</button><br /></> }
+                            <p style={{color:"red"}}>{errorMsg}</p>
+                            <Button onClick={generateOption}>Crear</Button>
                         </ModalContent>
                         <button onClick={() => setToggleModal()}type="button" className="btn-close" aria-label="Close" style={{position:'absolute', right:"15px", top:"15px"}} />
                     </ModalWrapper>

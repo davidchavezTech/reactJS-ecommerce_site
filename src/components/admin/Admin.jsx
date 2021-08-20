@@ -1,13 +1,17 @@
 import { Route} from 'react-router-dom'
 import CreateNewUserForm from './CreateNewUserForm'
+import AdminStore from './AdminStore'
 
-const Admin = () => {
+const Admin = ({loggedIn}) => {
 
     return (
         <div>
-            <h1>Administrar administradores</h1>
             <Route path="/admin" exact component={CreateNewUserForm} />
-            
+            <Route path="/admin/store" 
+				render={(props) => (
+					<AdminStore loggedIn={ loggedIn } />
+				)}
+			/>
         </div>
     )
 }
