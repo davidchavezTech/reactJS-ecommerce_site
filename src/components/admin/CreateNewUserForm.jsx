@@ -11,7 +11,7 @@ const CreateNewUserForm = () => {
     const [repeatPassword, SetRepeatPassword] = useState('');
     const [adminsList, SetAdminsList] = useState([])
     const [errorMsg, SetErrorMsg] = useState(null)
-    useEffect( async () => {
+    useEffect( () => {
         loadUsers();
     }, [])
     
@@ -50,9 +50,9 @@ const CreateNewUserForm = () => {
     }
     const checkFields = (...rest) => {
         let response = true
-        rest.forEach(field => { if(field == '') response = false} );
+        rest.forEach(field => { if(field === '') response = false} );
         if(response===false) SetErrorMsg("Llenar todos los campos")
-        else if(password != repeatPassword) {
+        else if(password !== repeatPassword) {
             SetErrorMsg("Contraseñas no coinciden");
             response = false;
         }else SetErrorMsg(null)

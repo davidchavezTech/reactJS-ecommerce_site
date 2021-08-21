@@ -29,12 +29,12 @@ const ModalWrapper = styled.div`
   border-radius: 10px;
 `;
 
-const ModalImg = styled.img`
-  width: 100%;
-  height: 100%;
-  border-radius: 10px 0 0 10px;
-  background: #000;
-`;
+// const ModalImg = styled.img`
+//   width: 100%;
+//   height: 100%;
+//   border-radius: 10px 0 0 10px;
+//   background: #000;
+// `;
 
 const ModalContent = styled.div`
     margin-left:60px;
@@ -69,6 +69,7 @@ const Button = styled.button`
 const Modal = ({toggleModal, setToggleModal, onNewField}) => {
     const modalRef = useRef()
     const [fieldType, SetFieldType] = useState('')
+    const [fieldName, SetFieldName] = useState('')
     const [options, SetOptions] = useState([''])
     const [errorMsg, SetErrorMsg] = useState('')
 
@@ -96,12 +97,10 @@ const Modal = ({toggleModal, setToggleModal, onNewField}) => {
     const keyPress = useCallback(
         e => { if (e.key === 'Escape' && toggleModal) setToggleModal(false);}, [toggleModal, setToggleModal]
     )
-    const addOption = () => {
-        SetOptions([...options, ''])  
-    };
+    const addOption = () => SetOptions([...options, '']);
     
     const handleDelete = (optionIndex) => {
-        const newOptions = options.filter( item => options.indexOf(item) != optionIndex)
+        const newOptions = options.filter( (item, currentIndex) => currentIndex !== optionIndex)
         SetOptions(newOptions)
     }
     useEffect(() => {
@@ -117,15 +116,29 @@ const Modal = ({toggleModal, setToggleModal, onNewField}) => {
     )
     const generateOption = () => {
         let newOptions
-        if(fieldType == "") SetErrorMsg("Debe de escoger un \"Tipo de campo\"")
-        else if(fieldType == "text") onNewField({fieldType});
-        else {
-            newOptions = options.filter( option => option !== "");
-            newOptions.length > 0 ? onNewField({fieldType, newOptions}) : SetErrorMsg('Debe de al menos agregar una opción');
+        if(fieldName==="") return SetErrorMsg("Especificar \"Nombre de opción\"");
+        switch (fieldType) {
+            case "":
+                return SetErrorMsg("Debe de escoger un \"Tipo de campo\"")
+            case "text":
+                onNewField({fieldType, fieldName})
+                setToggleModal(false);
+                SetFieldName('')
+                SetFieldType('')
+                SetOptions([''])
+                break;
+            default:
+                newOptions = options.filter( option => option !== "");
+                if(newOptions.length > 0)  {
+                    onNewField({fieldType, fieldName, newOptions})
+                    setToggleModal(false);
+                    SetFieldName('')
+                    SetFieldType('')
+                    SetOptions([''])
+                }
+                else return SetErrorMsg('Debe de al menos agregar una opción');
+                break;
         }
-        setToggleModal(false);
-        SetFieldType('')
-        SetOptions([''])
     }
     return (
         <>
@@ -138,7 +151,7 @@ const Modal = ({toggleModal, setToggleModal, onNewField}) => {
                             <h1>Opciones para artículo</h1>
 
                             <p>Nombre de opción</p>
-                            <input type="text" className="form-control" style={{marginBottom:20}} />
+                            <input onChange={(e) => SetFieldName(e.target.value)} type="text" className="form-control" style={{marginBottom:20}} value={fieldName} />
                             <p>Tipo de campo</p>
                             <select onChange={(e) => setType(e)} value={fieldType} className="form-control">
                                 <option value="">Seleccionar</option>

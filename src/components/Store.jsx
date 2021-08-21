@@ -20,10 +20,10 @@ const Store = ({isUserLoggedIn}) => {
 
     const handleAddItem = async (e, data) => {
         e.preventDefault();
-        const { itemName, imgURL, description, price } = data
-        const response = await axios.post("http://localhost:5000/items/add", {
-            itemName, imgURL, description, price
-        })
+        // const { itemName, imgURL, description, price } = data
+        // const response = await axios.post("http://localhost:5000/items/add", {
+        //     itemName, imgURL, description, price
+        // })
         getItems()
     }
 
