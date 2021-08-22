@@ -1,7 +1,7 @@
 import { Route} from 'react-router-dom'
 import CreateNewUserForm from './CreateNewUserForm'
 import AdminStore from './AdminStore'
-
+import { Counter } from '../../features/counter'
 const Admin = ({loggedIn}) => {
 
     return (
@@ -12,6 +12,7 @@ const Admin = ({loggedIn}) => {
 					<AdminStore loggedIn={ loggedIn } />
 				)}
 			/>
+            <Route path="/admin" exact component={Counter} />
         </div>
     )
 }

@@ -3,9 +3,10 @@ import MeasurementUnitComponent from './MeasurementUnitComponent';
 import PerUnit from './unitsComponents/PerUnit';
 import PerWeight from './unitsComponents/PerWeight';
 import PerVolume from './unitsComponents/PerVolume'
-// import {useState} from 'react'
+import {useState} from 'react'
 
 const AddItemForm = ({onMType, onFireModal, options, onDelete, setMUnit, mUnit}) => {
+    
     
     
     return (
@@ -17,7 +18,7 @@ const AddItemForm = ({onMType, onFireModal, options, onDelete, setMUnit, mUnit})
                 <input className="form-control" type="text" placeholder="Nombre" />
 
                 <h6 className="card-subtitle mb-2 text-muted" style={{marginTop:15}}>Descripción</h6>
-                <textarea className="form-control" placeholder="Nombre" rows="4" cols="40"/>
+                <textarea className="form-control" placeholder="Nombre" rows="4" cols="40" />
                 
                 <MeasurementUnitComponent setMUnit={setMUnit} mUnit={mUnit} />
                 {(mUnit==="unit") && <PerUnit onMType={onMType}/>}

@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 // import axios from 'axios'
 import Modal from './Modal';
 import AddItemForm from './store/AddItemForm';
-// import Item from './Item';
-// import AddItemForm from './AddItemForm';
+
 
 
 const AdminStore = ({loggedIn}) => {
@@ -15,6 +14,13 @@ const AdminStore = ({loggedIn}) => {
     const [mUnit, SetMUnit] = useState('');
     const [mType, SetMType] = useState({});
     const [options, SetOptions] = useState([]);
+
+    //New item's properties
+    // const [itemName, SetItemName] = useState('');
+    // const [itemDescription, SetItemDescription] = useState('');
+    // const [mUnitPrice, SetMUnitPrice] = useState({});
+    // const [ItemOptions, SetItemOptions] = useState([]);
+
     const setMUnitFunc = (value) => {
         SetMUnit(value)
         SetMType({})
@@ -36,7 +42,7 @@ const AdminStore = ({loggedIn}) => {
         SetMType(copy)
     }
     //Options
-    const handleNewOption = (field) => SetOptions([...options, field]);
+    const handleNewOption = (field) => {SetOptions([...options, field]); console.log(field)}
     const handleDeleteOption = (indexToBeDeleted) => {
         SetOptions(options.filter((option, currentIndex) => currentIndex !== indexToBeDeleted))
     } 
