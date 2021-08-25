@@ -7,7 +7,7 @@ import { useState } from 'react';
 import NavBar from './components/NavBar';
 import AdminNavBar from './components/admin/AdminNavBar'
 import Body from './components/Body';
-// import Store from './components/Store';
+import Store from './components/Store';
 import LogIn from './components/admin/LogIn';
 import Admin from './components/admin/Admin'
 //css
@@ -40,6 +40,7 @@ function App() {
 			{admin ? <AdminNavBar /> : <NavBar />}
 			
 			<Route path="/" exact component={Body} />
+			<Route path="/store" exact component={Store} />
 			
 
 			{/*Admin routes*/}
