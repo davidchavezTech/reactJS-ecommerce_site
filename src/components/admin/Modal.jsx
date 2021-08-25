@@ -2,6 +2,9 @@ import React, {useState, useEffect, useRef, useCallback} from 'react';
 import {useSpring, animated} from 'react-spring';
 import styled from 'styled-components';
 import Option from './store/Option';
+import { useDispatch } from 'react-redux';
+import { optionAdded } from '../../features/items/newItemSlice'
+
 // import img from './modal.jpg';
 
 const Background = styled.div`
@@ -66,12 +69,14 @@ const Button = styled.button`
 `
 
 
-const Modal = ({toggleModal, setToggleModal, onNewField}) => {
+const Modal = ({toggleModal, setToggleModal}) => {
     const modalRef = useRef()
-    const [fieldType, SetFieldType] = useState('')
     const [fieldName, SetFieldName] = useState('')
+    const [fieldType, SetFieldType] = useState('')
     const [options, SetOptions] = useState([''])
     const [errorMsg, SetErrorMsg] = useState('')
+
+    const dispatch = useDispatch();
 
     const animation = useSpring({
         config: {
@@ -85,9 +90,6 @@ const Modal = ({toggleModal, setToggleModal, onNewField}) => {
             setToggleModal(false);
         }
     };
-    const setType = (e) => {
-        SetFieldType(e.target.value)
-    }
 
     const storeOptionValue = (e, index) => {
         const optionsCopy = [...options]
@@ -100,13 +102,14 @@ const Modal = ({toggleModal, setToggleModal, onNewField}) => {
     const addOption = () => SetOptions([...options, '']);
     
     const handleDelete = (optionIndex) => {
+        //Prevent user from deleting the last option
+        if(options.length === 1 ) return SetOptions([''])
         const newOptions = options.filter( (item, currentIndex) => currentIndex !== optionIndex)
         SetOptions(newOptions)
     }
-    useEffect(() => {
-        SetErrorMsg("")
-        if(options.length === 0 ) SetOptions([''])
-    }, [options, fieldType])
+    //clear error when user changes "fieldType" or option
+    useEffect(() => SetErrorMsg(""), [options, fieldType]);
+    
     useEffect(
         () => {
             document.addEventListener('keydown', keyPress);
@@ -121,7 +124,12 @@ const Modal = ({toggleModal, setToggleModal, onNewField}) => {
             case "":
                 return SetErrorMsg("Debe de escoger un \"Tipo de campo\"")
             case "text":
-                onNewField({fieldType, fieldName})
+                dispatch(
+                    optionAdded({
+                        fieldType,
+                        fieldName
+                    })
+                )
                 setToggleModal(false);
                 SetFieldName('')
                 SetFieldType('')
@@ -130,7 +138,13 @@ const Modal = ({toggleModal, setToggleModal, onNewField}) => {
             default:
                 newOptions = options.filter( option => option !== "");
                 if(newOptions.length > 0)  {
-                    onNewField({fieldType, fieldName, newOptions})
+                    dispatch(
+                        optionAdded({
+                            fieldType,
+                            fieldName,
+                            newOptions
+                        })
+                    )
                     setToggleModal(false);
                     SetFieldName('')
                     SetFieldType('')
@@ -153,15 +167,31 @@ const Modal = ({toggleModal, setToggleModal, onNewField}) => {
                             <p>Nombre de opción</p>
                             <input onChange={(e) => SetFieldName(e.target.value)} type="text" className="form-control" style={{marginBottom:20}} value={fieldName} />
                             <p>Tipo de campo</p>
-                            <select onChange={(e) => setType(e)} value={fieldType} className="form-control">
+                            <select onChange={(e) => SetFieldType(e.target.value)} value={fieldType} className="form-control">
                                 <option value="">Seleccionar</option>
                                 <option value="radio">Radio</option>
                                 <option value="dropdown">Lista despegable</option>
                                 <option value="text">Texto</option>
                             </select>
                             <br />
-                            {(fieldType === "radio" || fieldType === "dropdown") &&  options.map( (option, index) => <Option key={index} index={index} onDelete={handleDelete} option={option} storeOptionValue={(e, index) => storeOptionValue(e, index)} /> )}
-                            { (fieldType === "radio" || fieldType === "dropdown") && <><button onClick={addOption} className="btn btn-info" style={{marginTop:20}}>Agregar opción</button><br /></> }
+                            {(fieldType === "radio" || fieldType === "dropdown") && options.map( (option, index) => {
+                                return <Option
+                                    key={index}
+                                    index={index}
+                                    onDelete={handleDelete}
+                                    option={option}
+                                    storeOptionValue={(e, index) => storeOptionValue(e, index)}
+                                /> 
+                            })}
+                            
+                            { (fieldType === "radio" || fieldType === "dropdown") && <>
+                                <button
+                                    onClick={addOption}
+                                    className="btn btn-info"
+                                    style={{marginTop:20}}>
+                                        Agregar opción
+                                </button><br />
+                            </>}
                             <p style={{color:"red"}}>{errorMsg}</p>
                             <Button onClick={generateOption}>Crear</Button>
                         </ModalContent>

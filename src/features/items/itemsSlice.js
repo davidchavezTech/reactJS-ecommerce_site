@@ -17,7 +17,9 @@ const itemsSlice = createSlice({
     name: 'items',
     initialState,
     reducers: {
-        
+		itemAdded(state, action) {
+			state.items.push(action.payload)
+		},
     },
     extraReducers: {
         [fetchItems.pending]: (state, action) => {
@@ -37,6 +39,8 @@ const itemsSlice = createSlice({
 })
 
 export default itemsSlice.reducer;
+
+export const { itemAdded } = itemsSlice.actions
 
 // export const selectAllItems = state => state.items.items
 export const selectAllItems = storeState => storeState.itemsState.items
