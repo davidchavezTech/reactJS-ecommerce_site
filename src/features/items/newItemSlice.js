@@ -16,13 +16,15 @@ const newItemSlice = createSlice({
     name: 'newItem',
     initialState,
     reducers: {
-        itemEdited(state, action) {
-            const { property, value } = action.payload;
-            state.item[property] = value;
+        itemAdded(state, action) {
+            const { itemName, itemDescription, mType } = action.payload
+            state.item.itemName = itemName;
+            state.item.description = itemDescription;
+            state.item.mUnitPrice = mType;
         },
-        mUnitPriceEdited(state, action) {
-            state.item.mUnitPrice = action.payload
-        },
+        // mUnitPriceEdited(state, action) {
+        //     state.item.mUnitPrice = action.payload
+        // },
 		optionAdded(state, action) {
 			state.item.options.push(action.payload)
 		},
@@ -32,4 +34,4 @@ const newItemSlice = createSlice({
 export default newItemSlice.reducer;
 export const selectNewItem = storeState => storeState.newItemState.item
 
-export const { itemEdited, mUnitPriceEdited, optionAdded } = newItemSlice.actions
+export const { itemAdded, optionAdded } = newItemSlice.actions
