@@ -49,14 +49,14 @@ const AddItemForm = ({onFireModal}) => {
     }
 
     const newItem = useSelector(selectNewItem)
-    const allItems = useSelector(selectAllItems)
+    // const allItems = useSelector(selectAllItems)
 
-    useEffect(() => {
-        console.log(newItem)
-    }, [newItem])
-    useEffect(() => {
-        console.log(allItems)
-    }, [allItems])
+    // useEffect(() => {
+    //     console.log(newItem)
+    // }, [newItem])
+    // useEffect(() => {
+    //     console.log(allItems)
+    // }, [allItems])
     return (
         <div className="card" style={{width: "35rem", margin:10}}>
             <div className="card-body">

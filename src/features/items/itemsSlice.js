@@ -2,13 +2,18 @@ import { createSlice, nanoid, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios'
 import { serverAdress } from '../../globalVariables'
 
+
+const initialState = {
+  items: [],
+  status: 'idle',
+  error: null
+}
+
+
 export const postItem = createAsyncThunk(
     'items/postItem',
     async (payload, { getState }) => {
-		console.log(payload)
 		const { itemName, priceAndUnits, description, options } = payload
-		const allItems = selectAllItems(getState())
-		console.log(allItems)
 		const response = await axios({
 			method: "POST",
 			withCredentials: true,
@@ -17,16 +22,10 @@ export const postItem = createAsyncThunk(
 				itemName, priceAndUnits, description, options
 			}
 		});
-       console.log(response)
 	   return payload
     }
 )
 
-const initialState = {
-    items: [],
-    status: 'idle',
-    error: null
-}
 
 export const fetchItems = createAsyncThunk('items/fetchItems', async () => {
     const { data } = await axios.get(`${serverAdress}/items/`)

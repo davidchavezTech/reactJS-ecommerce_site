@@ -1,0 +1,20 @@
+const Item = ({ item }) => {
+    return (
+        <div className="card" style={{width: "25rem", margin:10, color:"black", flexDirection: "row", display:"inline-flex"}}>
+            <div style={{
+                display:"inline-flex",
+                height:160, width:160,
+                backgroundColor:"gray",
+                alignItems:"center",
+                justifyContent:"center",
+                color: "white"
+            }}>Image</div>
+            <div className="card-body" style={{display:"inline-block"}}>
+                <h5 className="card-title">{item.itemName}</h5>
+                <p className="card-text" style={{width:"12rem", height:"44px"}}>{item.description}</p>
+                <a href="#" className="btn btn-warning" style={{marginLeft:125}}>Editar</a>
+            </div>
+        </div>
+    )
+}
+export default Item;
