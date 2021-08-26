@@ -4,7 +4,8 @@ import PerUnit from './unitsComponents/PerUnit';
 import PerWeight from './unitsComponents/PerWeight';
 import PerVolume from './unitsComponents/PerVolume'
 import { useState, useEffect } from 'react'
-import { selectNewItem, itemAdded } from '../../../features/items/newItemSlice';
+import { selectNewItem, itemAdded, selectOptions } from '../../../features/items/newItemSlice';
+import { postItem, selectAllItems } from '../../../features/items/itemsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const AddItemForm = ({onFireModal}) => {
@@ -15,7 +16,7 @@ const AddItemForm = ({onFireModal}) => {
     const [mUnit, SetMUnit] = useState('');
     const [mType, SetMType] = useState({});
     const [errorMsg, SetErrorMsg] = useState('');
-
+    const options = useSelector(selectOptions)
     const setMUnitFunc = (value) => {
         SetMUnit(value)
         SetMType({})
@@ -31,7 +32,6 @@ const AddItemForm = ({onFireModal}) => {
 
         SetMType(copy)
     }
-    const newItem = useSelector(selectNewItem)
     
     const createNewItem = () => {
         //Check if any mandatory field is empty, if it is, return error msg
@@ -43,11 +43,20 @@ const AddItemForm = ({onFireModal}) => {
         for(const key in mType){
             if(mType[key]==='') return SetErrorMsg("Asegúrese de poner precio a las unidades de medida seleccionadas")
         }
-        dispatch(itemAdded({itemName, itemDescription, mType}))
+        // dispatch(itemAdded({itemName, itemDescription, mType}))
+        console.log(options)
+        dispatch(postItem({itemName, priceAndUnits: mType, description: itemDescription, options}))
     }
+
+    const newItem = useSelector(selectNewItem)
+    const allItems = useSelector(selectAllItems)
+
     useEffect(() => {
         console.log(newItem)
     }, [newItem])
+    useEffect(() => {
+        console.log(allItems)
+    }, [allItems])
     return (
         <div className="card" style={{width: "35rem", margin:10}}>
             <div className="card-body">

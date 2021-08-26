@@ -1,17 +1,18 @@
 const router = require('express').Router();
 const Item = require('../models/items.model');
 
-router.route('/add').post(isAuthenticated, async (req,res) => {
-    const {itemName, price, fields, order, carousel, featured} = req.body
+router.route('/add').post(async (req,res) => {
+    const {itemName, priceAndUnits, description, options} = req.body
     
     const newItem = new Item({
         itemName,
-        price,
-        fields,
+        priceAndUnits: JSON.stringify(priceAndUnits),
+        description,
+        options: JSON.stringify(options),
         // imgURL,
-        order,
-        carousel,
-        featured
+        // order,
+        // carousel,
+        // featured
     });
     try {
         await newItem.save()

@@ -27,11 +27,12 @@ const newItemSlice = createSlice({
         // },
 		optionAdded(state, action) {
 			state.item.options.push(action.payload)
-		},
+		}
     }
 })
 
 export default newItemSlice.reducer;
 export const selectNewItem = storeState => storeState.newItemState.item
+export const selectOptions = storeState => storeState.newItemState.item.options
 
 export const { itemAdded, optionAdded } = newItemSlice.actions
