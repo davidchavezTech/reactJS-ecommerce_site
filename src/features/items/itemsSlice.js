@@ -12,9 +12,9 @@ const initialState = {
 
 export const postItem = createAsyncThunk(
     'items/postItem',
-    async (payload, { getState }) => {
+    async (payload, { getState }) => { 
 		const { itemName, priceAndUnits, description, options } = payload
-		const response = await axios({
+		await axios({
 			method: "POST",
 			withCredentials: true,
 			url: `${serverAdress}/items/add`,
@@ -29,7 +29,9 @@ export const postItem = createAsyncThunk(
 
 export const fetchItems = createAsyncThunk('items/fetchItems', async () => {
     const { data } = await axios.get(`${serverAdress}/items/`)
-    return data
+    const orderedArray = []
+    while(data.length !== 0) orderedArray.push(data.pop())
+    return orderedArray
 })
 
 const itemsSlice = createSlice({
@@ -37,7 +39,7 @@ const itemsSlice = createSlice({
     initialState,
     reducers: {
 		itemAdded(state, action) {
-			state.items.push(action.payload)
+			
 		},
     },
     extraReducers: {
@@ -60,7 +62,7 @@ const itemsSlice = createSlice({
         [postItem.fulfilled]: (state, action) => {
           state.status = 'succeeded'
           // Add any fetched posts to the array
-          state.items.push(action.payload)
+          state.items.unshift(action.payload)
           // state.items = state.items.concat(action.payload)
         },
         [postItem.rejected]: (state, action) => {

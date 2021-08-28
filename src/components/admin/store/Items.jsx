@@ -1,6 +1,5 @@
 import Item from "./Item"
 const Items = ({ status, items}) => {
-    console.log(items)
     return (
         <>
             {(status === "loading") &&

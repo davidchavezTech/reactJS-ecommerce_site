@@ -3,6 +3,8 @@ import MeasurementUnitComponent from './MeasurementUnitComponent';
 import PerUnit from './unitsComponents/PerUnit';
 import PerWeight from './unitsComponents/PerWeight';
 import PerVolume from './unitsComponents/PerVolume'
+import ImagesUpload from './ImagesUpload';
+
 import { useState, useEffect } from 'react'
 import { selectNewItem, itemAdded, selectOptions } from '../../../features/items/newItemSlice';
 import { postItem, selectAllItems } from '../../../features/items/itemsSlice';
@@ -44,19 +46,11 @@ const AddItemForm = ({onFireModal}) => {
             if(mType[key]==='') return SetErrorMsg("Asegúrese de poner precio a las unidades de medida seleccionadas")
         }
         // dispatch(itemAdded({itemName, itemDescription, mType}))
-        console.log(options)
         dispatch(postItem({itemName, priceAndUnits: mType, description: itemDescription, options}))
     }
 
     const newItem = useSelector(selectNewItem)
-    // const allItems = useSelector(selectAllItems)
 
-    // useEffect(() => {
-    //     console.log(newItem)
-    // }, [newItem])
-    // useEffect(() => {
-    //     console.log(allItems)
-    // }, [allItems])
     return (
         <div className="card" style={{width: "35rem", margin:10}}>
             <div className="card-body">
@@ -65,6 +59,8 @@ const AddItemForm = ({onFireModal}) => {
                 <h6 className="card-subtitle mb-2 text-muted" style={{marginTop:15}}>Nombre</h6>
                 <input onChange={e => SetItemName(e.target.value)} className="form-control" type="text" placeholder="Nombre" />
 
+                <ImagesUpload />
+                
                 <h6 className="card-subtitle mb-2 text-muted" style={{marginTop:15}}>Descripción</h6>
                 <textarea onChange={e => setItemDescription(e.target.value)} className="form-control" placeholder="Nombre" rows="4" cols="40" />
                 

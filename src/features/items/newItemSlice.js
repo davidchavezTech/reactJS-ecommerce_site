@@ -12,7 +12,7 @@ const initialState = {
     error: null
 }
 
-const newItemSlice = createSlice({
+const newItemReducer = createSlice({
     name: 'newItem',
     initialState,
     reducers: {
@@ -31,8 +31,8 @@ const newItemSlice = createSlice({
     }
 })
 
-export default newItemSlice.reducer;
+export default newItemReducer.reducer;
 export const selectNewItem = storeState => storeState.newItemState.item
 export const selectOptions = storeState => storeState.newItemState.item.options
 
-export const { itemAdded, optionAdded } = newItemSlice.actions
+export const { itemAdded, optionAdded } = newItemReducer.actions
