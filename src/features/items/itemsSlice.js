@@ -17,22 +17,27 @@ export const postItem = createAsyncThunk(
 		//Make imageFiles file list into an node array of files to send to multer in a form data object
 		const formData = new FormData()
 		console.log(imageFiles)
+    //Append each image to form data
 		for(let i =0; i < imageFiles.length; i++) {
 			formData.append("images", imageFiles[i]);
-			console.log(imageFiles[i])
 		}
 		formData.append("itemName", itemName)
 		formData.append("priceAndUnits", priceAndUnits)
 		formData.append("description", description)
 		formData.append("options", options)
-		await axios({
+		const { data } = await axios({
 			method: "POST",
 			withCredentials: true,
 			url: `${serverAdress}/items/add`,
 			data: formData,
 			headers: { "Content-Type": "multipart/form-data" }
 		});
-	   return payload
+    //Delete the files because initial state cannot proccess files (binary data I suppose)
+    const payloadCopy = JSON.parse(JSON.stringify(payload))
+    payloadCopy.imagesFileNames = data
+    // payloadCopy.imagesFileNames = data
+    delete payloadCopy['imageFiles']
+    return payloadCopy
     }
 )
 
@@ -72,6 +77,7 @@ const itemsSlice = createSlice({
         [postItem.fulfilled]: (state, action) => {
           state.status = 'succeeded'
           // Add any fetched posts to the array
+          console.log(action.payload)
           state.items.unshift(action.payload)
           // state.items = state.items.concat(action.payload)
         },

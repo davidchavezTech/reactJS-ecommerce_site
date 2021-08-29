@@ -15,6 +15,7 @@ const ImagesUpload = ({passedImages}) => {
                 previewsArray.push(images[i]);
             }
             SetPreviews(previewsArray)
+            passedImages(images)
         }else SetPreviews([]);
     }, [images])
     return (
@@ -36,11 +37,11 @@ const ImagesUpload = ({passedImages}) => {
                 name="images"
                 accept="image/*"
                 onChange={e => {
-                    const files = e.target.files;
-                    for(let i=0; files.length > i; i++){
-                        if(files[i].type.substr(0,5) !== "image") return SetPreviewsErrorMessage("Solo se permiten imágenes")
+                    const inputFieldFiles = e.target.files;
+                    for(let i=0; inputFieldFiles.length > i; i++){
+                        if(inputFieldFiles[i].type.substr(0,5) !== "image") return SetPreviewsErrorMessage("Solo se permiten imágenes")
                     }
-                    files ? SetImages(files) : SetImages(null);
+                    inputFieldFiles ? SetImages(inputFieldFiles) : SetImages(null);
                 }}
                 style={{display:"none"}}
                 type="file"
@@ -50,20 +51,7 @@ const ImagesUpload = ({passedImages}) => {
                 {previews.map((imgFile, index) => <ImagePreview key={index} imgFile={imgFile}/>)}
 
                 <br />
-                <button onClick={e=>{
-                    e.preventDefault();
-                    // const formData = new FormData()
-                    // // formData.append("images", [images]);
-                    // for(let i =0; i < images.length; i++) {
-                    //     formData.append("images", images[i]);
-                    // }
-                    // const response = await fetch("http://localhost:5000/images/upload", {
-                    //     method: 'post',
-                    //     body: formData
-                    // })
-                    // console.log(response)
-                    passedImages(images)
-                }}>Submit</button>
+
             </form>
 
         </>

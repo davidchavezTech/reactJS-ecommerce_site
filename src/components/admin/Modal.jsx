@@ -68,7 +68,6 @@ const Button = styled.button`
     cursor: pointer;
 `
 
-
 const Modal = ({toggleModal, setToggleModal}) => {
     const modalRef = useRef()
     const [fieldName, SetFieldName] = useState('')
@@ -77,6 +76,17 @@ const Modal = ({toggleModal, setToggleModal}) => {
     const [errorMsg, SetErrorMsg] = useState('')
 
     const dispatch = useDispatch();
+
+
+    const firstOptionField = useRef();
+
+    useEffect(() => {
+        console.log(firstOptionField)
+        if(firstOptionField.current){
+            firstOptionField.current.focus(); 
+        }
+    }, [options])
+
 
     const animation = useSpring({
         config: {
@@ -177,6 +187,8 @@ const Modal = ({toggleModal, setToggleModal}) => {
                             {(fieldType === "radio" || fieldType === "dropdown") && options.map( (option, index) => {
                                 return <Option
                                     key={index}
+                                    ref={(index === options.length - 1) ? firstOptionField : null }
+                                    lastElementInArrayBoolean={(index === options.length - 1) ? true : false}
                                     index={index}
                                     onDelete={handleDelete}
                                     option={option}

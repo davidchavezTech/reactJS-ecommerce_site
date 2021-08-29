@@ -31,8 +31,7 @@ const AdminStore = () => {
             <Modal toggleModal={toggleModal} setToggleModal={SetToggleModal} />
             <h1 style={{margin:10}}>Administrar tienda</h1>
             <AddItemForm onFireModal={fireModal} />
-            <Items status={itemsStatus} items={items} />
-            <button onClick={e => console.log(items)}>Log it</button>
+            {(items.length > 0) ? <Items status={itemsStatus} items={items} /> : <h2 style={{marginLeft:10, marginTop:20}}>No hay artículos para mostrar</h2>}
         </>
     )
 }

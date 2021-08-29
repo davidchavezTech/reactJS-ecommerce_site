@@ -19,27 +19,28 @@ const uploadFolder = multer({ storage: storage })
 router.route('/add').post(uploadFolder.array('images', 8), function (req, res, next) {
     // req.files is array of `images` files
     // req.body will contain the text fields, if there were any
-    console.log(req.body)
-
-    console.log(req.files)
     if(req.files) next()
     else(res.status(400).json("error"))
 }, async (req,res) => {
     const {itemName, priceAndUnits, description, options} = req.body
+    const imagesFileNames = []
     
+    //Store the images names in imagesURLs
+    for(let i = 0; req.files.length > i; i++ ) imagesFileNames.push(req.files[i].filename)
+
     const newItem = new Item({
         itemName,
         priceAndUnits: JSON.stringify(priceAndUnits),
         description,
         options: JSON.stringify(options),
-        // imgURL,
+        imagesFileNames,
         // order,
         // carousel,
         // featured
     });
     try {
         await newItem.save()
-        res.json('Item added!')
+        res.json(imagesFileNames)
     }catch(err){ res.status(400).json('Error: ' + err) }
 });
 

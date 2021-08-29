@@ -35,9 +35,7 @@ const AddItemForm = ({onFireModal}) => {
         SetMType(copy)
     }
     const [imageFiles, SetImageFiles] = useState([]);
-    useEffect(()=>{
-        console.log(imageFiles)
-    }, [imageFiles])
+
     const createNewItem = () => {
         //Check if any mandatory field is empty, if it is, return error msg
         if(itemName==='') return SetErrorMsg("Llenar el nombre del nuevo artículo")

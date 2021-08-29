@@ -1,4 +1,6 @@
+import { serverAdress } from '../../../globalVariables'
 const Item = ({ item }) => {
+    {console.log(item)}
     return (
         <div className="card" style={{width: "25rem", margin:10, color:"black", flexDirection: "row", display:"inline-flex"}}>
             <div style={{
@@ -7,8 +9,10 @@ const Item = ({ item }) => {
                 backgroundColor:"gray",
                 alignItems:"center",
                 justifyContent:"center",
-                color: "white"
-            }}>Image</div>
+                color: "white",
+                backgroundImage: `url("${serverAdress}/uploads/${item.imagesFileNames[0]}")`,
+                backgroundSize: "cover",
+            }}></div>
             <div className="card-body" style={{display:"inline-block"}}>
                 <h5 className="card-title">{item.itemName}</h5>
                 <p className="card-text" style={{width:"12rem", height:"44px"}}>{item.description}</p>
