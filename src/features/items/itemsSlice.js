@@ -13,14 +13,24 @@ const initialState = {
 export const postItem = createAsyncThunk(
     'items/postItem',
     async (payload, { getState }) => { 
-		const { itemName, priceAndUnits, description, options } = payload
+		const { itemName, priceAndUnits, description, options, imageFiles } = payload
+		//Make imageFiles file list into an node array of files to send to multer in a form data object
+		const formData = new FormData()
+		console.log(imageFiles)
+		for(let i =0; i < imageFiles.length; i++) {
+			formData.append("images", imageFiles[i]);
+			console.log(imageFiles[i])
+		}
+		formData.append("itemName", itemName)
+		formData.append("priceAndUnits", priceAndUnits)
+		formData.append("description", description)
+		formData.append("options", options)
 		await axios({
 			method: "POST",
 			withCredentials: true,
 			url: `${serverAdress}/items/add`,
-			data: {
-				itemName, priceAndUnits, description, options
-			}
+			data: formData,
+			headers: { "Content-Type": "multipart/form-data" }
 		});
 	   return payload
     }

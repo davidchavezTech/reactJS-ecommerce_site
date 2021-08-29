@@ -7,6 +7,8 @@ const usersRouter = require('./Routes/users')
 const adminRouter = require('./Routes/admin')
 const passport = require('passport');
 const session = require('express-session')
+const multer  = require('multer')
+const path = require('path');
 
 //Initializations
 require('dotenv').config();
@@ -31,6 +33,7 @@ const corsOptionsDelegate = (req, callback) => {
 
 // middlewares
 // app.use(cors(corsOptionsDelegate));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors(corsOptionsDelegate));
 app.use(express.json());
 app.use(session({
@@ -40,6 +43,29 @@ app.use(session({
 }))
 app.use(passport.initialize());
 app.use(passport.session());
+
+//Multer upload function
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'public/uploads')
+    },
+    filename: function (req, file, cb) {
+        const extension = file.mimetype.split("/")[1]
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+        cb(null, `${file.fieldname}-${uniqueSuffix}.${extension}`)
+    }
+  })
+  
+const uploadFolder = multer({ storage: storage })
+
+app.post('/images/upload', uploadFolder.array('images', 8), function (req, res, next) {
+    // req.files is array of `images` files
+    // req.body will contain the text fields, if there were any
+    res.statusMessage = "test";
+    res.end();
+})
+
 
 const uri = process.env.ATLAS_URI
 

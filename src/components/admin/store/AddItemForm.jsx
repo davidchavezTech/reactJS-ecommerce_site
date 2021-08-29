@@ -34,7 +34,10 @@ const AddItemForm = ({onFireModal}) => {
 
         SetMType(copy)
     }
-    
+    const [imageFiles, SetImageFiles] = useState([]);
+    useEffect(()=>{
+        console.log(imageFiles)
+    }, [imageFiles])
     const createNewItem = () => {
         //Check if any mandatory field is empty, if it is, return error msg
         if(itemName==='') return SetErrorMsg("Llenar el nombre del nuevo artículo")
@@ -46,7 +49,7 @@ const AddItemForm = ({onFireModal}) => {
             if(mType[key]==='') return SetErrorMsg("Asegúrese de poner precio a las unidades de medida seleccionadas")
         }
         // dispatch(itemAdded({itemName, itemDescription, mType}))
-        dispatch(postItem({itemName, priceAndUnits: mType, description: itemDescription, options}))
+        dispatch(postItem({itemName, priceAndUnits: mType, description: itemDescription, options, imageFiles}))
     }
 
     const newItem = useSelector(selectNewItem)
@@ -59,7 +62,7 @@ const AddItemForm = ({onFireModal}) => {
                 <h6 className="card-subtitle mb-2 text-muted" style={{marginTop:15}}>Nombre</h6>
                 <input onChange={e => SetItemName(e.target.value)} className="form-control" type="text" placeholder="Nombre" />
 
-                <ImagesUpload />
+                <ImagesUpload passedImages={images => SetImageFiles(images)} />
                 
                 <h6 className="card-subtitle mb-2 text-muted" style={{marginTop:15}}>Descripción</h6>
                 <textarea onChange={e => setItemDescription(e.target.value)} className="form-control" placeholder="Nombre" rows="4" cols="40" />
