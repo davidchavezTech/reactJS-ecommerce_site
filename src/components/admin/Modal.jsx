@@ -78,14 +78,15 @@ const Modal = ({toggleModal, setToggleModal}) => {
     const dispatch = useDispatch();
 
 
-    const firstOptionField = useRef();
+    // const firstOptionField = useRef();
+    const ref = React.createRef();
 
     useEffect(() => {
-        console.log(firstOptionField)
-        if(firstOptionField.current){
-            firstOptionField.current.focus(); 
+        console.log(ref)
+        if(ref.current){
+            ref.current.focus(); 
         }
-    }, [options])
+    }, [options.length])
 
 
     const animation = useSpring({
@@ -118,15 +119,17 @@ const Modal = ({toggleModal, setToggleModal}) => {
         SetOptions(newOptions)
     }
     //clear error when user changes "fieldType" or option
-    useEffect(() => SetErrorMsg(""), [options, fieldType]);
+    useEffect(() => {
+        //Set focus on option field when selecting a fieldtype
+        if(options.length===1 && ref.current) ref.current.focus();
+        SetErrorMsg("")
+    }, [options, fieldType]);
     
-    useEffect(
-        () => {
+    useEffect(() => {
             document.addEventListener('keydown', keyPress);
             return () => document.removeEventListener('keydown', keyPress);
-        },
-        [keyPress]
-    )
+        }, [keyPress])
+
     const generateOption = () => {
         let newOptions
         if(fieldName==="") return SetErrorMsg("Especificar \"Nombre de opción\"");
@@ -183,11 +186,12 @@ const Modal = ({toggleModal, setToggleModal}) => {
                                 <option value="dropdown">Lista despegable</option>
                                 <option value="text">Texto</option>
                             </select>
+
                             <br />
                             {(fieldType === "radio" || fieldType === "dropdown") && options.map( (option, index) => {
                                 return <Option
                                     key={index}
-                                    ref={(index === options.length - 1) ? firstOptionField : null }
+                                    ref={ref}
                                     lastElementInArrayBoolean={(index === options.length - 1) ? true : false}
                                     index={index}
                                     onDelete={handleDelete}
@@ -197,12 +201,16 @@ const Modal = ({toggleModal, setToggleModal}) => {
                             })}
                             
                             { (fieldType === "radio" || fieldType === "dropdown") && <>
+
                                 <button
                                     onClick={addOption}
                                     className="btn btn-info"
                                     style={{marginTop:20}}>
                                         Agregar opción
-                                </button><br />
+                                </button>
+                                
+                                <br />
+
                             </>}
                             <p style={{color:"red"}}>{errorMsg}</p>
                             <Button onClick={generateOption}>Crear</Button>

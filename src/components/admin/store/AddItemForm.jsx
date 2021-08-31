@@ -39,6 +39,7 @@ const AddItemForm = ({onFireModal}) => {
     const createNewItem = () => {
         //Check if any mandatory field is empty, if it is, return error msg
         if(itemName==='') return SetErrorMsg("Llenar el nombre del nuevo artículo")
+        if(imageFiles.length===0) return SetErrorMsg("Escoger al menos una imagen")
         if(itemDescription==='') return SetErrorMsg("Llenar la descripción del nuevo artículo")
         if(mUnit==='') return SetErrorMsg("Seleccionar unidad de medida del nuevo artículo")
         if(Object.keys(mType).length===0) return SetErrorMsg("Seleccionar al menos una unidad de medida y precio")

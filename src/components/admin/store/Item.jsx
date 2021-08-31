@@ -1,6 +1,5 @@
 import { serverAdress } from '../../../globalVariables'
 const Item = ({ item }) => {
-    {console.log(item)}
     return (
         <div className="card" style={{width: "25rem", margin:10, color:"black", flexDirection: "row", display:"inline-flex"}}>
             <div style={{
