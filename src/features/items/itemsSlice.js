@@ -84,7 +84,7 @@ const itemsSlice = createSlice({
         [postItem.rejected]: (state, action) => {
           state.status = 'failed'
           state.error = action.error.message
-        }
+        },
       }
 })
 
@@ -92,5 +92,5 @@ export default itemsSlice.reducer;
 
 export const { itemAdded } = itemsSlice.actions
 
-// export const selectAllItems = state => state.items.items
+
 export const selectAllItems = storeState => storeState.itemsState.items

@@ -50,6 +50,16 @@ router.route('/').get((req, res) =>{
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/:itemId').get( async (req, res) =>{
+    try{
+        const response = await Item.findOne({_id: req.params.itemId})
+        res.json(response)
+    }catch(err) {
+        console.log(err)
+        res.json("Error: " + err)
+    }
+});
+
 function isAuthenticated(req, res, next) { return req.isAuthenticated() ? next() : res.json(false) }
 
 module.exports = router;

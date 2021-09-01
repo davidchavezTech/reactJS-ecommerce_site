@@ -10,11 +10,11 @@ import { selectNewItem, itemAdded, selectOptions } from '../../../features/items
 import { postItem, selectAllItems } from '../../../features/items/itemsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-const AddItemForm = ({onFireModal}) => {
+const AddItemForm = ({onFireModal, selectedItem}) => {
     const dispatch = useDispatch();
 
     const [itemName, SetItemName] = useState('');
-    const [itemDescription, setItemDescription] = useState('');
+    const [itemDescription, SetItemDescription] = useState('');
     const [mUnit, SetMUnit] = useState('');
     const [mType, SetMType] = useState({});
     const [errorMsg, SetErrorMsg] = useState('');
@@ -23,6 +23,13 @@ const AddItemForm = ({onFireModal}) => {
         SetMUnit(value)
         SetMType({})
     }
+    useEffect(() => {
+        if(selectedItem.length !== 0){
+            SetItemName(selectedItem.itemName)
+            SetItemDescription(selectedItem.description)
+            console.log(selectedItem.priceAndUnits)
+        }
+    }, [selectedItem])
     const handleSetMType = (check1, measurementType1, price1, check2, measurementType2, price2, check3, measurementType3, price3) => {
         
         let copy = JSON.parse(JSON.stringify(mType))
@@ -59,12 +66,12 @@ const AddItemForm = ({onFireModal}) => {
                 <h5 className="card-title">Agregar artículo</h5>
 
                 <h6 className="card-subtitle mb-2 text-muted" style={{marginTop:15}}>Nombre</h6>
-                <input onChange={e => SetItemName(e.target.value)} className="form-control" type="text" placeholder="Nombre" />
+                <input onChange={e => SetItemName(e.target.value)} className="form-control" type="text" placeholder="Nombre" value={itemName} />
 
                 <ImagesUpload passedImages={images => SetImageFiles(images)} />
                 
                 <h6 className="card-subtitle mb-2 text-muted" style={{marginTop:15}}>Descripción</h6>
-                <textarea onChange={e => setItemDescription(e.target.value)} className="form-control" placeholder="Nombre" rows="4" cols="40" />
+                <textarea onChange={e => SetItemDescription(e.target.value)} className="form-control" placeholder="Nombre" rows="4" cols="40" value={itemDescription} />
                 
                 <MeasurementUnitComponent setMUnit={setMUnitFunc} mUnit={mUnit} />
 

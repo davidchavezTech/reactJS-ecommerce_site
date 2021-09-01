@@ -82,7 +82,6 @@ const Modal = ({toggleModal, setToggleModal}) => {
     const ref = React.createRef();
 
     useEffect(() => {
-        console.log(ref)
         if(ref.current){
             ref.current.focus(); 
         }

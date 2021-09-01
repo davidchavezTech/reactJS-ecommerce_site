@@ -15,7 +15,7 @@ const Item = ({ item }) => {
             <div className="card-body" style={{display:"inline-block"}}>
                 <h5 className="card-title">{item.itemName}</h5>
                 <p className="card-text" style={{width:"12rem", height:"44px"}}>{item.description}</p>
-                <a href="#" className="btn btn-warning" style={{marginLeft:125}}>Editar</a>
+                <a href={`editItem/${item._id}`} className="btn btn-warning" style={{marginLeft:125}}>Editar</a>
             </div>
         </div>
     )

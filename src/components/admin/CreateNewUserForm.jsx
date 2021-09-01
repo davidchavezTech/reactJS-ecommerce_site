@@ -21,6 +21,7 @@ const CreateNewUserForm = () => {
             withCredentials: true,
             url: "http://localhost:5000/admin/getUsers",
         });
+        console.log(list)
         
         if(list.data)SetAdminsList(list.data)
     }

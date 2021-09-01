@@ -6,7 +6,7 @@ const itemsSchema = new Schema({
     itemName: { type: String, required: true},
     priceAndUnits: { type: Object, required: true},
     description: { type: String, required: true},
-    options: { type: Array, default: null },
+    options: { type: Object, default: null },
     imagesFileNames: { type: Array, required: true},
     order:  { type: Number, default: 0},
     carousel: { type: Boolean, default: false },

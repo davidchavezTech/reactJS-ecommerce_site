@@ -54,7 +54,6 @@ function App() {
 				render={(props) => <Admin loggedIn={isUserLoggedIn} />}
 			/>
 			
-			
 			<GlobalStyle />
         </>
 		
