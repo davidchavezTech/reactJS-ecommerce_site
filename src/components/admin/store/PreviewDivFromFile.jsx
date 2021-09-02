@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const ImagePreview = ({imgFile}) => {
+const PreviewDivFromFile = ({index, imgFile, remove, removePreview}) => {
     const [previewUrl, SetPreviewURL] = useState();
 
     const reader = new FileReader();
@@ -16,9 +16,13 @@ const ImagePreview = ({imgFile}) => {
                 height:150,
                 width:150,
                 display:"inline-block",
-                marginRight:8
+                textAlign: "right",
+                margin:8,
+                padding: 4
             }}
-        ></div>
+        >
+            {remove && <button onClick={() => removePreview(index)} type="button" className="btn btn-outline-danger btn-sm" aria-label="Close">X</button>}
+        </div>
     )   
 }
-export default ImagePreview;
+export default PreviewDivFromFile;

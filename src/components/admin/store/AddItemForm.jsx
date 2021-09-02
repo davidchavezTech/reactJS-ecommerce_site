@@ -6,7 +6,7 @@ import PerVolume from './unitsComponents/PerVolume'
 import ImagesUpload from './ImagesUpload';
 
 import { useState, useEffect } from 'react'
-import { selectNewItem, itemAdded, selectOptions } from '../../../features/items/newItemSlice';
+import { selectNewItem, itemAdded, selectOptions, optionSet } from '../../../features/items/newItemSlice';
 import { postItem, selectAllItems } from '../../../features/items/itemsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { editItem } from '../../../features/items/itemSlice';
@@ -20,7 +20,7 @@ const AddItemForm = ({onFireModal, selectedItem}) => {
     const [mType, SetMType] = useState({});
     const [errorMsg, SetErrorMsg] = useState('');
     const options = useSelector(selectOptions)
-    const [editItemOptions, SetEditItemOptions] = useState([]);
+    // const [editItemOptions, SetEditItemOptions] = useState([]);
     const setMUnitFunc = (value) => {
         SetMUnit(value)
         SetMType({})
@@ -31,8 +31,9 @@ const AddItemForm = ({onFireModal, selectedItem}) => {
             SetItemDescription(selectedItem.description)
             SetMUnit(selectedItem.mUnit)
             SetMType(selectedItem.priceAndUnits)
+            dispatch(optionSet(selectedItem.options))
             console.log(selectedItem)
-            SetEditItemOptions(selectedItem.options)
+            // SetEditItemOptions(selectedItem.options)
         }
     }, [selectedItem])
     const handleSetMType = (check1, measurementType1, price1, check2, measurementType2, price2, check3, measurementType3, price3) => {
@@ -72,7 +73,7 @@ const AddItemForm = ({onFireModal, selectedItem}) => {
                 <h6 className="card-subtitle mb-2 text-muted" style={{marginTop:15}}>Nombre</h6>
                 <input onChange={e => SetItemName(e.target.value)} className="form-control" type="text" placeholder="Nombre" value={itemName} />
 
-                <ImagesUpload passedImages={images => SetImageFiles(images)} />
+                <ImagesUpload passImages={images => SetImageFiles(images)} imagesURLs={selectedItem.imagesFileNames} />
                 
                 <h6 className="card-subtitle mb-2 text-muted" style={{marginTop:15}}>Descripción</h6>
                 <textarea onChange={e => SetItemDescription(e.target.value)} className="form-control" placeholder="Nombre" rows="4" cols="40" value={itemDescription} />
@@ -86,12 +87,14 @@ const AddItemForm = ({onFireModal, selectedItem}) => {
                 <h6 className="card-subtitle mb-2" style={{marginTop:25}}>Opciones:</h6>
                 {newItem.options.map((option, currentIndex) => <OptionCard key={currentIndex} index={currentIndex} fieldType={option.fieldType} options={option.newOptions} fieldName={option.fieldName} />)}
                 {/* If we are editing an object, use this instead  */}
-                {editItemOptions.map((option, currentIndex) => <OptionCard key={currentIndex} index={currentIndex} fieldType={option.fieldType} options={option.newOptions} fieldName={option.fieldName} />)}
+                {/* {editItemOptions.map((option, currentIndex) => <OptionCard key={currentIndex} index={currentIndex} fieldType={option.fieldType} options={option.newOptions} fieldName={option.fieldName} />)} */}
 
                 <p style={{color:"red"}}>{errorMsg}</p>
                 <div style={{display:"flex", justifyContent:"space-between"}}>
                     <button onClick={onFireModal} type="button" className="btn btn-dark" style={{marginTop:10}}>Agregar opción</button>
-                    <button onClick={createNewItem} type="button" className="btn btn-success" style={{marginTop:10}}>Generar Artículo</button>
+                    <button onClick={createNewItem} type="button" className="btn btn-success" style={{marginTop:10}}>
+                        {selectedItem ? <>Guardar Cambios</> : <>Generar Artículo</>}
+                    </button>
                 </div>
             </div>
         </div>

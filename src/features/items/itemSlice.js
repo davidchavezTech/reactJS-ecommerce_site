@@ -24,8 +24,7 @@ const itemSlice = createSlice({
     initialState,
     reducers: {
 		itemRemoved(state, action) {
-			console.log(action.payload)
-            state.selectedItem.imagesFileNames.splice(action.payload, 1)
+      		state.selectedItem.imagesFileNames.splice(action.payload, 1)
 		},
     },
     extraReducers: {

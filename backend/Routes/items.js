@@ -74,16 +74,23 @@ router.route('/:itemId').get( async (req, res) =>{
 
 router.route('/edit').post( async (req, res) =>{
     try{
-        const { _id, itemName, priceAndUnits, description, mUnit, options } = req.body
+        const { _id, itemName, priceAndUnits, description, mUnit, options } = req.body.payload
         
-        console.log(req.body)
+        console.log(req.body.payload)
 
-        const response = await Item.updateOne({ _id },  { $set: { itemName } }, function(err, result) {
-            if (err) console.log(err)
-                
-        });
+        const response = await Item.updateOne({ _id },  { 
+            $set: { 
+                _id,
+                itemName,
+                priceAndUnits,
+                description,
+                mUnit,
+                options
+            }
+        }, { upsert: true });
         console.log(response)
-        res.json(req.body)
+
+        res.json(req.body.payload)
     }catch(err) {
         console.log(err)
         res.json("Error: " + err)
