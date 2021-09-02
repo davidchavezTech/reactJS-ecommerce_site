@@ -13,17 +13,20 @@ const initialState = {
 export const postItem = createAsyncThunk(
     'items/postItem',
     async (payload, { getState }) => { 
-		const { itemName, priceAndUnits, description, options, imageFiles } = payload
-		//Make imageFiles file list into an node array of files to send to multer in a form data object
+		const { itemName, description, imageFiles, mUnit } = payload
+		let { priceAndUnits, options} = payload
+		priceAndUnits = JSON.stringify(priceAndUnits)
+		options = JSON.stringify(options)
 		const formData = new FormData()
-		console.log(imageFiles)
-    //Append each image to form data
+		//Make imageFiles file list into an node array of files to send to multer in a form data object
+    	//Append each image to form data
 		for(let i =0; i < imageFiles.length; i++) {
 			formData.append("images", imageFiles[i]);
 		}
 		formData.append("itemName", itemName)
 		formData.append("priceAndUnits", priceAndUnits)
 		formData.append("description", description)
+		formData.append("mUnit", mUnit)
 		formData.append("options", options)
 		const { data } = await axios({
 			method: "POST",
@@ -32,21 +35,21 @@ export const postItem = createAsyncThunk(
 			data: formData,
 			headers: { "Content-Type": "multipart/form-data" }
 		});
-    //Delete the files because initial state cannot proccess files (binary data I suppose)
-    const payloadCopy = JSON.parse(JSON.stringify(payload))
-    payloadCopy.imagesFileNames = data
+    // //Delete the files because initial state cannot proccess files (binary data I suppose)
+    // const payloadCopy = JSON.parse(JSON.stringify(payload))
     // payloadCopy.imagesFileNames = data
-    delete payloadCopy['imageFiles']
-    return payloadCopy
+    // // payloadCopy.imagesFileNames = data
+    // delete payloadCopy['imageFiles']
+    return data
     }
 )
 
 
 export const fetchItems = createAsyncThunk('items/fetchItems', async () => {
-    const { data } = await axios.get(`${serverAdress}/items/`)
-    const orderedArray = []
-    while(data.length !== 0) orderedArray.push(data.pop())
-    return orderedArray
+	const { data } = await axios.get(`${serverAdress}/items/`)
+	const orderedArray = []
+	while(data.length !== 0) orderedArray.push(data.pop())
+	return orderedArray
 })
 
 const itemsSlice = createSlice({
@@ -75,11 +78,10 @@ const itemsSlice = createSlice({
           state.status = 'loading'
         },
         [postItem.fulfilled]: (state, action) => {
-          state.status = 'succeeded'
-          // Add any fetched posts to the array
-          console.log(action.payload)
-          state.items.unshift(action.payload)
-          // state.items = state.items.concat(action.payload)
+          	state.status = 'succeeded'
+          	// Add any fetched posts to the array
+        	state.items.unshift(action.payload)
+          	// state.items = state.items.concat(action.payload)
         },
         [postItem.rejected]: (state, action) => {
           state.status = 'failed'

@@ -19,7 +19,6 @@ const EditItem = ({ match }) => {
         if (itemStatus === 'idle') {
         dispatch(fetchItem(itemId))
         }
-        console.log(selectedItem)
     }, [itemStatus, dispatch])
 
     //Modal

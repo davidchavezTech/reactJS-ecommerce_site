@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react'
 import { selectNewItem, itemAdded, selectOptions } from '../../../features/items/newItemSlice';
 import { postItem, selectAllItems } from '../../../features/items/itemsSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { editItem } from '../../../features/items/itemSlice';
 
 const AddItemForm = ({onFireModal, selectedItem}) => {
     const dispatch = useDispatch();
@@ -19,15 +20,19 @@ const AddItemForm = ({onFireModal, selectedItem}) => {
     const [mType, SetMType] = useState({});
     const [errorMsg, SetErrorMsg] = useState('');
     const options = useSelector(selectOptions)
+    const [editItemOptions, SetEditItemOptions] = useState([]);
     const setMUnitFunc = (value) => {
         SetMUnit(value)
         SetMType({})
     }
     useEffect(() => {
-        if(selectedItem.length !== 0){
+        if(selectedItem && selectedItem.length !== 0){
             SetItemName(selectedItem.itemName)
             SetItemDescription(selectedItem.description)
-            console.log(selectedItem.priceAndUnits)
+            SetMUnit(selectedItem.mUnit)
+            SetMType(selectedItem.priceAndUnits)
+            console.log(selectedItem)
+            SetEditItemOptions(selectedItem.options)
         }
     }, [selectedItem])
     const handleSetMType = (check1, measurementType1, price1, check2, measurementType2, price2, check3, measurementType3, price3) => {
@@ -46,7 +51,7 @@ const AddItemForm = ({onFireModal, selectedItem}) => {
     const createNewItem = () => {
         //Check if any mandatory field is empty, if it is, return error msg
         if(itemName==='') return SetErrorMsg("Llenar el nombre del nuevo artículo")
-        if(imageFiles.length===0) return SetErrorMsg("Escoger al menos una imagen")
+        if(!selectedItem && imageFiles.length===0) return SetErrorMsg("Escoger al menos una imagen")
         if(itemDescription==='') return SetErrorMsg("Llenar la descripción del nuevo artículo")
         if(mUnit==='') return SetErrorMsg("Seleccionar unidad de medida del nuevo artículo")
         if(Object.keys(mType).length===0) return SetErrorMsg("Seleccionar al menos una unidad de medida y precio")
@@ -54,12 +59,11 @@ const AddItemForm = ({onFireModal, selectedItem}) => {
         for(const key in mType){
             if(mType[key]==='') return SetErrorMsg("Asegúrese de poner precio a las unidades de medida seleccionadas")
         }
-        // dispatch(itemAdded({itemName, itemDescription, mType}))
-        dispatch(postItem({itemName, priceAndUnits: mType, description: itemDescription, options, imageFiles}))
+        if(!selectedItem) dispatch(postItem({itemName, priceAndUnits: mType, description: itemDescription, mUnit, options, imageFiles}))
+        else dispatch(editItem( { _id: selectedItem._id, itemName, priceAndUnits: mType, description: itemDescription, mUnit, options, imageFiles}))
     }
 
     const newItem = useSelector(selectNewItem)
-
     return (
         <div className="card" style={{width: "35rem", margin:10}}>
             <div className="card-body">
@@ -75,12 +79,14 @@ const AddItemForm = ({onFireModal, selectedItem}) => {
                 
                 <MeasurementUnitComponent setMUnit={setMUnitFunc} mUnit={mUnit} />
 
-                {(mUnit==="unit") && <PerUnit onMType={handleSetMType}/>}
-                {(mUnit==="weight") && <PerWeight onMType={handleSetMType}/>}
-                {(mUnit==="volume") && <PerVolume onMType={handleSetMType}/>}
+                {(mUnit==="unit") && <PerUnit onMType={handleSetMType} priceAndUnits={selectedItem ? selectedItem.priceAndUnits : undefined} />}
+                {(mUnit==="weight") && <PerWeight onMType={handleSetMType} priceAndUnits={selectedItem ? selectedItem.priceAndUnits : undefined} />}
+                {(mUnit==="volume") && <PerVolume onMType={handleSetMType} priceAndUnits={selectedItem ? selectedItem.priceAndUnits : undefined} />}
 
                 <h6 className="card-subtitle mb-2" style={{marginTop:25}}>Opciones:</h6>
                 {newItem.options.map((option, currentIndex) => <OptionCard key={currentIndex} index={currentIndex} fieldType={option.fieldType} options={option.newOptions} fieldName={option.fieldName} />)}
+                {/* If we are editing an object, use this instead  */}
+                {editItemOptions.map((option, currentIndex) => <OptionCard key={currentIndex} index={currentIndex} fieldType={option.fieldType} options={option.newOptions} fieldName={option.fieldName} />)}
 
                 <p style={{color:"red"}}>{errorMsg}</p>
                 <div style={{display:"flex", justifyContent:"space-between"}}>

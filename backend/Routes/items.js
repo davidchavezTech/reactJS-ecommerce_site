@@ -20,9 +20,14 @@ router.route('/add').post(uploadFolder.array('images', 8), function (req, res, n
     // req.files is array of `images` files
     // req.body will contain the text fields, if there were any
     if(req.files) next()
-    else(res.status(400).json("error"))
+    else(res.status(400).json("error, no files were received"))
 }, async (req,res) => {
-    const {itemName, priceAndUnits, description, options} = req.body
+    const {itemName, description, mUnit } = req.body
+    let { priceAndUnits, options } = req.body
+
+    priceAndUnits = JSON.parse(priceAndUnits)
+    options = JSON.parse(options)
+
     const imagesFileNames = []
     
     //Store the images names in imagesURLs
@@ -30,30 +35,55 @@ router.route('/add').post(uploadFolder.array('images', 8), function (req, res, n
 
     const newItem = new Item({
         itemName,
-        priceAndUnits: JSON.stringify(priceAndUnits),
         description,
-        options: JSON.stringify(options),
+        priceAndUnits: priceAndUnits,
+        mUnit,
+        options: options,
         imagesFileNames,
         // order,
         // carousel,
         // featured
     });
     try {
-        await newItem.save()
-        res.json(imagesFileNames)
-    }catch(err){ res.status(400).json('Error: ' + err) }
+        const response = await newItem.save()
+        res.json(response)
+    }catch(err){ 
+        console.log(err)
+        res.status(400).json('Error: ' + err) 
+    }
 });
 
-router.route('/').get((req, res) =>{
-    Item.find()
-    .then(item => res.json(item))
-    .catch(err => res.status(400).json('Error: ' + err));
+router.route('/').get( async (req, res) =>{
+    try{
+        const items = await Item.find()
+        res.json(items)
+    }catch(err) { res.status(400).json('Error: ' + err) }
+    
 });
 
 router.route('/:itemId').get( async (req, res) =>{
     try{
         const response = await Item.findOne({_id: req.params.itemId})
         res.json(response)
+    }catch(err) {
+        console.log(err)
+        res.json("Error: " + err)
+    }
+});
+
+
+router.route('/edit').post( async (req, res) =>{
+    try{
+        const { _id, itemName, priceAndUnits, description, mUnit, options } = req.body
+        
+        console.log(req.body)
+
+        const response = await Item.updateOne({ _id },  { $set: { itemName } }, function(err, result) {
+            if (err) console.log(err)
+                
+        });
+        console.log(response)
+        res.json(req.body)
     }catch(err) {
         console.log(err)
         res.json("Error: " + err)

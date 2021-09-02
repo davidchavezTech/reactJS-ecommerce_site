@@ -11,15 +11,13 @@ const AdminStore = () => {
     const dispatch = useDispatch();
     
     const items = useSelector(selectAllItems)
-    const itemsStatus = useSelector(StoreState => StoreState.newItemState.status)
+    const itemsStatus = useSelector(StoreState => StoreState.itemsState.status)
     // if(!loggedIn) window.location = "/login"
 
     const [toggleModal, SetToggleModal] = useState(false);
     
     useEffect(() => {
-        if (itemsStatus === 'idle') {
-            dispatch(fetchItems())
-        }
+        if (itemsStatus === 'idle') dispatch(fetchItems())
     }, [itemsStatus, dispatch])
     
     
@@ -31,7 +29,7 @@ const AdminStore = () => {
             <Modal toggleModal={toggleModal} setToggleModal={SetToggleModal} />
             <h1 style={{margin:10}}>Administrar tienda</h1>
             <AddItemForm onFireModal={fireModal} />
-            {(items.length > 0) ? <Items status={itemsStatus} items={items} /> : <h2 style={{marginLeft:10, marginTop:20}}>No hay artículos para mostrar</h2>}
+            <Items status={itemsStatus} items={items} />
         </>
     )
 }

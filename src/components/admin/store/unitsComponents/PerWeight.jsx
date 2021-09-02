@@ -1,16 +1,51 @@
 import { useState, useEffect } from 'react';
 
-const PerWeight = ({onMType}) => {
-    const [gramCheck, SetGramCheck] = useState(false)
-    const [gramPrice, SetGramPrice] = useState("")
-    const [kiloCheck, SetKiloCheck] = useState(false)
-    const [kiloPrice, SetKiloPrice] = useState("")
-    const [tonCheck, SetTonCheck] = useState(false)
-    const [tonPrice, SetTonPrice] = useState("")
+const PerWeight = ({onMType, priceAndUnits}) => {
+
+    const unitOfMeasurement1ES = "100 gramos"
+    const unitOfMeasurement2ES = "Kilos"
+    const unitOfMeasurement3ES = "Toneladas"
+
+    const unitOfMeasurement1 = "grams"
+    const unitOfMeasurement2 = "kilos"
+    const unitOfMeasurement3 = "tons"
+
+    const [aCheck, SetACheck] = useState(false)
+    const [aPrice, SetAPrice] = useState("")
+    const [bCheck, SetBCheck] = useState(false)
+    const [bPrice, SetBPrice] = useState("")
+    const [cCheck, SetCCheck] = useState(false)
+    const [cPrice, SetCPrice] = useState("")
 
     useEffect(() => {
-        onMType( gramCheck, "gram", gramPrice, kiloCheck, "kilo", kiloPrice, tonCheck, "ton", tonPrice )
-    }, [gramCheck, gramPrice, kiloCheck, kiloPrice, tonCheck, tonPrice])
+        onMType( aCheck, unitOfMeasurement1, aPrice, bCheck, unitOfMeasurement2, bPrice, cCheck, unitOfMeasurement3, cPrice )
+    }, [aCheck, aPrice, bCheck, bPrice, cCheck, cPrice])
+
+    //Load up units selected if we are editing an Item
+    useEffect(() => {
+        if(priceAndUnits){
+            for(const key in priceAndUnits){
+                switch (key) {
+                    case unitOfMeasurement1:
+                        SetACheck(true)
+                        SetAPrice(priceAndUnits[key])
+                        break;
+                    case unitOfMeasurement2:
+                        SetBCheck(true)
+                        SetBPrice(priceAndUnits[key])
+                        break;
+                    case unitOfMeasurement3:
+                        SetCCheck(true)
+                        SetCPrice(priceAndUnits[key])
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }, [])
+
+
     return (
         <>
             <div className="container px-3" style={{marginTop:25}}>
@@ -18,14 +53,14 @@ const PerWeight = ({onMType}) => {
                     <div className="col">
                         <div className="p-3 border bg-light" style={{display:"flex", flexDirection:"column",alignItems:"center", justifyContent:"space-around"}}>
                             <span>
-                                <input onChange={(e) => SetGramCheck(e.target.checked)} type="checkbox" className="form-check-input"  /> 
+                                <input onChange={(e) => SetACheck(e.target.checked)} type="checkbox" className="form-check-input" checked={aCheck} /> 
                                 <label className="form-check-label" style={{paddingLeft:5}}>
-                                    100 gramos
+                                    {unitOfMeasurement1ES}
                                 </label>
                             </span>
                             <label className="form-check-label text-muted" style={{paddingLeft:5}}>
                                 <span style={{fontSize:12}}>Precio</span> <br />
-                                <input onChange={(e)=> SetGramPrice(e.target.value)} value={gramPrice} type="input" className="form-text-input" style={{width:"5rem"}}   placeholder="0.00" />
+                                <input onChange={(e)=> SetAPrice(e.target.value)} value={aPrice} type="input" className="form-text-input" style={{width:"5rem"}}   placeholder="0.00" />
                             </label>
                         </div>
                     </div>
@@ -33,14 +68,14 @@ const PerWeight = ({onMType}) => {
                     <div className="col">
                         <div className="p-3 border bg-light" style={{display:"flex", flexDirection:"column",alignItems:"center", justifyContent:"space-around"}}>
                             <span>
-                                <input onChange={(e) => SetKiloCheck(e.target.checked)} type="checkbox" className="form-check-input" /> 
+                                <input onChange={(e) => SetBCheck(e.target.checked)} type="checkbox" className="form-check-input" checked={bCheck} /> 
                                 <label className="form-check-label" style={{paddingLeft:5}}>
-                                    Kilos
+                                    {unitOfMeasurement2ES}
                                 </label>
                             </span>
                             <label className="form-check-label text-muted" style={{paddingLeft:5}}>
                                 <span style={{fontSize:12}}>Precio</span> <br />
-                                <input onChange={(e)=> SetKiloPrice(e.target.value)} value={kiloPrice} type="input" className="form-text-input" style={{width:"5rem"}} placeholder="0.00" />
+                                <input onChange={(e)=> SetBPrice(e.target.value)} value={bPrice} type="input" className="form-text-input" style={{width:"5rem"}} placeholder="0.00" />
                             </label>
                         </div>
                     </div>
@@ -48,14 +83,14 @@ const PerWeight = ({onMType}) => {
                     <div className="col">
                         <div className="p-3 border bg-light" style={{display:"flex", flexDirection:"column",alignItems:"center", justifyContent:"space-around"}}>
                             <span>
-                                <input onChange={(e) => SetTonCheck(e.target.checked)} type="checkbox" className="form-check-input" /> 
+                                <input onChange={(e) => SetCCheck(e.target.checked)} type="checkbox" className="form-check-input" checked={cCheck} /> 
                                 <label className="form-check-label" style={{paddingLeft:5}}>
-                                    Toneladas
+                                    {unitOfMeasurement3ES}
                                 </label>
                             </span>
                             <label className="form-check-label text-muted" style={{paddingLeft:5}}>
                                 <span style={{fontSize:12}}>Precio</span> <br />
-                                <input onChange={(e)=> SetTonPrice(e.target.value)} value={tonPrice}type="input" className="form-text-input" style={{width:"5rem"}} placeholder="0.00" />
+                                <input onChange={(e)=> SetCPrice(e.target.value)} value={cPrice} type="input" className="form-text-input" style={{width:"5rem"}} placeholder="0.00" />
                             </label>
                         </div>
                     </div>

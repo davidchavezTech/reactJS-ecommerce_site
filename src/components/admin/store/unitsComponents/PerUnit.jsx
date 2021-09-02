@@ -1,17 +1,51 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 
-const PerUnit = ({onMType}) => {
-    const [unitCheck, setUnitCheck] = useState(false)
-    const [unitPrice, SetUnitPrice] = useState("")
-    const [dozenCheck, SetDozenCheck] = useState(false)
-    const [dozenPrice, SetDozenPrice] = useState("")
-    const [thousandCheck, SetThousandCheck] = useState(false)
-    const [thousandPrice, SetThousandPrice] = useState("")
+const PerWeight = ({onMType, priceAndUnits}) => {
 
-    
+    const unitOfMeasurement1ES = "Unidad"
+    const unitOfMeasurement2ES = "Docena"
+    const unitOfMeasurement3ES = "Millar"
+
+    const unitOfMeasurement1 = "unit"
+    const unitOfMeasurement2 = "dozen"
+    const unitOfMeasurement3 = "thousand"
+
+    const [aCheck, SetACheck] = useState(false)
+    const [aPrice, SetAPrice] = useState("")
+    const [bCheck, SetBCheck] = useState(false)
+    const [bPrice, SetBPrice] = useState("")
+    const [cCheck, SetCCheck] = useState(false)
+    const [cPrice, SetCPrice] = useState("")
+
     useEffect(() => {
-        onMType(unitCheck, "unit", unitPrice, dozenCheck, "dozen", dozenPrice, thousandCheck, "thousand", thousandPrice)  
-    }, [unitCheck, unitPrice, dozenCheck, dozenPrice, thousandCheck, thousandPrice])
+        onMType( aCheck, unitOfMeasurement1, aPrice, bCheck, unitOfMeasurement2, bPrice, cCheck, unitOfMeasurement3, cPrice )
+    }, [aCheck, aPrice, bCheck, bPrice, cCheck, cPrice])
+
+    //Load up units selected if we are editing an Item
+    useEffect(() => {
+        if(priceAndUnits){
+            for(const key in priceAndUnits){
+                switch (key) {
+                    case unitOfMeasurement1:
+                        SetACheck(true)
+                        SetAPrice(priceAndUnits[key])
+                        break;
+                    case unitOfMeasurement2:
+                        SetBCheck(true)
+                        SetBPrice(priceAndUnits[key])
+                        break;
+                    case unitOfMeasurement3:
+                        SetCCheck(true)
+                        SetCPrice(priceAndUnits[key])
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }, [])
+
+
     return (
         <>
             <div className="container px-3" style={{marginTop:25}}>
@@ -19,14 +53,14 @@ const PerUnit = ({onMType}) => {
                     <div className="col">
                         <div className="p-3 border bg-light" style={{display:"flex", flexDirection:"column",alignItems:"center", justifyContent:"space-around"}}>
                             <span>
-                                <input onChange={(e) => setUnitCheck(e.target.checked) } type="checkbox" className="form-check-input"  /> 
+                                <input onChange={(e) => SetACheck(e.target.checked)} type="checkbox" className="form-check-input" checked={aCheck} /> 
                                 <label className="form-check-label" style={{paddingLeft:5}}>
-                                    Unidad
+                                    {unitOfMeasurement1ES}
                                 </label>
                             </span>
                             <label className="form-check-label text-muted" style={{paddingLeft:5}}>
                                 <span style={{fontSize:12}}>Precio</span> <br />
-                                <input onChange={(e)=> SetUnitPrice(e.target.value)} value={unitPrice} type="input" className="form-text-input" style={{width:"5rem"}}   placeholder="0.00" />
+                                <input onChange={(e)=> SetAPrice(e.target.value)} value={aPrice} type="input" className="form-text-input" style={{width:"5rem"}}   placeholder="0.00" />
                             </label>
                         </div>
                     </div>
@@ -34,14 +68,14 @@ const PerUnit = ({onMType}) => {
                     <div className="col">
                         <div className="p-3 border bg-light" style={{display:"flex", flexDirection:"column",alignItems:"center", justifyContent:"space-around"}}>
                             <span>
-                                <input onChange={(e) => SetDozenCheck(e.target.checked)} type="checkbox" className="form-check-input" /> 
+                                <input onChange={(e) => SetBCheck(e.target.checked)} type="checkbox" className="form-check-input" checked={bCheck} /> 
                                 <label className="form-check-label" style={{paddingLeft:5}}>
-                                    Docena
+                                    {unitOfMeasurement2ES}
                                 </label>
                             </span>
                             <label className="form-check-label text-muted" style={{paddingLeft:5}}>
                                 <span style={{fontSize:12}}>Precio</span> <br />
-                                <input onChange={(e)=> SetDozenPrice(e.target.value)} value={dozenPrice} type="input" className="form-text-input" style={{width:"5rem"}} placeholder="0.00" />
+                                <input onChange={(e)=> SetBPrice(e.target.value)} value={bPrice} type="input" className="form-text-input" style={{width:"5rem"}} placeholder="0.00" />
                             </label>
                         </div>
                     </div>
@@ -49,14 +83,14 @@ const PerUnit = ({onMType}) => {
                     <div className="col">
                         <div className="p-3 border bg-light" style={{display:"flex", flexDirection:"column",alignItems:"center", justifyContent:"space-around"}}>
                             <span>
-                                <input onChange={(e) => SetThousandCheck(e.target.checked)} type="checkbox" className="form-check-input" /> 
+                                <input onChange={(e) => SetCCheck(e.target.checked)} type="checkbox" className="form-check-input" checked={cCheck} /> 
                                 <label className="form-check-label" style={{paddingLeft:5}}>
-                                    Millar
+                                    {unitOfMeasurement3ES}
                                 </label>
                             </span>
                             <label className="form-check-label text-muted" style={{paddingLeft:5}}>
                                 <span style={{fontSize:12}}>Precio</span> <br />
-                                <input onChange={(e)=> SetThousandPrice(e.target.value)} value={thousandPrice}type="input" className="form-text-input" style={{width:"5rem"}} placeholder="0.00" />
+                                <input onChange={(e)=> SetCPrice(e.target.value)} value={cPrice} type="input" className="form-text-input" style={{width:"5rem"}} placeholder="0.00" />
                             </label>
                         </div>
                     </div>
@@ -65,4 +99,4 @@ const PerUnit = ({onMType}) => {
         </>
     )
 }
-export default PerUnit;
+export default PerWeight;

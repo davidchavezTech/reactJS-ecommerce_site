@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const PerWeight = ({onMType}) => {
+const PerWeight = ({onMType, priceAndUnits}) => {
 
     const unitOfMeasurement1ES = "Mililitro"
     const unitOfMeasurement2ES = "Litro"
@@ -20,6 +20,32 @@ const PerWeight = ({onMType}) => {
     useEffect(() => {
         onMType( aCheck, unitOfMeasurement1, aPrice, bCheck, unitOfMeasurement2, bPrice, cCheck, unitOfMeasurement3, cPrice )
     }, [aCheck, aPrice, bCheck, bPrice, cCheck, cPrice])
+
+    //Load up units selected if we are editing an Item
+    useEffect(() => {
+        if(priceAndUnits){
+            for(const key in priceAndUnits){
+                switch (key) {
+                    case unitOfMeasurement1:
+                        SetACheck(true)
+                        SetAPrice(priceAndUnits[key])
+                        break;
+                    case unitOfMeasurement2:
+                        SetBCheck(true)
+                        SetBPrice(priceAndUnits[key])
+                        break;
+                    case unitOfMeasurement3:
+                        SetCCheck(true)
+                        SetCPrice(priceAndUnits[key])
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }, [])
+
+
     return (
         <>
             <div className="container px-3" style={{marginTop:25}}>
@@ -27,7 +53,7 @@ const PerWeight = ({onMType}) => {
                     <div className="col">
                         <div className="p-3 border bg-light" style={{display:"flex", flexDirection:"column",alignItems:"center", justifyContent:"space-around"}}>
                             <span>
-                                <input onChange={(e) => SetACheck(e.target.checked)} type="checkbox" className="form-check-input"  /> 
+                                <input onChange={(e) => SetACheck(e.target.checked)} type="checkbox" className="form-check-input" checked={aCheck} /> 
                                 <label className="form-check-label" style={{paddingLeft:5}}>
                                     {unitOfMeasurement1ES}
                                 </label>
@@ -42,7 +68,7 @@ const PerWeight = ({onMType}) => {
                     <div className="col">
                         <div className="p-3 border bg-light" style={{display:"flex", flexDirection:"column",alignItems:"center", justifyContent:"space-around"}}>
                             <span>
-                                <input onChange={(e) => SetBCheck(e.target.checked)} type="checkbox" className="form-check-input" /> 
+                                <input onChange={(e) => SetBCheck(e.target.checked)} type="checkbox" className="form-check-input" checked={bCheck} /> 
                                 <label className="form-check-label" style={{paddingLeft:5}}>
                                     {unitOfMeasurement2ES}
                                 </label>
@@ -57,7 +83,7 @@ const PerWeight = ({onMType}) => {
                     <div className="col">
                         <div className="p-3 border bg-light" style={{display:"flex", flexDirection:"column",alignItems:"center", justifyContent:"space-around"}}>
                             <span>
-                                <input onChange={(e) => SetCCheck(e.target.checked)} type="checkbox" className="form-check-input" /> 
+                                <input onChange={(e) => SetCCheck(e.target.checked)} type="checkbox" className="form-check-input" checked={cCheck} /> 
                                 <label className="form-check-label" style={{paddingLeft:5}}>
                                     {unitOfMeasurement3ES}
                                 </label>

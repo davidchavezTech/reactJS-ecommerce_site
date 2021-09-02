@@ -2,11 +2,17 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
+const optionsSchema = new Schema({
+    fieldName: { type: String, required: false },
+    fieldType: { type: String, required: true },
+    newOptions: { type: Array, required: false }
+})
 const itemsSchema = new Schema({
     itemName: { type: String, required: true},
-    priceAndUnits: { type: Object, required: true},
+    priceAndUnits: { type: JSON, required: true},
     description: { type: String, required: true},
-    options: { type: Object, default: null },
+    mUnit: { type: String, required: true },
+    options: [optionsSchema],
     imagesFileNames: { type: Array, required: true},
     order:  { type: Number, default: 0},
     carousel: { type: Boolean, default: false },

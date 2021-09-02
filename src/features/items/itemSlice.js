@@ -14,6 +14,11 @@ export const fetchItem = createAsyncThunk('items/fetchItem', async (itemId) => {
   return data
 })
 
+export const editItem = createAsyncThunk('items/editItem', async (payload) => {
+  const { data } = await axios.post(`${serverAdress}/items/edit`,{ payload }, { withCredentials: true });
+  return data
+})
+
 const itemSlice = createSlice({
     name: 'item',
     initialState,
@@ -33,6 +38,18 @@ const itemSlice = createSlice({
           state.selectedItem = action.payload;
         },
         [fetchItem.rejected]: (state, action) => {
+          state.status = 'failed'
+          state.error = action.error.message
+        },
+        [editItem.pending]: (state, action) => {
+          state.status = 'loading'
+        },
+        [editItem.fulfilled]: (state, action) => {
+          state.status = 'succeeded'
+          // Add any fetched posts to the array
+          // state.selectedItem = action.payload;
+        },
+        [editItem.rejected]: (state, action) => {
           state.status = 'failed'
           state.error = action.error.message
         }

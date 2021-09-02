@@ -7,7 +7,7 @@ const Items = ({ status, items}) => {
                 <span class="visually-hidden">Loading...</span>
             </div>}
             {(status === "Error") && <p style={{color:"red"}}>Error</p>}
-            {(status === "idle" && (items.length !== undefined)) && items.map((item, index) => <Item key={index} item={item} />)}
+            {(status === "succeeded" && (items.length !== undefined || items.length !== 0 )) && items.map((item, index) => <Item key={index} item={item} />)}
         </>
     )
 }
