@@ -15,7 +15,52 @@ export const fetchItem = createAsyncThunk('items/fetchItem', async (itemId) => {
 })
 
 export const editItem = createAsyncThunk('items/editItem', async (payload) => {
-  const { data } = await axios.post(`${serverAdress}/items/edit`,{ payload }, { withCredentials: true });
+
+	console.log(payload)
+
+	const { _id, itemName, description, mUnit, oldListOfImagesURLs } = payload
+  	const formData = new FormData()
+
+	
+	//"imageFiles" is an array of name+extensions of images on uploads folder of the server and actual image files
+	//Extract only the files from this array into a new one to send to server and upload to server
+	for(const imageFile of payload.imageFiles) {
+		if(typeof imageFile === "object") formData.append("images", imageFile)
+	}
+	//extract the imageURLs from payload.imagesFiles into a new array
+	const receivedImageURLs = [];
+	for(const imageURL of payload.imageFiles) {
+		if(typeof imageURL === 'string') receivedImageURLs.push(imageURL)
+	}
+	
+	//remove received urls from oldListOfImagesURLs
+	for(const imageURL of receivedImageURLs){
+		const index = oldListOfImagesURLs.indexOf(imageURL);
+		oldListOfImagesURLs.splice(index, 1)
+	}
+	
+	//stringify arrays and objects to send as form data
+	let priceAndUnits = JSON.stringify(payload.priceAndUnits)
+	let options = JSON.stringify(payload.options)
+	const imageURLsToKeep = JSON.stringify(receivedImageURLs)
+	const imageURLsToDelete = JSON.stringify(oldListOfImagesURLs)
+
+	formData.append("_id", _id)
+	formData.append("itemName", itemName)
+	formData.append("priceAndUnits", priceAndUnits)
+	formData.append("description", description)
+	formData.append("mUnit", mUnit)
+	formData.append("options", options)
+	formData.append("imageURLsToKeep", imageURLsToKeep)
+	formData.append("imageURLsToDelete", imageURLsToDelete)
+	const { data } = await axios({
+		method: "POST",
+		withCredentials: true,
+		url: `${serverAdress}/items/edit`,
+		data: formData,
+		headers: { "Content-Type": "multipart/form-data" }
+  	});
+
   return data
 })
 

@@ -1,8 +1,9 @@
+const fs = require('fs')
 const router = require('express').Router();
 const multer  = require('multer')
 const Item = require('../models/items.model');
 const path = require('path');
-
+const { maxImagesNumber } = require("../globalVariables")
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, 'public/uploads')
@@ -16,7 +17,7 @@ const storage = multer.diskStorage({
   
 const uploadFolder = multer({ storage: storage })
 
-router.route('/add').post(uploadFolder.array('images', 8), function (req, res, next) {
+router.route('/add').post(uploadFolder.array('images', maxImagesNumber), function (req, res, next) {
     // req.files is array of `images` files
     // req.body will contain the text fields, if there were any
     if(req.files) next()
@@ -72,25 +73,47 @@ router.route('/:itemId').get( async (req, res) =>{
 });
 
 
-router.route('/edit').post( async (req, res) =>{
+router.route('/edit').post(uploadFolder.array('images', maxImagesNumber), async (req, res) =>{
     try{
-        const { _id, itemName, priceAndUnits, description, mUnit, options } = req.body.payload
-        
-        console.log(req.body.payload)
+        const { _id, itemName, description, mUnit } = req.body
 
+        //parse arrays and objects recieved
+        
+        console.log(req.body)
+
+        let priceAndUnits = JSON.parse(req.body.priceAndUnits)
+	    let options = JSON.parse(req.body.options)
+	    let imageURLsToKeep = JSON.parse(req.body.imageURLsToKeep)
+	    let imageURLsToDelete = JSON.parse(req.body.imageURLsToDelete)
+        
+        // remove images selected for deletion from server
+        for(const fileName of imageURLsToDelete){
+            const path = `./public/uploads/${fileName}`
+            fs.unlink(path, (err) => {
+                if (err) {
+                    console.error(err)
+                    return
+                }
+            })
+        }
+        // update db with new image file names
+        const newImageFileNames = [...imageURLsToKeep]
+        console.log(newImageFileNames)
+        for(const { filename } of req.files) newImageFileNames.push(filename)
+        
         const response = await Item.updateOne({ _id },  { 
             $set: { 
-                _id,
                 itemName,
                 priceAndUnits,
                 description,
                 mUnit,
-                options
+                options,
+                imagesFileNames: imageURLsToKeep
             }
-        }, { upsert: true });
+        });
         console.log(response)
 
-        res.json(req.body.payload)
+        res.json(req.body)
     }catch(err) {
         console.log(err)
         res.json("Error: " + err)

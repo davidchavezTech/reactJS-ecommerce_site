@@ -10,6 +10,7 @@ import { selectNewItem, itemAdded, selectOptions, optionSet } from '../../../fea
 import { postItem, selectAllItems } from '../../../features/items/itemsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { editItem } from '../../../features/items/itemSlice';
+import { maxImagesNumber } from '../../../globalVariables';
 
 const AddItemForm = ({onFireModal, selectedItem}) => {
     const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const AddItemForm = ({onFireModal, selectedItem}) => {
     const [mUnit, SetMUnit] = useState('');
     const [mType, SetMType] = useState({});
     const [errorMsg, SetErrorMsg] = useState('');
+    const [oldListOfImagesURLs, SetOldListOfImagesURLs] = useState(null);
     const options = useSelector(selectOptions)
     // const [editItemOptions, SetEditItemOptions] = useState([]);
     const setMUnitFunc = (value) => {
@@ -27,13 +29,13 @@ const AddItemForm = ({onFireModal, selectedItem}) => {
     }
     useEffect(() => {
         if(selectedItem && selectedItem.length !== 0){
+            if(oldListOfImagesURLs===null) SetOldListOfImagesURLs([...selectedItem.imagesFileNames])
             SetItemName(selectedItem.itemName)
             SetItemDescription(selectedItem.description)
             SetMUnit(selectedItem.mUnit)
             SetMType(selectedItem.priceAndUnits)
             dispatch(optionSet(selectedItem.options))
             console.log(selectedItem)
-            // SetEditItemOptions(selectedItem.options)
         }
     }, [selectedItem])
     const handleSetMType = (check1, measurementType1, price1, check2, measurementType2, price2, check3, measurementType3, price3) => {
@@ -53,6 +55,7 @@ const AddItemForm = ({onFireModal, selectedItem}) => {
         //Check if any mandatory field is empty, if it is, return error msg
         if(itemName==='') return SetErrorMsg("Llenar el nombre del nuevo artículo")
         if(!selectedItem && imageFiles.length===0) return SetErrorMsg("Escoger al menos una imagen")
+        if(imageFiles.length > maxImagesNumber) return SetErrorMsg(`Solo se permiten ${maxImagesNumber} imágenes`)
         if(itemDescription==='') return SetErrorMsg("Llenar la descripción del nuevo artículo")
         if(mUnit==='') return SetErrorMsg("Seleccionar unidad de medida del nuevo artículo")
         if(Object.keys(mType).length===0) return SetErrorMsg("Seleccionar al menos una unidad de medida y precio")
@@ -60,8 +63,9 @@ const AddItemForm = ({onFireModal, selectedItem}) => {
         for(const key in mType){
             if(mType[key]==='') return SetErrorMsg("Asegúrese de poner precio a las unidades de medida seleccionadas")
         }
+        //This if/else determines if we are editing or posting a new item
         if(!selectedItem) dispatch(postItem({itemName, priceAndUnits: mType, description: itemDescription, mUnit, options, imageFiles}))
-        else dispatch(editItem( { _id: selectedItem._id, itemName, priceAndUnits: mType, description: itemDescription, mUnit, options, imageFiles}))
+        else dispatch(editItem( { _id: selectedItem._id, itemName, priceAndUnits: mType, description: itemDescription, mUnit, options, imageFiles, oldListOfImagesURLs}))
     }
 
     const newItem = useSelector(selectNewItem)
