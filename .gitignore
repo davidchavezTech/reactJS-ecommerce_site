@@ -26,3 +26,7 @@ yarn-error.log*
 
 backend/cred
 backend/.env
+
+# uploads folder
+
+/backend/public/uploads
