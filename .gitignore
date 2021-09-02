@@ -30,3 +30,7 @@ backend/.env
 # uploads folder
 
 /backend/public/uploads
+
+#excel files
+schedule.xlsx
+~$schedule.xlsx

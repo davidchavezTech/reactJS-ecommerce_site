@@ -98,7 +98,6 @@ router.route('/edit').post(uploadFolder.array('images', maxImagesNumber), async 
         }
         // update db with new image file names
         const newImageFileNames = [...imageURLsToKeep]
-        console.log(newImageFileNames)
         for(const { filename } of req.files) newImageFileNames.push(filename)
         
         const response = await Item.updateOne({ _id },  { 
@@ -108,7 +107,7 @@ router.route('/edit').post(uploadFolder.array('images', maxImagesNumber), async 
                 description,
                 mUnit,
                 options,
-                imagesFileNames: imageURLsToKeep
+                imagesFileNames: newImageFileNames
             }
         });
         console.log(response)
