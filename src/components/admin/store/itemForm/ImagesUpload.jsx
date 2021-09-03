@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react"
 import PreviewDivFromFile from "./PreviewDivFromFile";
-import PreviewDivFromURL from "./singleItemComponents/PreviewDivFromURL";
-import { maxImagesNumber } from "../../../globalVariables";
+import PreviewDivFromURL from "./PreviewDivFromURL";
+import { maxImagesNumber } from "../../../../globalVariables";
 const ImagesUpload = ({passImages, imagesURLs}) => {
 
     const [images, SetImages] = useState([]);

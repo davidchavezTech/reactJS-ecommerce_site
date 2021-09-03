@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchItem } from "../../../features/items/itemSlice";
+import { fetchItem } from "../../../../features/items/itemSlice";
 
-import AddItemForm from "./AddItemForm";
-import Modal from "../Modal";
+import ItemForm from "./ItemForm";
+import Modal from "../../Modal";
 const EditItem = ({ match }) => {
     const { itemId } = match.params
 
@@ -26,7 +26,7 @@ const EditItem = ({ match }) => {
         <>
             <Modal toggleModal={toggleModal} setToggleModal={SetToggleModal} />
 
-            <AddItemForm onFireModal={fireModal} selectedItem={selectedItem} />
+            <ItemForm onFireModal={fireModal} selectedItem={selectedItem} />
         </>
     )
 }

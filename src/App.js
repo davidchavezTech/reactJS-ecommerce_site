@@ -6,7 +6,7 @@ import { useState } from 'react';
 import axios from 'axios'
 //components
 import NavBar from './components/NavBar';
-import AdminNavBar from './components/admin/AdminNavBar'
+import NavBarAdmin from './components/admin/NavBarAdmin'
 import Body from './components/Body';
 import Store from './components/Store';
 import LogIn from './components/admin/LogIn';
@@ -40,7 +40,7 @@ function App() {
 	// else return (
 	return (
 		<>
-			{admin ? <AdminNavBar /> : <NavBar />}
+			{admin ? <NavBarAdmin /> : <NavBar />}
 			
 			<Route path="/" exact component={Body} />
 			<Route path="/store" exact component={Store} />

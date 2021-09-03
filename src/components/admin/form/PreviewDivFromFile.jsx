@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { singleImageSize } from "../../../globalVariables";
 const PreviewDivFromFile = ({index, imgFile, remove, removePreview}) => {
     const [previewUrl, SetPreviewURL] = useState();
 
@@ -13,8 +13,8 @@ const PreviewDivFromFile = ({index, imgFile, remove, removePreview}) => {
             style={{
                 backgroundImage: `url("${previewUrl}")`,
                 backgroundSize: "cover",
-                height:150,
-                width:150,
+                height:singleImageSize,
+                width:singleImageSize,
                 display:"inline-block",
                 textAlign: "right",
                 margin:8,

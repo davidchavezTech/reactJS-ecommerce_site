@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-const AdminNavBar = () => {
+const NavBarAdmin = () => {
     const logOut = async () => {
         await axios({
             method: "GET",
@@ -13,12 +13,13 @@ const AdminNavBar = () => {
         <nav className="navbar navbar-dark bg-dark">
             <div className="container-fluid">
                 <Link className="navbar-brand" to="/">Inicio</Link>
-                <Link className="navbar-brand" to="/createUser">Crear Usuarios</Link>
+                <Link className="navbar-brand" to="/createUser">Usuarios</Link>
                 <Link className="navbar-brand" to="/admin/store">Tienda</Link>
+                <Link className="navbar-brand" to="/admin/categories/">Categorías</Link>
                 <span style={{cursor:'pointer'}} className="navbar-brand" onClick={logOut}>Cerrar sesión</span>
             </div>
         </nav>
     )
 }
 
-export default AdminNavBar
+export default NavBarAdmin

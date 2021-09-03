@@ -1,18 +1,18 @@
 import OptionCard from './OptionCard';
 import MeasurementUnitComponent from './MeasurementUnitComponent';
-import PerUnit from './unitsComponents/PerUnit';
-import PerWeight from './unitsComponents/PerWeight';
-import PerVolume from './unitsComponents/PerVolume'
+import PerUnit from '../unitsComponents/PerUnit';
+import PerWeight from '../unitsComponents/PerWeight';
+import PerVolume from '../unitsComponents/PerVolume'
 import ImagesUpload from './ImagesUpload';
 
 import { useState, useEffect } from 'react'
-import { selectNewItem, itemAdded, selectOptions, optionSet } from '../../../features/items/newItemSlice';
-import { postItem, selectAllItems } from '../../../features/items/itemsSlice';
+import { selectNewItem, itemAdded, selectOptions, optionSet } from '../../../../features/items/newItemSlice';
+import { postItem, selectAllItems } from '../../../../features/items/itemsSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { editItem } from '../../../features/items/itemSlice';
-import { maxImagesNumber } from '../../../globalVariables';
+import { editItem } from '../../../../features/items/itemSlice';
+import { maxImagesNumber } from '../../../../globalVariables';
 
-const AddItemForm = ({onFireModal, selectedItem}) => {
+const ItemForm = ({onFireModal, selectedItem}) => {
     const dispatch = useDispatch();
 
     const [itemName, SetItemName] = useState('');
@@ -35,7 +35,6 @@ const AddItemForm = ({onFireModal, selectedItem}) => {
             SetMUnit(selectedItem.mUnit)
             SetMType(selectedItem.priceAndUnits)
             dispatch(optionSet(selectedItem.options))
-            console.log(selectedItem)
         }
     }, [selectedItem])
     const handleSetMType = (check1, measurementType1, price1, check2, measurementType2, price2, check3, measurementType3, price3) => {
@@ -77,7 +76,7 @@ const AddItemForm = ({onFireModal, selectedItem}) => {
                 <h6 className="card-subtitle mb-2 text-muted" style={{marginTop:15}}>Nombre</h6>
                 <input onChange={e => SetItemName(e.target.value)} className="form-control" type="text" placeholder="Nombre" value={itemName} />
 
-                <ImagesUpload passImages={images => SetImageFiles(images)} imagesURLs={selectedItem.imagesFileNames} />
+                <ImagesUpload passImages={images => SetImageFiles(images)} imagesURLs={selectedItem ? selectedItem.imagesFileNames : null} />
                 
                 <h6 className="card-subtitle mb-2 text-muted" style={{marginTop:15}}>Descripción</h6>
                 <textarea onChange={e => SetItemDescription(e.target.value)} className="form-control" placeholder="Nombre" rows="4" cols="40" value={itemDescription} />
@@ -104,4 +103,4 @@ const AddItemForm = ({onFireModal, selectedItem}) => {
         </div>
     )   
 }
-export default AddItemForm;
+export default ItemForm;

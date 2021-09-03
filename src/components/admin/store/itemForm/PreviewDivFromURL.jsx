@@ -1,4 +1,5 @@
 import { serverAdress } from "../../../../globalVariables";
+import { itemFormImagePreviewSize } from "../../../../globalVariables";
 const PreviewDivFromURL = ({ previewFileName, index, remove, removePreview }) => {
 
     return (
@@ -6,8 +7,8 @@ const PreviewDivFromURL = ({ previewFileName, index, remove, removePreview }) =>
             style={{
                 backgroundImage: `url("${serverAdress}/uploads/${previewFileName}")`,
                 backgroundSize: "cover",
-                height:150,
-                width:150,
+                height: itemFormImagePreviewSize,
+                width: itemFormImagePreviewSize,
                 display:"inline-block",
                 textAlign: "right",
                 margin:8,

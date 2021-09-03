@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef, useCallback} from 'react';
 import {useSpring, animated} from 'react-spring';
 import styled from 'styled-components';
-import Option from './store/Option';
+import Option from './store/itemForm/Option';
 import { useDispatch } from 'react-redux';
 import { optionAdded } from '../../features/items/newItemSlice'
 
