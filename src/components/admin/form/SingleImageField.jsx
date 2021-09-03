@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from "react"
 import PreviewDivFromFile from "./PreviewDivFromFile"
 import PreviewDivFromURL from "./PreviewDivFromURL"
 
-const SingleImageField = ({ passedImage }) => {
+const SingleImageField = ({ id, passedImage, onImageLoad }) => {
     const [previewsErrorMessage, SetPreviewsErrorMessage] = useState(null)
     const [previewDiv, SetPreviewDiv] = useState(null)
     const [image, SetImage] = useState(passedImage)
@@ -20,12 +20,14 @@ const SingleImageField = ({ passedImage }) => {
                 case "object":
                     SetPreviewDiv(
                         <PreviewDivFromFile
+                            key={id}
                             imgFile={image}
                         />)
                     break;
                 case "string":
                     SetPreviewDiv(
                         <PreviewDivFromURL
+                            key={id}
                             previewFileName={image}
                         />)
                     break;
@@ -35,6 +37,9 @@ const SingleImageField = ({ passedImage }) => {
         }
     }, [image])
     
+    // useEffect(() => {
+    //     console.log(onImageLoad)
+    // }, [])
     return (
         <>
             {previewsErrorMessage}
@@ -57,6 +62,7 @@ const SingleImageField = ({ passedImage }) => {
                     const inputFieldFile = e.target.files[0];
                     if(inputFieldFile && inputFieldFile.type.substr(0,5) !== "image") return SetPreviewsErrorMessage("Solo se permiten imágenes")
                     if(inputFieldFile) loadImage(inputFieldFile);
+                    onImageLoad(id, inputFieldFile)
                 }}
                 style={{display:"none"}}
                 type="file"
