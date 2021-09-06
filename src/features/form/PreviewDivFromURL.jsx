@@ -1,5 +1,5 @@
-import { serverAdress } from "../../../globalVariables";
-import { singleImageSize } from "../../../globalVariables";
+import { serverAdress, singleImageSize } from "../../globalVariables";
+
 const PreviewDivFromURL = ({ previewFileName, index, remove, removePreview }) => {
 
     return (

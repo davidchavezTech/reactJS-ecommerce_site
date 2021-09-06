@@ -5,6 +5,7 @@ const exercisesRouter = require('./Routes/exercises')
 const itemsRouter = require('./Routes/items')
 const usersRouter = require('./Routes/users')
 const adminRouter = require('./Routes/admin')
+const categoriesRouter = require('./Routes/categories')
 const passport = require('passport');
 const session = require('express-session')
 const multer  = require('multer')
@@ -79,6 +80,7 @@ app.use('/exercises', exercisesRouter);
 app.use('/users', usersRouter);
 app.use('/items', itemsRouter);
 app.use('/admin', adminRouter);
+app.use('/categories', categoriesRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);

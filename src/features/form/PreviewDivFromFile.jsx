@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { singleImageSize } from "../../../globalVariables";
+import { singleImageSize } from "../../globalVariables";
 const PreviewDivFromFile = ({index, imgFile, remove, removePreview}) => {
     const [previewUrl, SetPreviewURL] = useState();
 
