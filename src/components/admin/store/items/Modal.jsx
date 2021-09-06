@@ -1,9 +1,9 @@
 import React, {useState, useEffect, useRef, useCallback} from 'react';
 import {useSpring, animated} from 'react-spring';
 import styled from 'styled-components';
-import Option from './store/itemForm/Option';
+import Option from './Option';
 import { useDispatch } from 'react-redux';
-import { optionAdded } from '../../features/items/newItemSlice'
+import { optionAdded } from '../../../../features/items/newItemSlice'
 
 // import img from './modal.jpg';
 

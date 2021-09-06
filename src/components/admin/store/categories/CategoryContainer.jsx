@@ -14,7 +14,7 @@ const CategoryContainer = ({category}) => {
             }}></div>
             <div className="card-body" style={{display:"inline-block"}}>
                 <h5 className="card-title">{category.categoryName}</h5>
-                <a href={`editItem/${category._id}`} className="btn btn-warning" style={{marginLeft:125}}>Editar</a>
+                <a href={`editCategory/${category._id}`} className="btn btn-warning" style={{marginLeft:125}}>Editar</a>
             </div>
         </div>
     )

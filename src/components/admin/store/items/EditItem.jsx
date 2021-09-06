@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchItem } from "../../../../features/items/itemSlice";
 
 import ItemForm from "./ItemForm";
-import Modal from "../../Modal";
+import Modal from "./Modal";
 const EditItem = ({ match }) => {
     const { itemId } = match.params
 

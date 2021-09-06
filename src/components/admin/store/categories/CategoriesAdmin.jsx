@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import CategoryForm from "./CategoryForm"
-import { getCategories } from "../../../../features/serverRequests/categories"
+import { getCategories } from "./categoriesServerRequests"
 import CategoryContainer from "./CategoryContainer"
 const CategoriesAdmin = () => {
     const [categories, SetCategories] = useState([]);

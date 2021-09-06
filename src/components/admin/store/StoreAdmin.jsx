@@ -1,9 +1,9 @@
 // import React, { useState, useEffect } from 'react';
 import React, { useState } from 'react';
 // import axios from 'axios'
-import Modal from '../Modal';
-import ItemForm from './itemForm/ItemForm';
-import Items from './Items';
+import Modal from './items/Modal';
+import ItemForm from './items/ItemForm';
+import Items from './items/Items';
 import { fetchItems, selectAllItems } from '../../../features/items/itemsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';

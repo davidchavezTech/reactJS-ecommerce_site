@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Form from "../../../../features/form/Form"
-import { addCategory } from "../../../../features/serverRequests/categories"
+import { addCategory } from "./categoriesServerRequests"
 
 const CategoryForm = () => {
     const [ formErrorMsg, SetFormErrorMsg ] = useState(null);

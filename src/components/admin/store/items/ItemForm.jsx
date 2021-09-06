@@ -1,8 +1,8 @@
 import OptionCard from './OptionCard';
 import MeasurementUnitComponent from './MeasurementUnitComponent';
-import PerUnit from '../unitsComponents/PerUnit';
-import PerWeight from '../unitsComponents/PerWeight';
-import PerVolume from '../unitsComponents/PerVolume'
+import PerUnit from './unitsComponents/PerUnit';
+import PerWeight from './unitsComponents/PerWeight';
+import PerVolume from './unitsComponents/PerVolume'
 import ImagesUpload from './ImagesUpload';
 
 import { useState, useEffect } from 'react'

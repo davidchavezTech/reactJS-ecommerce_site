@@ -1,4 +1,4 @@
-import { serverAdress } from '../../../globalVariables'
+import { serverAdress } from '../../../../globalVariables'
 const Item = ({ item }) => {
     return (
         <div className="card" style={{width: "25rem", margin:10, color:"black", flexDirection: "row", display:"inline-flex"}}>

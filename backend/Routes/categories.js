@@ -26,6 +26,17 @@ router.route('/getCategories').get(async (req, res) =>{
         res.json("Error: " + err)
     }
 })
+
+router.route('/getCategory/:categoryId').get(async (req, res) =>{
+    try{
+        const response = await Category.findOne({ _id: req.params.categoryId })
+        res.json(response)
+    }catch(err) {
+        console.log(err)
+        res.json("Error: " + err)
+    }
+})
+
 router.route('/add').post(uploadFolder.array('images', 1), async function (req, res, next) {
     // req.files is array of `images` files
     // req.body will contain the text fields, if there were any

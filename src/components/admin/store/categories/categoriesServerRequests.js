@@ -1,5 +1,5 @@
 import axios from "axios";
-import { serverAdress } from '../../globalVariables';
+import { serverAdress } from '../../../../globalVariables';
 
 export const addCategory = async ( body ) => {
     const formData = new FormData()
@@ -17,6 +17,14 @@ export const addCategory = async ( body ) => {
 
     return data
 }
+
+export const getCategory = async (_id) => {{
+    const { data }  = await axios({
+        method: "GET",
+        url: `${serverAdress}/categories/getCategory/${_id}`
+    })
+    return data
+}}
 
 export const getCategories = async () => {{
     const { data }  = await axios({
