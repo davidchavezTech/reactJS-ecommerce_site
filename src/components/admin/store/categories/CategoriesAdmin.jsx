@@ -4,13 +4,15 @@ import { getCategories } from "./categoriesServerRequests"
 import CategoryContainer from "./CategoryContainer"
 const CategoriesAdmin = () => {
     const [categories, SetCategories] = useState([]);
-    useEffect(async () => {
+
+    const handleNewCategory = async () => {
         const categoriesData = await getCategories()
         SetCategories(categoriesData)
-    }, [])
+    }
+    useEffect(() => handleNewCategory(), [])
     return (
         <>
-            <CategoryForm />
+            <CategoryForm onNewCategory={handleNewCategory} />
             {categories.map((category, index) => <CategoryContainer key={index} category={category}/>)}
         </>
     )

@@ -30,6 +30,7 @@ const SingleImageField = ({ id, passedImage, onImageLoad }) => {
                             key={id}
                             previewFileName={image}
                         />)
+                    onImageLoad(id, image)
                     break;
                 default:
                     break;

@@ -33,3 +33,11 @@ export const getCategories = async () => {{
     })
     return data
 }}
+
+export const deleteCategory = async (id) => {{
+    const { data }  = await axios({
+        method: "DELETE",
+        url: `${serverAdress}/categories/deleteCategory/${id}`
+    })
+    return data
+}}

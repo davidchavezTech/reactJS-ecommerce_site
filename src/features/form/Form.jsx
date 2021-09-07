@@ -2,7 +2,7 @@ import TextInputField from "./TextInputField";
 import SingleImageField from "./SingleImageField";
 
 import { useState, useEffect } from "react"
-const Form = ({ fields, onFormSubmit, passedErrorMsg }) => {
+const Form = ({ fields, onFormSubmit, passedErrorMsg, onDelete }) => {
     const [inputFieldValues, SetInputFieldValues] = useState({})
     const [errorMsg, SetErrorMsg] = useState(null)
 
@@ -35,7 +35,7 @@ const Form = ({ fields, onFormSubmit, passedErrorMsg }) => {
             {fields.map((inputFieldOptions, index ) =>{
                 switch (inputFieldOptions.type) {
                     case "text":
-                        return <TextInputField key={index} id={inputFieldOptions.id} inputFieldName={inputFieldOptions.name} onSetInputValues={handleSetInputValues} /> 
+                        return <TextInputField key={index} id={inputFieldOptions.id} inputFieldName={inputFieldOptions.name} onSetInputValues={handleSetInputValues} value={inputFieldOptions.value ? inputFieldOptions.value : ""} /> 
                     case "single-image":
                         return <SingleImageField key={index} id={inputFieldOptions.id} passedImage={inputFieldOptions.imageURL} onImageLoad={handleSetInputValues} />
                     case "submit":
@@ -50,6 +50,17 @@ const Form = ({ fields, onFormSubmit, passedErrorMsg }) => {
                                 </button>
                             </div>
                         )
+                    case "delete":
+                    return (
+                        <div key={index}>
+                            <button onClick={() => onDelete(inputFieldOptions.id)}
+                                className="btn btn-danger"
+                                style={{marginTop:10, display: "block"}
+                            }>
+                                {inputFieldOptions.text}
+                            </button>
+                        </div>
+                    )
                     default:
                         break;
                 }

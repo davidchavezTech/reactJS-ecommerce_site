@@ -4,6 +4,8 @@ import PerUnit from './unitsComponents/PerUnit';
 import PerWeight from './unitsComponents/PerWeight';
 import PerVolume from './unitsComponents/PerVolume'
 import ImagesUpload from './ImagesUpload';
+import CategorySelector from '../../../../features/form/categorySelector/CategorySelector';
+import { getCategories } from '../categories/categoriesServerRequests';
 
 import { useState, useEffect } from 'react'
 import { selectNewItem, itemAdded, selectOptions, optionSet } from '../../../../features/items/newItemSlice';
@@ -78,6 +80,8 @@ const ItemForm = ({onFireModal, selectedItem}) => {
 
                 <ImagesUpload passImages={images => SetImageFiles(images)} imagesURLs={selectedItem ? selectedItem.imagesFileNames : null} />
                 
+                <CategorySelector name="Categoría" getListFunction={getCategories} />
+
                 <h6 className="card-subtitle mb-2 text-muted" style={{marginTop:15}}>Descripción</h6>
                 <textarea onChange={e => SetItemDescription(e.target.value)} className="form-control" placeholder="Nombre" rows="4" cols="40" value={itemDescription} />
                 

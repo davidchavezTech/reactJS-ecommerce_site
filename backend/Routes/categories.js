@@ -19,7 +19,7 @@ const uploadFolder = multer({ storage: storage })
 
 router.route('/getCategories').get(async (req, res) =>{
     try{
-        const response = await Category.find()
+        const response = await Category.find().sort({$natural:-1});
         res.json(response)
     }catch(err) {
         console.log(err)
@@ -62,5 +62,15 @@ router.route('/add').post(uploadFolder.array('images', 1), async function (req, 
         res.status(400).json('Error: ' + err) 
     }
 });
+
+router.route('/deleteCategory/:categoryId').delete(async (req, res) =>{
+    try{
+        const response = await Category.deleteOne({ _id: req.params.categoryId })
+        res.json(response)
+    }catch(err) {
+        console.log(err)
+        res.json("Error: " + err)
+    }
+})
 
 module.exports = router;
