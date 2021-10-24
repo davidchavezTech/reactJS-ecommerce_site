@@ -1,17 +1,26 @@
+import { serverAdress } from "../globalVariables"
+
 const Item = ({item, isUserLoggedIn}) => {
+    console.log("logging:")
+    console.log(item)
     return (
-        <>
-            <div className="card" style={{width: "14rem", display:"inline-block", margin:"10px"}}>
-                {isUserLoggedIn && <button type="button" className="btn-close" aria-label="Close" style={{position:'absolute', right:"10px", top:"11px"}}></button>}
-                <img src={item.imgURL} className="card-img-top" alt=""></img>
-                <div className="card-body">
-                    <h5 className="card-title">{item.itemName}</h5>
-                    <p className="card-text">{item.description}</p>
-                    <p className="card-text">{item.price}</p>
-                    <button  className="btn btn-primary">Add to cart</button>
-                </div>
+        <div className="card" style={{width: "25rem", margin:10, color:"black", flexDirection: "row", display:"inline-flex"}}>
+            <div style={{
+                display:"inline-flex",
+                height:160, width:160,
+                backgroundColor:"gray",
+                alignItems:"center",
+                justifyContent:"center",
+                color: "white",
+                backgroundImage: `url("${serverAdress}/uploads/${item.imagesFileNames[0]}")`,
+                backgroundSize: "cover",
+            }}></div>
+            <div className="card-body" style={{display:"inline-block"}}>
+                <h5 className="card-title">{item.itemName}</h5>
+                <p className="card-text" style={{width:"12rem", height:"44px"}}>{item.description}</p>
+                <a href={`editItem/${item._id}`} className="btn btn-success" style={{marginLeft:"auto"}}>Agregar al carrito</a>
             </div>
-        </>
+        </div>
     )
 }
 

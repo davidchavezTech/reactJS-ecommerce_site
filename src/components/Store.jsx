@@ -49,7 +49,7 @@ const Store = ({isUserLoggedIn}) => {
     return (
         <>
             <h1>Store</h1>
-            <AddItemForm onAddItem={handleAddItem} />
+            {/* <AddItemForm onAddItem={handleAddItem} /> */}
             {storeItems.map(item => <Item key={item._id} item={item} isUserLoggedIn={isUserLoggedIn} />)}
         </>
     )
