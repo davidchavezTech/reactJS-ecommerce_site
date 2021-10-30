@@ -1,3 +1,7 @@
+import { useState, useEffect } from 'react'
+import { useHistory } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+
 import OptionCard from './OptionCard';
 import MeasurementUnitComponent from './MeasurementUnitComponent';
 import PerUnit from './unitsComponents/PerUnit';
@@ -6,15 +10,13 @@ import PerVolume from './unitsComponents/PerVolume'
 import ImagesUpload from './ImagesUpload';
 import CategorySelector from '../../../../features/form/categorySelector/CategorySelector';
 import { getCategories } from '../categories/categoriesServerRequests';
-
-import { useState, useEffect } from 'react'
 import { selectNewItem, selectOptions, optionSet } from '../../../../features/items/newItemSlice';
 import { postItem } from '../../../../features/items/itemsSlice';
-import { useDispatch, useSelector } from 'react-redux';
 import { editItem } from '../../../../features/items/itemSlice';
 import { maxImagesNumber } from '../../../../globalVariables';
 
-const ItemForm = ({onFireModal, selectedItem}) => {
+const ItemForm = ({onFireModal, selectedItem, setToggleModal}) => {
+    const history = useHistory();
     const dispatch = useDispatch();
 
     const [itemName, SetItemName] = useState('');
@@ -66,11 +68,15 @@ const ItemForm = ({onFireModal, selectedItem}) => {
         }
         //This if/else determines if we are editing or posting a new item
         if(!selectedItem) dispatch(postItem({itemName, priceAndUnits: mType, description: itemDescription, mUnit, options, imageFiles}))
-        else dispatch(editItem( { _id: selectedItem._id, itemName, priceAndUnits: mType, description: itemDescription, mUnit, options, imageFiles, oldListOfImagesURLs}))
+        else {
+            dispatch(editItem( { _id: selectedItem._id, itemName, priceAndUnits: mType, description: itemDescription, mUnit, options, imageFiles, oldListOfImagesURLs}))
+            history.push("/admin/store")
+        }
     }
 
     const newItem = useSelector(selectNewItem)
     return (
+
         <div className="card" style={{width: "35rem", margin:10}}>
             <div className="card-body">
                 <h5 className="card-title">Agregar artículo</h5>
@@ -99,6 +105,9 @@ const ItemForm = ({onFireModal, selectedItem}) => {
                 <p style={{color:"red"}}>{errorMsg}</p>
                 <div style={{display:"flex", justifyContent:"space-between"}}>
                     <button onClick={onFireModal} type="button" className="btn btn-dark" style={{marginTop:10}}>Agregar opción</button>
+
+                    {selectedItem && <button type="button" className="btn btn-danger" style={{marginTop:10}} onClick={()=> setToggleModal()}>Eliminar</button>}
+
                     <button onClick={createNewItem} type="button" className="btn btn-success" style={{marginTop:10}}>
                         {selectedItem ? <>Guardar Cambios</> : <>Generar Artículo</>}
                     </button>

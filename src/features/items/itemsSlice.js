@@ -19,7 +19,7 @@ export const postItem = createAsyncThunk(
 		options = JSON.stringify(options)
 		const formData = new FormData()
 		//Make imageFiles file list into an node array of files to send to multer in a form data object
-    	//Append each image to form data
+		//Append each image to form data
 		for(let i =0; i < imageFiles.length; i++) {
 			formData.append("images", imageFiles[i]);
 		}
@@ -35,12 +35,12 @@ export const postItem = createAsyncThunk(
 			data: formData,
 			headers: { "Content-Type": "multipart/form-data" }
 		});
-    // //Delete the files because initial state cannot proccess files (binary data I suppose)
-    // const payloadCopy = JSON.parse(JSON.stringify(payload))
-    // payloadCopy.imagesFileNames = data
-    // // payloadCopy.imagesFileNames = data
-    // delete payloadCopy['imageFiles']
-    return data
+		// //Delete the files because initial state cannot proccess files (binary data I suppose)
+		// const payloadCopy = JSON.parse(JSON.stringify(payload))
+		// payloadCopy.imagesFileNames = data
+		// // payloadCopy.imagesFileNames = data
+		// delete payloadCopy['imageFiles']
+		return data
     }
 )
 
@@ -51,6 +51,7 @@ export const fetchItems = createAsyncThunk('items/fetchItems', async () => {
 	while(data.length !== 0) orderedArray.push(data.pop())
 	return orderedArray
 })
+
 
 const itemsSlice = createSlice({
     name: 'items',

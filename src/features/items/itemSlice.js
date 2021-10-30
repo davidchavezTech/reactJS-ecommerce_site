@@ -64,6 +64,19 @@ export const editItem = createAsyncThunk('items/editItem', async (payload) => {
   return data
 })
 
+export const deleteItemById = createAsyncThunk(
+	'items/deleteItem',
+	async (itemId, { getState }) => { 
+		
+		const { data }  = await axios({
+			method: "DELETE",
+			url: `${serverAdress}/items/deleteItem/${itemId}`
+		})
+		return data
+  
+	}
+)
+
 const itemSlice = createSlice({
     name: 'item',
     initialState,

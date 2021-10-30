@@ -119,6 +119,12 @@ router.route('/edit').post(uploadFolder.array('images', maxImagesNumber), async 
     }
 });
 
+router.route('/deleteItem/:itemId').delete( (req, res) =>{
+    Item.findByIdAndDelete(req.params.itemId)
+    .then(() => res.json("Item deleted."))
+    .catch(err => res.status(400).json("Error: " + err));
+});
+
 function isAuthenticated(req, res, next) { return req.isAuthenticated() ? next() : res.json(false) }
 
 module.exports = router;
