@@ -6,12 +6,14 @@ const CategorySelector = ({name, getListFunction}) => {
     const createCheck = (val) => {
         SetChecks([...checks, val])
     }
-    useEffect(async ()=> {
-        const response = await getListFunction()
-        const optionsArr = []
-        for(const properties of response) optionsArr.push(properties.categoryName)
-        SetCategoryOptions([...categoryOptions, ...optionsArr])
-    }, [])
+    useEffect(()=> {
+        (async ()=> {
+            const response = await getListFunction()
+            const optionsArr = []
+            for(const properties of response) optionsArr.push(properties.categoryName)
+            SetCategoryOptions([...categoryOptions, ...optionsArr])
+        })()
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
     return (
         <>
             <h6 className="card-subtitle mb-2 text-muted" style={{marginTop:15}}>{name}</h6>

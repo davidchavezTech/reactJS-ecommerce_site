@@ -19,7 +19,7 @@ const PerWeight = ({onMType, priceAndUnits}) => {
 
     useEffect(() => {
         onMType( aCheck, unitOfMeasurement1, aPrice, bCheck, unitOfMeasurement2, bPrice, cCheck, unitOfMeasurement3, cPrice )
-    }, [aCheck, aPrice, bCheck, bPrice, cCheck, cPrice])
+    }, [aCheck, aPrice, bCheck, bPrice, cCheck, cPrice]) // eslint-disable-line react-hooks/exhaustive-deps
 
     //Load up units selected if we are editing an Item
     useEffect(() => {
@@ -43,7 +43,7 @@ const PerWeight = ({onMType, priceAndUnits}) => {
                 }
             }
         }
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
 
     return (

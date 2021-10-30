@@ -18,26 +18,26 @@ export const addCategory = async ( body ) => {
     return data
 }
 
-export const getCategory = async (_id) => {{
+export const getCategory = async (_id) => {
     const { data }  = await axios({
         method: "GET",
         url: `${serverAdress}/categories/getCategory/${_id}`
     })
     return data
-}}
+}
 
-export const getCategories = async () => {{
+export const getCategories = async () => {
     const { data }  = await axios({
         method: "GET",
         url: `${serverAdress}/categories/getCategories`
     })
     return data
-}}
+}
 
-export const deleteCategory = async (id) => {{
+export const deleteCategory = async (id) => {
     const { data }  = await axios({
         method: "DELETE",
         url: `${serverAdress}/categories/deleteCategory/${id}`
     })
     return data
-}}
+}

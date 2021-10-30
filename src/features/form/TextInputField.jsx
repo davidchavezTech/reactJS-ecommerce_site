@@ -8,7 +8,7 @@ const TextInputField = ({id, inputFieldName, onSetInputValues, value}) => {
             SetInputFieldValue(value)
             onSetInputValues(id, value)
         }
-    },[])
+    },[]) // eslint-disable-line react-hooks/exhaustive-deps
     return (
         <>
             <h6 className="card-subtitle mb-2" style={{marginTop:15}}>{inputFieldName}</h6>

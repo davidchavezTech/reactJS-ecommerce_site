@@ -1,4 +1,4 @@
-import { Route, Redirect, useHistory } from 'react-router-dom'
+import { Route, useHistory } from 'react-router-dom'
 import { useState } from 'react';
 
 // import { useState, useEffect } from 'react';
@@ -17,27 +17,25 @@ import GlobalStyle from './components/GlobalStyle';
 
 
 function App() {
-	// const history = useHistory()
-	// const [isUserLoggedIn, SetIsUserLoggedIn] = useState(false)
-	// const [isUserLoggedIn] = useState(false)
+	const history = useHistory()
+	const [isUserLoggedIn, SetIsUserLoggedIn] = useState(false)
 	
 	const path = window.location.pathname;
 	const admin = path.includes("admin");
-	const isUserLoggedIn = true
-	// (async () => {
-	// 		const response = await axios({
-	// 			method: "GET",
-	// 			withCredentials: true,
-	// 			url: "http://localhost:5000/admin/authenticateUser",
-	// 		})
-	// 		if(response.data === true) {
-	// 			SetIsUserLoggedIn(true)
-	// 			history.push("/admin")
-	// 		}
-	// 	}
-	// )()
-	// if( !isUserLoggedIn && admin ) return <Redirect to="/login" />
-	// else return (
+	
+	(async () => {
+			const response = await axios({
+				method: "GET",
+				withCredentials: true,
+				url: "http://localhost:5000/admin/authenticateUser",
+			})
+			if(response.data === true) {
+				SetIsUserLoggedIn(true)
+
+				// history.push("/admin")
+			}else if(admin) history.push("/login")
+		}
+	)()
 	return (
 		<>
 			{admin ? <NavBarAdmin /> : <NavBar />}

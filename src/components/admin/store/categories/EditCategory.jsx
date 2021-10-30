@@ -6,7 +6,7 @@ import { Redirect } from "react-router";
 const EditCategory = ({ match }) => {
     const { categoryId } = match.params
     const [category, SetCategory] = useState(null);
-    const [ formErrorMsg, SetFormErrorMsg ] = useState(null);
+    const [ formErrorMsg ] = useState(null);
     const [ activateRedirect, SetActivateRedirect ] = useState(false);
     const handleOnFormSubmit = async (values) => {
         console.log(values)
@@ -15,16 +15,19 @@ const EditCategory = ({ match }) => {
         await deleteCategory(id)
         SetActivateRedirect(true)
     }
-    useEffect(async () => {
-        const response = await getCategory(categoryId)
-        console.log(response)
-        const inputFields = [
-            {id: "categoryName", type: "text", name: "Nombre de categoría", value: response.categoryName, mandatory: true},
-            {id: "categoryImage", type: "single-image", name: "Imagen", imageURL: response.imageFileName, mandatory: true},
-            {type: "submit", text: "Guardar cambios"},
-            {id: response._id, type: "delete", text: "Eliminar"}
-        ]
-        SetCategory(inputFields)
+    useEffect(() => {
+        (async ()=>{
+            const response = await getCategory(categoryId)
+            console.log(response)
+            const inputFields = [
+                {id: "categoryName", type: "text", name: "Nombre de categoría", value: response.categoryName, mandatory: true},
+                {id: "categoryImage", type: "single-image", name: "Imagen", imageURL: response.imageFileName, mandatory: true},
+                {type: "submit", text: "Guardar cambios"},
+                {id: response._id, type: "delete", text: "Eliminar"}
+            ]
+            SetCategory(inputFields)
+        })()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     
     return (

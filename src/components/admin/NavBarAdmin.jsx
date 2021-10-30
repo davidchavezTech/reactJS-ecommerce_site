@@ -13,7 +13,7 @@ const NavBarAdmin = () => {
         <nav className="navbar navbar-dark bg-dark">
             <div className="container-fluid">
                 <Link className="navbar-brand" to="/">Inicio</Link>
-                <Link className="navbar-brand" to="/createUser">Usuarios</Link>
+                <Link className="navbar-brand" to="/admin">Usuarios</Link>
                 <Link className="navbar-brand" to="/admin/store">Tienda</Link>
                 <Link className="navbar-brand" to="/admin/categories/">Categorías</Link>
                 <span style={{cursor:'pointer'}} className="navbar-brand" onClick={logOut}>Cerrar sesión</span>

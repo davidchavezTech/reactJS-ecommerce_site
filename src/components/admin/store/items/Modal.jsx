@@ -85,7 +85,7 @@ const Modal = ({toggleModal, setToggleModal}) => {
         if(ref.current){
             ref.current.focus(); 
         }
-    }, [options.length])
+    }, [options.length]) // eslint-disable-line react-hooks/exhaustive-deps
 
 
     const animation = useSpring({
@@ -122,7 +122,7 @@ const Modal = ({toggleModal, setToggleModal}) => {
         //Set focus on option field when selecting a fieldtype
         if(options.length===1 && ref.current) ref.current.focus();
         SetErrorMsg("")
-    }, [options, fieldType]);
+    }, [options, fieldType]); // eslint-disable-line react-hooks/exhaustive-deps
     
     useEffect(() => {
             document.addEventListener('keydown', keyPress);

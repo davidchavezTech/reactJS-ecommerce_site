@@ -36,7 +36,7 @@ const SingleImageField = ({ id, passedImage, onImageLoad }) => {
                     break;
             }
         }
-    }, [image])
+    }, [image]) // eslint-disable-line react-hooks/exhaustive-deps
     
     // useEffect(() => {
     //     console.log(onImageLoad)

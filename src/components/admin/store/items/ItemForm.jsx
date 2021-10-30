@@ -8,8 +8,8 @@ import CategorySelector from '../../../../features/form/categorySelector/Categor
 import { getCategories } from '../categories/categoriesServerRequests';
 
 import { useState, useEffect } from 'react'
-import { selectNewItem, itemAdded, selectOptions, optionSet } from '../../../../features/items/newItemSlice';
-import { postItem, selectAllItems } from '../../../../features/items/itemsSlice';
+import { selectNewItem, selectOptions, optionSet } from '../../../../features/items/newItemSlice';
+import { postItem } from '../../../../features/items/itemsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { editItem } from '../../../../features/items/itemSlice';
 import { maxImagesNumber } from '../../../../globalVariables';
@@ -38,7 +38,7 @@ const ItemForm = ({onFireModal, selectedItem}) => {
             SetMType(selectedItem.priceAndUnits)
             dispatch(optionSet(selectedItem.options))
         }
-    }, [selectedItem])
+    }, [selectedItem]) // eslint-disable-line react-hooks/exhaustive-deps
     const handleSetMType = (check1, measurementType1, price1, check2, measurementType2, price2, check3, measurementType3, price3) => {
         
         let copy = JSON.parse(JSON.stringify(mType))

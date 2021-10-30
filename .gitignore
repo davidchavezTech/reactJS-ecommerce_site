@@ -31,6 +31,8 @@ backend/.env
 
 /backend/public/uploads
 
+/design-inspiration
+
 #excel files
 schedule.xlsx
 ~$schedule.xlsx

@@ -50,19 +50,28 @@ const Form = ({ fields, onFormSubmit, passedErrorMsg, onDelete }) => {
                                 </button>
                             </div>
                         )
-                    case "delete":
-                    return (
-                        <div key={index}>
-                            <button onClick={() => onDelete(inputFieldOptions.id)}
-                                className="btn btn-danger"
-                                style={{marginTop:10, display: "block"}
-                            }>
-                                {inputFieldOptions.text}
-                            </button>
-                        </div>
-                    )
+                    // case "delete":
+                    // return (
+                    //     <div key={index}>
+                    //         <button onClick={() => onDelete(inputFieldOptions.id)}
+                    //             className="btn btn-danger"
+                    //             style={{marginTop:10, display: "block"}
+                    //         }>
+                    //             {inputFieldOptions.text}
+                    //         </button>
+                    //     </div>
+                    // )
                     default:
-                        break;
+                        return (
+                            <div key={index}>
+                                <button onClick={() => onDelete(inputFieldOptions.id)}
+                                    className="btn btn-danger"
+                                    style={{marginTop:10, display: "block"}
+                                }>
+                                    {inputFieldOptions.text}
+                                </button>
+                            </div>
+                        )
                 }
             })}
         </>

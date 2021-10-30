@@ -34,7 +34,7 @@ const ImagesUpload = ({passImages, imagesURLs}) => {
             SetPreviewsErrorMessage('')
             passImages(images)
         };
-    }, [images])
+    }, [images, passImages])
     return (
         <>
             <br />
@@ -73,7 +73,8 @@ const ImagesUpload = ({passImages, imagesURLs}) => {
                             remove={(images.length > 1) ? true : false }
                             removePreview={handleRemovePreview}
                         />)
-                    else if(typeof imgFile === "string") return (
+                    else return (
+                    // else if(typeof imgFile === "string") return (
                         <PreviewDivFromURL
                             key={index}
                             index={index}

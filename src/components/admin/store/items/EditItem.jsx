@@ -18,7 +18,7 @@ const EditItem = ({ match }) => {
         if (itemStatus === 'idle') {
         dispatch(fetchItem(itemId))
         }
-    }, [itemStatus, dispatch])
+    }, [itemStatus, dispatch, itemId])
 
     //Modal
     const fireModal = () => SetToggleModal(prev => !prev);
