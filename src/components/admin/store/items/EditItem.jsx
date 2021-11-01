@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchItem, deleteItemById } from "../../../../features/items/itemSlice";
 
-import ItemForm from "./ItemForm";
+import ItemForm from "./itemForm/ItemForm";
 import ConfirmModal from "../../../../features/modals/ConfirmModal";
 import Modal from "./Modal";
 const EditItem = ({ match, history }) => {
