@@ -5,15 +5,17 @@ import { useState } from 'react';
 
 import axios from 'axios'
 //components
-import NavBar from './components/NavBar';
-import NavBarAdmin from './components/admin/NavBarAdmin'
+// import NavBar from './components/NavBar';
+// import NavBarAdmin from './components/admin/NavBarAdmin'
+import Navbar from './components/navbar/Navbar';
+import Home from './components/home/Home'
 import Body from './components/Body';
 import Store from './components/Store';
 import LogIn from './components/admin/LogIn';
 import Admin from './components/admin/Admin'
 //css
 import GlobalStyle from './components/GlobalStyle';
-
+import styles from './App.module.css'
 
 
 function App() {
@@ -37,10 +39,10 @@ function App() {
 		}
 	)()
 	return (
-		<>
-			{admin ? <NavBarAdmin /> : <NavBar />}
-			
-			<Route path="/" exact component={Body} />
+		<div className={styles.main_limiter}>
+			{/* {admin ? <NavBarAdmin /> : <NavBar />} */}
+			<Navbar />
+			<Route path="/" exact component={Home} />
 			<Route path="/store" exact component={Store} />
 			
 
@@ -53,7 +55,7 @@ function App() {
 			/>
 			
 			<GlobalStyle />
-        </>
+        </div>
 		
 	);
 }

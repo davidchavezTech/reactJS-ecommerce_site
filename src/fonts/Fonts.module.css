@@ -1,0 +1,8 @@
+@font-face {
+    font-family: lemonMilk-regular;
+    src: url(./LEMONMILK-Regular.otf);
+}
+
+.lemon_milk_reg{
+    font-family: lemonMilk-regular;
+}

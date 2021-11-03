@@ -1,0 +1,25 @@
+.navbar{
+    padding: 30px 40px;
+    display: flex;
+    justify-content: space-between;
+}
+.menu_button{
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+    width: 120px;
+}
+body > div > div > div > div > p {
+    margin: 0;
+}
+.shopping_cart_icon {
+    width: 50px;
+}
+.cart_icons{
+    width: 120px;
+    display: flex;
+    justify-content: space-between;
+}
+.profile_picture_icon {
+    width: 30px;
+}
