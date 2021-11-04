@@ -1,0 +1,15 @@
+.category_description_wrapper{
+    display: flex;
+    align-items: center;
+    margin-left: 10vw;
+    margin-top: 12vh;
+}
+.left_bar {
+    width: 3px;
+    height: 50px;
+}
+.category_text_container > p{
+    margin: 0;
+    font-size: 12px;
+    margin-left: 75px;
+}

@@ -2,7 +2,14 @@
     font-family: lemonMilk-regular;
     src: url(./LEMONMILK-Regular.otf);
 }
+@font-face {
+    font-family: lemonMilk-bold;
+    src: url(./LEMONMILK-Bold.otf);
+}
 
 .lemon_milk_reg{
     font-family: lemonMilk-regular;
+}
+.lemon_milk_bold{
+    font-family: lemonMilk-bold;
 }

@@ -16,6 +16,7 @@ import Admin from './components/admin/Admin'
 //css
 import GlobalStyle from './components/GlobalStyle';
 import styles from './App.module.css'
+import fonts from './fonts/Fonts.module.css'
 
 
 function App() {
@@ -39,7 +40,7 @@ function App() {
 		}
 	)()
 	return (
-		<div className={styles.main_limiter}>
+		<div className={`${styles.main_limiter} ${fonts.lemon_milk_reg}`}>
 			{/* {admin ? <NavBarAdmin /> : <NavBar />} */}
 			<Navbar />
 			<Route path="/" exact component={Home} />

@@ -1,0 +1,7 @@
+.wrapper {
+    overflow: hidden;
+    position: absolute;
+    right: 12vw;
+    bottom: 0;
+    height: 70vh;
+}

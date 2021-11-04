@@ -1,0 +1,14 @@
+.slider_wrapper{
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+.slider_logo_wrapper {
+    text-align: center;
+}
+.toro_logo {
+    height: 30px;
+    margin-right: 15vw;
+    margin-top: 8vh;
+}

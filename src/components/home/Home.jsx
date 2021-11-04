@@ -1,14 +1,12 @@
-//images
-import ToroLogo from "../globalImages/toro_logo.svg"
-
-import styles from "./Home.module.css"
-
+import TopSection from "./sliderSection/TopSection"
+import Categories from "./categoriesSection/CategorySection"
 const Home = () => {
 
     return (
-        <div className={styles.home_logo_wrapper}>
-            <img className={styles.toro_logo} src={ToroLogo} alt="" />
-        </div>
+        <>
+            <TopSection />
+            <Categories />
+        </>
     )
 }
 
