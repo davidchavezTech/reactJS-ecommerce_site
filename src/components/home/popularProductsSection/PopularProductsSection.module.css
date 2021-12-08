@@ -1,0 +1,9 @@
+.title {text-align: center;}
+.images{
+    margin-top: 80px;
+    display: flex;
+    justify-content: center;
+}
+.logos{
+    margin: 0 30px;
+}

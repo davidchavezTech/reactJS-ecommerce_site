@@ -1,0 +1,21 @@
+
+.sale_text{
+    writing-mode: vertical-rl;
+    transform: rotate(180deg) translate(-62px, 220px);
+    margin-right: 50px;
+    color: #b80300;
+    font-size: 20px;
+}
+.category {
+    display: flex;
+    width: min-content;
+    margin-bottom: 120px;
+    font-size: 25px;
+}
+.category:nth-child(odd){
+    margin-left: 150px;
+}
+.category:nth-child(even){
+    margin-left: auto;
+    margin-right: 150px;
+}

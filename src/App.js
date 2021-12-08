@@ -9,7 +9,7 @@ import axios from 'axios'
 // import NavBarAdmin from './components/admin/NavBarAdmin'
 import Navbar from './components/navbar/Navbar';
 import Home from './components/home/Home'
-import Body from './components/Body';
+// import Body from './components/Body';
 import Store from './components/Store';
 import LogIn from './components/admin/LogIn';
 import Admin from './components/admin/Admin'

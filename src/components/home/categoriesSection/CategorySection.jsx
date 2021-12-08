@@ -1,4 +1,5 @@
-import Category from "./category/Category"
+import CategoryLeft from "./categoryLeft/CategoryLeft"
+import CategoryRight from "./categoryRight/CategoryRight"
 
 import styles from "./CategorySection.module.css"
 
@@ -6,9 +7,9 @@ const CategorySection = () => {
 
     return (
         <div style={{position:"relative"}} className={styles.category_container}>
-            <Category />
-            <Category />
-            <Category />
+            <CategoryLeft />
+            <CategoryRight />
+            <CategoryLeft />
         </div>
     )
 }

@@ -1,0 +1,35 @@
+footer{
+    margin-top: 350px;
+}
+.logo {width: 192px;}
+.socialLogo{width: 18px;}
+.footerWrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.logoContainer{
+    width: 33vw;
+    text-align: center;
+}
+.termsWrapper{
+    text-align: center;
+}
+.termsContainer {
+    width: 33vw;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.termsText {
+    margin: 0 40px;
+}
+.social{
+    width: 33vw;
+    text-align: center;
+}
+.webDeveloper{
+    margin-top: 160px;
+    margin-bottom: 140px;
+    text-align: center;
+}

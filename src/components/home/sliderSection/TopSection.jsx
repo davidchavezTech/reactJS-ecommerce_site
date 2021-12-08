@@ -9,14 +9,14 @@ import styles from "./TopSection.module.css"
 const TopSection = () => {
     
     return (
-        <div className={styles.slider_wrapper}>
+        <section className={styles.slider_wrapper}>
             <div className={styles.slider_logo_wrapper}>
                 <img className={styles.toro_logo} src={toroLogo} alt="" />
             </div>
 
             <CategoryDescription />
             <FullPageSlider />
-        </div>
+        </section>
     )
 }
 
