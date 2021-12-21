@@ -1,4 +1,4 @@
-import styles from "./PopularProductsSection.module.css"
+import styles from "./Brands.module.css"
 
 //images
 import img1 from "./images/img1.jpg";
@@ -9,7 +9,7 @@ import img5 from "./images/img5.jpg";
 
 const popularProductsSection = () => {
     return (
-        <section>
+        <section style={{paddingTop:"200px", boxSizing:"border-box"}}>
             <h1 className={styles.title}>Brands that represent us</h1>
             <div className={styles.images}>
                 <img src={img1} className={styles.logos} alt="" />

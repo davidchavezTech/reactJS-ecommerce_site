@@ -1,6 +1,6 @@
 import TopSection from "./sliderSection/TopSection"
 import Categories from "./categoriesSection/CategorySection"
-import PopularProductsSection from "./popularProductsSection/PopularProductsSection"
+import Brands from "./brands/Brands"
 import Footer from "./footer/Footer"
 
 const Home = () => {
@@ -9,7 +9,7 @@ const Home = () => {
         <>
             <TopSection />
             <Categories />
-            <PopularProductsSection />
+            <Brands />
             <Footer />
         </>
     )

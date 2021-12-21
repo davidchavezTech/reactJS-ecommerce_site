@@ -4,10 +4,13 @@ import CircleSelectors from "./slidersCircleSelectors/SlidersCircleSelectors"
 import styles from "./FullPageSlider.module.css"
 import fonts from "../../../../fonts/Fonts.module.css"
 
+import { useSpring, animated } from 'react-spring';
+
 //images
 import arrow from "./images/triangle_arrow.svg"
 
 const FullPageSlider = () => {
+   
     return (
         <div className={styles.wrapper}>
             <div className={styles.relative_wrapper}>
