@@ -1,10 +1,10 @@
-.wrapper{
+/* .wrapper{
     background-color: #8a7d7b;
     height: 55vh;
     width: 100%;
     position: absolute;
     bottom: 0;
-}
+} */
 .relative_wrapper{
     position: relative;
 }.boxed_number_position_absolute_wrapper{
