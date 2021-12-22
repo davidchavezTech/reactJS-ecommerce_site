@@ -14,17 +14,22 @@ const FullPageSlider = ({style, item}) => {
         // <div className={styles.wrapper}>
         <div>
             <div className={styles.relative_wrapper}>
-                <div className={styles.boxed_number_position_absolute_wrapper}>
-                    <div className={styles.boxed_number_wrapper}>
-                        <p className={styles.boxed_number}>01</p>
-                    </div>
-                </div>
 
-                <animated.div className={styles.text} style={style}>
-                    <h1>Punching bags</h1>
-                    <p>We have a wide variety of punching bags for all types of disciplines and levels. From different sizes, looks, and quality, you won’t have to look anywhere else.</p>
+                <animated.div className={styles.text} style={{...style, color:item.textColor}}>
+                    <h1>{item.title}</h1>
+                    <p>{item.text}</p>
                     <div className={`${styles.view_collection_link_wrapper} ${fonts.lemon_milk_bold}`}>
-                        <span>View collection</span><img src={arrow} className={styles.triangle_arrow} alt="" />
+                        <span style={{color:item.linkColor}}>View collection</span>
+                        <svg version="1.1" id="Layer_1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            x="0px"
+                            y="0px"
+	                        viewBox="0 0 13.2 15.8"
+                            style={{width: "11px", fill: item.linkColor, marginLeft:"5px" }}
+                        >
+                            <polygon points="0,0 0,15.8 13.2,7.9 "/>
+                        </svg>
+
                     </div>
                 </animated.div>
             </div>

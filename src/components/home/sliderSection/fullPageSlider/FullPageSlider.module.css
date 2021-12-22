@@ -7,20 +7,6 @@
 } */
 .relative_wrapper{
     position: relative;
-}.boxed_number_position_absolute_wrapper{
-    position: absolute;
-    top: 12%;
-}
-.boxed_number_wrapper{
-    width: 140px;
-    height: 400px;
-    overflow: hidden;
-    position: relative;
-}.boxed_number{
-    color:rgba(255, 255, 255, .3);
-    font-size: 180px;
-    position: absolute;
-    right: 0;
 }.text{
     padding-top: 8%;
     color: black;
