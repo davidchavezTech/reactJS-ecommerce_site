@@ -10,7 +10,7 @@ const SliderCircleSelector = ({slideIndex, SetSlideIndex, textProperties, transi
                     setTimeout(()=>{
                         SetSlideIndex(0);
                         SetItems([textProperties[0]])
-                    },transitionDuration*2)
+                    },transitionDuration)
                 }}
             ></div>
             <div className={styles.circle}
@@ -20,7 +20,7 @@ const SliderCircleSelector = ({slideIndex, SetSlideIndex, textProperties, transi
                     setTimeout(()=>{
                         SetSlideIndex(1);
                         SetItems([textProperties[1]])
-                    },transitionDuration*2)
+                    },transitionDuration)
                 }}
             ></div>
             <div className={styles.circle}
@@ -30,7 +30,7 @@ const SliderCircleSelector = ({slideIndex, SetSlideIndex, textProperties, transi
                     setTimeout(()=>{
                         SetSlideIndex(2);
                         SetItems([textProperties[2]])
-                    },transitionDuration*2)
+                    },transitionDuration)
                 }}
             ></div>
         </div>

@@ -1,15 +1,21 @@
+.lemon_milk_reg{
+    font-family: lemonMilk-regular;
+}
 @font-face {
     font-family: lemonMilk-regular;
     src: url(./LEMONMILK-Regular.otf);
+}
+.lemon_milk_bold{
+    font-family: lemonMilk-bold;
 }
 @font-face {
     font-family: lemonMilk-bold;
     src: url(./LEMONMILK-Bold.otf);
 }
-
-.lemon_milk_reg{
-    font-family: lemonMilk-regular;
+.lemon_milk_light{
+    font-family: lemonMilk-light;
 }
-.lemon_milk_bold{
-    font-family: lemonMilk-bold;
+@font-face {
+    font-family: lemonMilk-light;
+    src: url(./LEMONMILK-Light.otf);
 }

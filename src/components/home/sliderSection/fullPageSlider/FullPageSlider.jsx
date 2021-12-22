@@ -1,12 +1,9 @@
-import ImageSliderContainer from "./imageSliderContainer/ImageSliderContainer"
-import CircleSelectors from "./slidersCircleSelectors/SlidersCircleSelectors"
 import styles from "./FullPageSlider.module.css"
 import fonts from "../../../../fonts/Fonts.module.css"
 
-import { useSpring, animated } from 'react-spring';
+import { animated } from 'react-spring';
 
 //images
-import arrow from "./images/triangle_arrow.svg"
 
 const FullPageSlider = ({style, item}) => {
    
