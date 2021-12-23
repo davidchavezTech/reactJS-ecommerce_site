@@ -29,7 +29,6 @@ const TopSection = () => {
         dissapearToLeftAnimation_transition,
         backgroundColor,
         AnimatedCategoryDescription,
-        runIt,
         slideIndex,
         SetSlideIndex,
         SetItems

@@ -1,14 +1,22 @@
 import styles from "./CategoryLeft.module.css"
+import bag from "./images/bag.png"
 
-import templateImage from "./images/gym bag no bg.jpg"
-const CategoryLeft = () => {
+const CategoryLeft = ({item}) => {
     return (
         <div className={styles.category}>
-            <p className={styles.sale_text}>Sale up to 30% off</p>
-            <div>
-                <img src={templateImage} alt="" />
-                <p style={{marginTop:30}}>Gym bags</p>
+            <p className={styles.sale_text}>{item.saleText}</p>
+            <div className={styles.categoryContents}>
+                <div className={styles.animatedBG}  style={{backgroundColor: item.color}}>
+                    <h2 className={styles.hoverTitle}>{item.title}</h2>
+                    <p className={styles.hoverText}>{item.text}</p>
+                    <div className={styles.button}>Take a Look</div>
+                </div>
+                <img src={item.image} alt={item.title} className={styles.image} style={{right:`${item.offSetX}px`, top: `${item.offSetY}px`}} />
+                <p style={{marginTop:30}}>Boxing Gloves</p>
             </div>
+
+            
+
         </div>
     )
 }

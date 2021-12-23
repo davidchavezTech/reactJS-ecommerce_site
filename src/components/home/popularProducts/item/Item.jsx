@@ -8,7 +8,6 @@ import kickingPads from "./images/kicking-pads.jpg"
 import shorts from "./images/shorts.jpg"
 
 const Item = ({item}) => {
-    console.log(item.id)
     const image = (
         item.id === 0 ? bottle :
         item.id === 1 ? pads :
