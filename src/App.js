@@ -1,11 +1,11 @@
-import { serverAdress } from './globalVariables';
+// import { serverAdress } from './globalVariables';
 
-import { Route, useHistory } from 'react-router-dom'
-import { useState } from 'react';
+// import { Route, useHistory } from 'react-router-dom'
+// import { useState } from 'react';
 
 // import { useState, useEffect } from 'react';
 
-import axios from 'axios'
+// import axios from 'axios'
 //components
 // import NavBar from './components/NavBar';
 // import NavBarAdmin from './components/admin/NavBarAdmin'
@@ -13,7 +13,7 @@ import Navbar from './components/navbar/Navbar';
 import Home from './components/home/Home'
 // import Body from './components/Body';
 import Store from './components/Store';
-import LogIn from './components/admin/LogIn';
+// import LogIn from './components/admin/LogIn';
 import Admin from './components/admin/Admin'
 //css
 import GlobalStyle from './components/GlobalStyle';
@@ -22,11 +22,11 @@ import fonts from './fonts/Fonts.module.css'
 
 
 function App() {
-	const history = useHistory()
-	const [isUserLoggedIn, SetIsUserLoggedIn] = useState(false)
+	// const history = useHistory()
+	// const [isUserLoggedIn, SetIsUserLoggedIn] = useState(false)
 	
-	const path = window.location.pathname;
-	const admin = path.includes("admin");
+	// const path = window.location.pathname;
+	// const admin = path.includes("admin");
 	
 	// (async () => {
 	// 		const response = await axios({
@@ -51,7 +51,7 @@ function App() {
 
 			{/*Admin routes*/}
 
-			<Route path="/login" component={LogIn}/>
+			{/* <Route path="/login" component={LogIn}/> */}
 
 			<Route path="/admin" 
 				render={(props) => <Admin loggedIn={true} />}
