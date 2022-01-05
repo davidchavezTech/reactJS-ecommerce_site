@@ -1,5 +1,4 @@
 import styles from "./CategoryLeft.module.css"
-import bag from "./images/bag.png"
 
 const CategoryLeft = ({item}) => {
     return (
@@ -12,7 +11,7 @@ const CategoryLeft = ({item}) => {
                     <div className={styles.button}>Take a Look</div>
                 </div>
                 <img src={item.image} alt={item.title} className={styles.image} style={{right:`${item.offSetX}px`, top: `${item.offSetY}px`}} />
-                <p style={{marginTop:30}}>Boxing Gloves</p>
+                <p style={{marginTop:30}}>{item.title}</p>
             </div>
 
             

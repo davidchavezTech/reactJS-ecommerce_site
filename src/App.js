@@ -41,6 +41,8 @@ function App() {
 	// 		}else if(admin) history.push("/login")
 	// 	}
 	// )()
+
+	
 	return (
 		<div className={`${styles.main_limiter} ${fonts.lemon_milk_reg}`}>
 			{/* {admin ? <NavBarAdmin /> : <NavBar />} */}
@@ -54,7 +56,7 @@ function App() {
 			{/* <Route path="/login" component={LogIn}/> */}
 
 			<Route path="/admin" 
-				render={(props) => <Admin loggedIn={true} />}
+				render={() => <Admin loggedIn={true} />}
 			/>
 			
 			<GlobalStyle />
