@@ -19,7 +19,7 @@ import Admin from './components/admin/Admin'
 import GlobalStyle from './components/GlobalStyle';
 import styles from './App.module.css'
 import fonts from './fonts/Fonts.module.css'
-
+import { Route } from 'react-router-dom';
 
 function App() {
 	// const history = useHistory()
