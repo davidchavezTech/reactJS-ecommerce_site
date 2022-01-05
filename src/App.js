@@ -1,3 +1,5 @@
+import { serverAdress } from './globalVariables';
+
 import { Route, useHistory } from 'react-router-dom'
 import { useState } from 'react';
 
@@ -26,19 +28,19 @@ function App() {
 	const path = window.location.pathname;
 	const admin = path.includes("admin");
 	
-	(async () => {
-			const response = await axios({
-				method: "GET",
-				withCredentials: true,
-				url: "http://localhost:5000/admin/authenticateUser",
-			})
-			if(response.data === true) {
-				SetIsUserLoggedIn(true)
+	// (async () => {
+	// 		const response = await axios({
+	// 			method: "GET",
+	// 			withCredentials: true,
+	// 			url: `${serverAdress}/admin/authenticateUser`,
+	// 		})
+	// 		if(response.data === true) {
+	// 			SetIsUserLoggedIn(true)
 
-				// history.push("/admin")
-			}else if(admin) history.push("/login")
-		}
-	)()
+	// 			// history.push("/admin")
+	// 		}else if(admin) history.push("/login")
+	// 	}
+	// )()
 	return (
 		<div className={`${styles.main_limiter} ${fonts.lemon_milk_reg}`}>
 			{/* {admin ? <NavBarAdmin /> : <NavBar />} */}
@@ -52,7 +54,7 @@ function App() {
 			<Route path="/login" component={LogIn}/>
 
 			<Route path="/admin" 
-				render={(props) => <Admin loggedIn={isUserLoggedIn} />}
+				render={(props) => <Admin loggedIn={true} />}
 			/>
 			
 			<GlobalStyle />

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import Item from './Item';
+import { serverAdress } from '../globalVariables';
+
 // import AddItemForm from './AddItemForm';
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchItems, selectAllItems } from '../features/items/itemsSlice';
@@ -8,7 +10,7 @@ import { fetchItems, selectAllItems } from '../features/items/itemsSlice';
 const Store = ({isUserLoggedIn}) => {
     const dispatch = useDispatch()
     const getItems = async () =>{
-        const {data} = await axios.get(`http://localhost:5000/items/`)
+        const {data} = await axios.get(`${serverAdress}/items/`)
         setStoreItems(data)
     }
     const items = useSelector(selectAllItems)

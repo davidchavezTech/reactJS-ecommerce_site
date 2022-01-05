@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios'
 import UserComponent from './UserComponent';
+
+import { serverAdress } from '../../globalVariables';
+
 const CreateNewUserForm = () => {
 
     const [names, SetNames] = useState('');
@@ -19,8 +22,13 @@ const CreateNewUserForm = () => {
         const list = await axios({
             method: "GET",
             withCredentials: true,
-            url: "http://localhost:5000/admin/getUsers",
+            url: `${serverAdress}/admin/getUsers`,
         });
+        const test = await fetch(`${serverAdress}/admin/getUsers`, {
+            method: "GET"
+        });
+        console.log(test)
+        console.log(await test.json())
         console.log(list)
         
         if(list.data)SetAdminsList(list.data)
@@ -29,7 +37,7 @@ const CreateNewUserForm = () => {
         const response = await axios({
             method: "DELETE",
             withCredentials: true,
-            url: `http://localhost:5000/admin/delete/${id}`,
+            url: `${serverAdress}/admin/delete/${id}`,
         });
         if(response.data === "Admin deleted.") loadUsers();
         else console.log(response)
@@ -40,7 +48,7 @@ const CreateNewUserForm = () => {
         const response = await axios({
             method: "POST",
             withCredentials: true,
-            url: "http://localhost:5000/admin/addAdmin",
+            url: `${serverAdress}/admin/addAdmin`,
             data: {
                 userName, password, names, title, number
             }

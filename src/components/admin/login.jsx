@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios'
+import { serverAdress } from '../../globalVariables';
+
 const LogIn = () => {
     const [email, SetEmail] = useState('');
     const [password, SetPassword] = useState('');
 
     const login = async (e) => {
         e.preventDefault();
-        const response  = await axios.post("http://localhost:5000/admin/login", { email, password },{ withCredentials: true });
+        const response  = await axios.post(`${serverAdress}/admin/login`, { email, password },{ withCredentials: true });
         if(response.data === true) {
             window.location = ('/admin');
         } else console.log('Error logging in');
@@ -20,7 +22,7 @@ const LogIn = () => {
         const response = await axios({
             method: "GET",
             withCredentials: true,
-            url: "http://localhost:5000/admin/authenticateUser",
+            url: `${serverAdress}/admin/authenticateUser`,
         })
         if(response.data === true) {
             window.location = ('/admin');
@@ -28,7 +30,7 @@ const LogIn = () => {
     }
     return (
         <>
-            <form style={{width:"20rem"}}>
+            <form style={{width:"20rem", marginTop:150, marginLeft:40}}>
                 <div className="mb-3">
                     <label className="form-label">Correo corporativo</label>
                     <input onChange={(e) => SetEmail(e.target.value)} type="text" className="form-control" aria-describedby="emailHelp" name="email" autoComplete="username" />

@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-
+import { serverAdress } from '../globalVariables'
 const NavBar = ({isUserLoggedIn}) => {
 
     const logOut = async () => {
         const response = await axios({
             method: "GET",
             withCredentials: true,
-            url: "http://localhost:5000/admin/logout",
+            url: `${serverAdress}/admin/logout`,
         })
         response.data === "OK" ? window.location.pathname = "/" : console.log(response)
     }
