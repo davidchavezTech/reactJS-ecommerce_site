@@ -15,6 +15,7 @@ const CategoryForm = ({ onNewCategory }) => {
     const handleOnFormSubmit = async (values) => {
         const response = await addCategory(values);
         if(response === "Esa categoría ya existe") return SetFormErrorMsg(response)
+        if(response === "error, no files were received") return SetFormErrorMsg(response)
         else {
             onNewCategory()
             SetLoadForm(false)

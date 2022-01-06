@@ -7,8 +7,10 @@ import fonts from "../../../fonts/Fonts.module.css"
 import bag from "./categoryLeft/images/bag.png"
 import gloves from "./categoryRight/images/gloves.png"
 import helmet from "./categoryLeft/images/helmet.png"
+import { useHistory } from "react-router-dom"
 
 const CategorySection = () => {
+    let history = useHistory();
     const categoriesArr = [
         {id:0, title:"Gym bags", text:"We now offer some of the best brands in the market with different colors and features for you to have one that adjusts to your exact needs", image:bag,color:"#DBBB7E",saleText:"SALE UP TO 30% OFF", offSetX: -100, offSetY: -10},
         {id:1, title:"Boxing Gloves", text:"Best quality, vast variety, and all at the tip of your fingers.", image:gloves,color:"#F2E9DF",saleText:"SALE UP TO 50% OFF", offSetX: 0, offSetY: 0},
@@ -22,7 +24,7 @@ const CategorySection = () => {
                 return index % 2 === 0 ? <CategoryLeft key={index} item={item} /> : <CategoryRight key={index} item={item} />
             })
             }
-            <div style={accesoriesLinkStyles}>
+            <div style={accesoriesLinkStyles} onClick={e => history.push("/categories")}>
                 <div className={styles.accesoriesAccent}></div>
                 <h1 className={`${styles.accesoriesLink} ${fonts.lemon_milk_bold}`}>View all<br />accesories</h1>
             </div>

@@ -8,23 +8,29 @@ const EditCategory = ({ match }) => {
     const [category, SetCategory] = useState(null);
     const [ formErrorMsg ] = useState(null);
     const [ activateRedirect, SetActivateRedirect ] = useState(false);
-    const handleOnFormSubmit = async (values) => {
+    const handleOnFormSubmit = async (id, values) => {
+        console.log(id)
         console.log(values)
     }
-    const handleDelete = async (id) => {
-        await deleteCategory(id)
+    const handleDelete = async (id, imageURL) => {
+        console.log(id)
+        console.log(imageURL)
+        await deleteCategory({id, imageURL})
         SetActivateRedirect(true)
     }
     useEffect(() => {
         (async ()=>{
             const response = await getCategory(categoryId)
-            console.log(response)
             const inputFields = [
                 {id: "categoryName", type: "text", name: "Nombre de categoría", value: response.categoryName, mandatory: true},
-                {id: "categoryImage", type: "single-image", name: "Imagen", imageURL: response.imageFileName, mandatory: true},
+                {id: "categoryImage", type: "single-image", name: "Imagen", imageURL: response.imageFileURL, mandatory: true},
+                {id: "subcategories", type: "autoboxes", name: "Nombre de subcategoría", value: "", mandatory: false},
                 {type: "submit", text: "Guardar cambios"},
                 {id: response._id, type: "delete", text: "Eliminar"}
             ]
+            if(response.subCategories){//add subcategories to inputFields
+                inputFields.subCategories = response.subCategories
+            }
             SetCategory(inputFields)
         })()
         // eslint-disable-next-line react-hooks/exhaustive-deps

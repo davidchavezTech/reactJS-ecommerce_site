@@ -1,14 +1,16 @@
-import { useRef, useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 
 import PreviewDivFromFile from "./PreviewDivFromFile"
 import PreviewDivFromURL from "./PreviewDivFromURL"
 
-const SingleImageField = ({ id, passedImage, onImageLoad }) => {
+import React from "react";
+
+const SingleImageField = React.forwardRef(({ id, passedImage, onImageLoad }, ref) => {
     const [previewsErrorMessage, SetPreviewsErrorMessage] = useState(null)
     const [previewDiv, SetPreviewDiv] = useState(null)
     const [image, SetImage] = useState(passedImage)
 
-    const fileInputRef = useRef();
+    // const fileInputRef = useRef();
 
     const loadImage = (imageFile) => {
         SetImage(imageFile)
@@ -51,12 +53,13 @@ const SingleImageField = ({ id, passedImage, onImageLoad }) => {
                 className="btn btn-primary"
                 onClick={e =>{
                     e.preventDefault();
-                    fileInputRef.current.click();
+                    ref.current.click();
             }}>
                 Escoger imagen
             </button>
             {/* {hidden input} */}
             <input
+                ref={ref}
                 name="image"
                 accept="image/*"
                 onChange={e => {
@@ -67,9 +70,8 @@ const SingleImageField = ({ id, passedImage, onImageLoad }) => {
                 }}
                 style={{display:"none"}}
                 type="file"
-                ref={fileInputRef}
             />
         </>
     )
-}
+})
 export default SingleImageField

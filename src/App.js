@@ -11,6 +11,7 @@
 // import NavBarAdmin from './components/admin/NavBarAdmin'
 import Navbar from './components/navbar/Navbar';
 import Home from './components/home/Home'
+import Categories from './components/categories/Categories';
 // import Body from './components/Body';
 import Store from './components/Store';
 import LogIn from './components/admin/Login';
@@ -49,6 +50,7 @@ function App() {
 			<Navbar />
 			<Route path="/" exact component={Home} />
 			<Route path="/store" exact component={Store} />
+			<Route path="/categories" exact component={Categories} />
 			
 
 			{/*Admin routes*/}

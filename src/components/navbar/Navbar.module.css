@@ -1,5 +1,8 @@
 .navbar_wrapper{
     height: 0;
+    position: sticky;
+    top: 0;
+    z-index: 999;
 }
 .navbar{
     padding: 30px 40px;
@@ -7,6 +10,10 @@
     justify-content: space-between;
     position: sticky;
     top:0;
+    background-color: transparent;
+    border-bottom: 2px solid;
+    border-color: transparent;
+    transition: .3s;
 }
 .menu_button{
     display: flex;
@@ -27,4 +34,13 @@ body > div > div > div > div > div > p {
 }
 .profile_picture_icon {
     width: 30px;
+}.navBackground {
+    background-color: white;
+    border-color: #b13635;
+}.navLogo{
+    width: 70px;
+    transition: .3s;
+    opacity: 0;
+}.show{
+    opacity: 1;
 }

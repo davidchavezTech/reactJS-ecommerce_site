@@ -1,0 +1,11 @@
+.main {
+    margin-top: 150px;
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 1920px;
+}
+.h3 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+}
