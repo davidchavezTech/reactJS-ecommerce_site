@@ -18,12 +18,18 @@ const Form = ({ fields, onFormSubmit, passedErrorMsg, onDelete }) => {
 
     
     const handleSetInputValues = (id, value) => {
+        if(!value) return //Avoid crashes from undefined values being saved after a person cancels changing the image on system window popup
         const _imageFielObj = {};
-
-        if(Object.keys(inputFieldValues).length){//This will prevent the copying we are a bout to do with JSON.parse(...) to convert file to string object, along with...
-            for(let key in inputFieldValues){
-                if(typeof(inputFieldValues[key])=== "object") {
+        let _imageToBeDeletedURL;
+        if(Object.keys(inputFieldValues).length){//Prevent it from runnning on empty object and avoid crash. 
+            for(let key in inputFieldValues){//This will prevent img file to be overwritten by the copying we are a bout to do with JSON.parse(...) to convert file to string object, along with...
+                if(inputFieldValues[key].name) {//If it's a file type object, proceed (files are objects AND have a "name" property).
                     _imageFielObj[key] = inputFieldValues[key]
+                    _imageToBeDeletedURL = fields.find(obj => obj.type === "single-image").imageURL
+                }
+                //remove all empty strings on array from "autoboxes" generated:
+                else if(typeof(inputFieldValues[key])==="object"){
+                    if(!inputFieldValues[key].name && typeof(value) !== "string" && !value.name) value = value.filter(string => string !== "")//if is to avoid crash when inputFieldValues[key] is file and value is string because it will try to "filter" through them when they are not arrays 
                 }
             }
         }
@@ -34,12 +40,12 @@ const Form = ({ fields, onFormSubmit, passedErrorMsg, onDelete }) => {
                 inputFieldValuesCopy[key] = _imageFielObj[key]
             }
         }
+        if(_imageToBeDeletedURL) inputFieldValuesCopy._imageToBeDeletedURL = _imageToBeDeletedURL
         console.log(inputFieldValuesCopy)
-
         SetInputFieldValues(inputFieldValuesCopy)
     }
 
-    const handleMandatoryFields = () => {
+    const handleFormSubmit = () => {
 
         for(const field of fields) {
             if(field.mandatory && field.type !== "submit"){
@@ -65,7 +71,7 @@ const Form = ({ fields, onFormSubmit, passedErrorMsg, onDelete }) => {
         SetInputFieldValues(_inputFieldValues)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-    
+    console.log(fields)
     return (
         <>
             {fields.map((inputFieldOptions, index ) =>{
@@ -73,14 +79,14 @@ const Form = ({ fields, onFormSubmit, passedErrorMsg, onDelete }) => {
                     case "text":
                         return <TextInputField key={index} id={inputFieldOptions.id} inputFieldName={inputFieldOptions.name} onSetInputValues={handleSetInputValues} value={inputFieldOptions.value ? inputFieldOptions.value : ""} /> 
                     case "autoboxes":
-                        return <AutoBoxes key={index} id={inputFieldOptions.id} inputFieldName={inputFieldOptions.name} onSetInputValues={handleSetInputValues} value={inputFieldOptions.value ? inputFieldOptions.value : []} /> 
+                        return <AutoBoxes key={index} id={inputFieldOptions.id} inputFieldName={inputFieldOptions.name} onSetInputValues={handleSetInputValues} value={inputFieldOptions.value} /> 
                     case "single-image":
                         return <SingleImageField ref={imageInputFieldRef} key={index} id={inputFieldOptions.id} passedImage={inputFieldOptions.imageURL} onImageLoad={handleSetInputValues} />
                     case "submit":
                         return (
                             <div key={index}>
                                 <p style={{color:"red"}}>{errorMsg}</p>
-                                <button onClick={handleMandatoryFields}
+                                <button onClick={handleFormSubmit}
                                     className="btn btn-success"
                                     style={{marginTop:10, display: "block"}
                                 }>

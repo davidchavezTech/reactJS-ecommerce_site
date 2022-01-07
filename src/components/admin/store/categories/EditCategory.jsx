@@ -1,7 +1,7 @@
 import Form from "../../../../features/form/Form";
 import { getCategory } from "./categoriesServerRequests";
 import { useState, useEffect } from "react";
-import { deleteCategory } from "./categoriesServerRequests";
+import { deleteCategory, editCategory } from "./categoriesServerRequests";
 import { Redirect } from "react-router";
 const EditCategory = ({ match }) => {
     const { categoryId } = match.params
@@ -9,28 +9,34 @@ const EditCategory = ({ match }) => {
     const [ formErrorMsg ] = useState(null);
     const [ activateRedirect, SetActivateRedirect ] = useState(false);
     const handleOnFormSubmit = async (id, values) => {
-        console.log(id)
-        console.log(values)
+        editCategory(id, values)
+        SetActivateRedirect(true)
     }
     const handleDelete = async (id, imageURL) => {
-        console.log(id)
-        console.log(imageURL)
         await deleteCategory({id, imageURL})
         SetActivateRedirect(true)
     }
     useEffect(() => {
         (async ()=>{
             const response = await getCategory(categoryId)
+            console.log(response)
+            let subcategories;
             const inputFields = [
                 {id: "categoryName", type: "text", name: "Nombre de categoría", value: response.categoryName, mandatory: true},
                 {id: "categoryImage", type: "single-image", name: "Imagen", imageURL: response.imageFileURL, mandatory: true},
-                {id: "subcategories", type: "autoboxes", name: "Nombre de subcategoría", value: "", mandatory: false},
                 {type: "submit", text: "Guardar cambios"},
                 {id: response._id, type: "delete", text: "Eliminar"}
             ]
-            if(response.subCategories){//add subcategories to inputFields
-                inputFields.subCategories = response.subCategories
+            response.subcategories ? subcategories = response.subcategories : subcategories = [""]
+            
+            subcategories = {
+                    id: `subcategories`,
+                    type: "autoboxes",
+                    name: "Nombre de subcategoría",
+                    value: subcategories,
+                    mandatory: false
             }
+            inputFields.push(subcategories)
             SetCategory(inputFields)
         })()
         // eslint-disable-next-line react-hooks/exhaustive-deps

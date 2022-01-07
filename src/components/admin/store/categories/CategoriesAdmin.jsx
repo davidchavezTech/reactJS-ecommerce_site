@@ -13,7 +13,7 @@ const CategoriesAdmin = () => {
     return (
         <>
             <CategoryForm onNewCategory={handleNewCategory} />
-            {categories.map((category, index) => <CategoryContainer key={index} category={category}/>)}
+            {categories.map((category, index) => <CategoryContainer key={Date.now() + index} category={category}/>)}
         </>
     )
 }
