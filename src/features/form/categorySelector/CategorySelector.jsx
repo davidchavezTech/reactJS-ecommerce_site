@@ -1,23 +1,34 @@
 import { useState, useEffect } from "react"
 import Check from "./Check";
+
 const CategorySelector = ({name, getListFunction, saveSetChecksFunction}) => {
     const [ categoryOptions, SetCategoryOptions] = useState([]);
     const [ checks, SetChecks ] = useState([]);
+    const [ subcats, SetSubcats ] = useState({});
 
-    const createCheck = (val) => {
+    const createCheck = async (val) => {
         if(checks.some(check => check === val)) return //Prevent selecting same option from generating duplicates
         SetChecks([...checks, val])
+    }
+    const handleOnCheck = (category, subCat, isChecked) => {
+        if(!subCat) return
+        console.log(category)
+        console.log(subCat)
+        console.log(isChecked)
+        const subcatCopy = JSON.parse(JSON.stringify(subcats));
+        console.log(subcatCopy)
+        if(subcatCopy[category]){
+            subcatCopy[category][subCat] = isChecked
+         }else subcatCopy[category] = {[subCat]: isChecked};
+        SetSubcats(subcatCopy)
     }
     saveSetChecksFunction(SetChecks)
     useEffect(()=> {
         (async ()=> {
             const response = await getListFunction()
-            console.log(response)
             const optionsArr = []
             for(const properties of response) optionsArr.push(properties.categoryName)
-            console.log(optionsArr)
             SetCategoryOptions([...categoryOptions, ...optionsArr])
-            console.log([...categoryOptions, ...optionsArr])
         })()
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
     return (
@@ -28,7 +39,7 @@ const CategorySelector = ({name, getListFunction, saveSetChecksFunction}) => {
                 {categoryOptions.map((option, index) => <option key={index} value={option}>{option}</option>)}
             </select>
 
-            {checks.map((val, index) => <Check key={index} name={val} />)}
+            {checks.map((val, index) => <Check key={index} name={val} onCheck={handleOnCheck} SetSubcats={SetSubcats} />)}
         </>
     )
 }

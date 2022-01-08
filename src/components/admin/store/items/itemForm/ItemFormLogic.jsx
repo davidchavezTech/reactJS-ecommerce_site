@@ -71,12 +71,7 @@ const ItemFormLogic = (selectedItem) => {
         }
     }
 
-    const handleOptionDelete = index => {
-        console.log(index)
-        console.log(newItem)
-        dispatch(optionRemoveOne(index))
-        console.log(newItem)
-    }
+    const handleOptionDelete = index => dispatch(optionRemoveOne(index));
     let _setChecks
     let _setImages
     const saveSetChecksFunction = setChecksFunc => _setChecks = setChecksFunc;
