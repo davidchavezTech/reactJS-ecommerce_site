@@ -19,7 +19,6 @@ const EditCategory = ({ match }) => {
     useEffect(() => {
         (async ()=>{
             const response = await getCategory(categoryId)
-            console.log(response)
             let subcategories;
             const inputFields = [
                 {id: "categoryName", type: "text", name: "Nombre de categoría", value: response.categoryName, mandatory: true},

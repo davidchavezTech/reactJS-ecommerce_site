@@ -7,12 +7,12 @@ const CategoryForm = ({ onNewCategory }) => {
     const [ loadForm, SetLoadForm ] = useState(true)
     const inputFields = [
         {id: "categoryName", type: "text", name: "Nombre de categoría", mandatory: true},
-        // {type: "single-image", imageURL: "images-1630593966043-797422623.jpeg"},
         {id: "categoryImage", type: "single-image", name: "Imagen", mandatory: true},
         {type: "submit", text: "Crear categoría"}
     ]
     
-    const handleOnFormSubmit = async (values) => {
+    const handleOnFormSubmit = async ( ignore ,values) => {
+        console.log(values)
         const response = await addCategory(values);
         if(response === "Esa categoría ya existe") return SetFormErrorMsg(response)
         if(response === "error, no files were received") return SetFormErrorMsg(response)

@@ -34,19 +34,22 @@ const Navbar = () => {
     }, [handleNavigation]);
 
     return (
-        <div className={styles.navbar_wrapper}>
-            <div className={`${styles.navbar} ${fonts.lemon_milk_reg} ${y !==0 ? styles.navBackground : ""}`}>
-                <div className={styles.menu_button}>
-                    <img src={burgerIcon} alt="" style={{width:40, height:40}} />
-                    <p>MENU</p>
-                </div>
-                <img className={`${styles.navLogo} ${y !==0 ? styles.show : ""}`} src={logo} alt="Toro Logo" />
-                <div className={styles.cart_icons}>
-                    <img src={shoppingCartIcon} className={styles.shopping_cart_icon} alt="" />
-                    <img src={profilePictureIcon} className={styles.profile_picture_icon} alt="" />
+        <>
+            <div className={styles.navbar_wrapper}>
+                <div className={`${styles.navbar} ${fonts.lemon_milk_reg} ${y !==0 ? styles.navBackground : ""}`}>
+                    <div className={styles.menu_button}>
+                        <img src={burgerIcon} alt="" style={{width:40, height:40}} />
+                        <p>MENU</p>
+                    </div>
+                    <img className={`${styles.navLogo} ${y !==0 ? styles.show : ""}`} src={logo} alt="Toro Logo" />
+                    <div className={styles.cart_icons}>
+                        <img src={shoppingCartIcon} className={styles.shopping_cart_icon} alt="" />
+                        <img src={profilePictureIcon} className={styles.profile_picture_icon} alt="" />
+                    </div>
                 </div>
             </div>
-        </div>
+            <div style={{height:100}}></div>
+        </>
     )
 }
 export default Navbar;

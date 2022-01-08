@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { selectNewItem, selectOptions, optionSet } from '../../../../../features/items/newItemSlice';
+import { selectNewItem, selectOptions, optionSet, optionRemoveOne } from '../../../../../features/items/newItemSlice';
 import { postItem } from '../../../../../features/items/itemsSlice';
 import { editItem } from '../../../../../features/items/itemSlice';
 import { maxImagesNumber } from '../../../../../globalVariables';
@@ -16,6 +16,7 @@ const ItemFormLogic = (selectedItem) => {
     const [itemDescription, SetItemDescription] = useState('');
     const [mUnit, SetMUnit] = useState('');
     const [mType, SetMType] = useState({});
+    const [imageFiles, SetImageFiles] = useState([]);
     const [errorMsg, SetErrorMsg] = useState('');
     const [oldListOfImagesURLs, SetOldListOfImagesURLs] = useState(null);
     const options = useSelector(selectOptions)
@@ -24,7 +25,7 @@ const ItemFormLogic = (selectedItem) => {
         SetMUnit(value)
         SetMType({})
     }
-    useEffect(() => {
+    useEffect(() => {//Load form with data for editing
         if(selectedItem && selectedItem.length !== 0){
             if(oldListOfImagesURLs===null) SetOldListOfImagesURLs([...selectedItem.imagesFileNames])
             SetItemName(selectedItem.itemName)
@@ -46,7 +47,6 @@ const ItemFormLogic = (selectedItem) => {
 
         SetMType(copy)
     }
-    const [imageFiles, SetImageFiles] = useState([]);
 
     const createNewItem = () => {
         //Check if any mandatory field is empty, if it is, return error msg
@@ -61,16 +61,44 @@ const ItemFormLogic = (selectedItem) => {
             if(mType[key]==='') return SetErrorMsg("Asegúrese de poner precio a las unidades de medida seleccionadas")
         }
         //This if/else determines if we are editing or posting a new item
-        if(!selectedItem) dispatch(postItem({itemName, priceAndUnits: mType, description: itemDescription, mUnit, options, imageFiles}))
+        if(!selectedItem) {
+            dispatch(postItem({itemName, priceAndUnits: mType, description: itemDescription, mUnit, options, imageFiles}))
+            clearForm()
+        }
         else {
             dispatch(editItem( { _id: selectedItem._id, itemName, priceAndUnits: mType, description: itemDescription, mUnit, options, imageFiles, oldListOfImagesURLs}))
             history.push("/admin/store")
         }
     }
 
+    const handleOptionDelete = index => {
+        console.log(index)
+        console.log(newItem)
+        dispatch(optionRemoveOne(index))
+        console.log(newItem)
+    }
+    let _setChecks
+    let _setImages
+    const saveSetChecksFunction = setChecksFunc => _setChecks = setChecksFunc;
+    const saveSetImages = setImagesFunc => _setImages = setImagesFunc;
+
+    const clearForm = () => {
+        SetItemName("")
+        SetItemDescription("")
+        SetMUnit("")
+        SetMType("")
+        SetErrorMsg("")
+        SetOldListOfImagesURLs("")
+        SetMUnit("")
+        SetMType("")
+        SetImageFiles([])
+        dispatch(optionSet([]))
+        _setChecks([])
+        _setImages([])
+    }
     const newItem = useSelector(selectNewItem)
 
-    return { handleSetMType, createNewItem, SetItemName, SetImageFiles, SetItemDescription, setMUnitFunc, itemName, itemDescription, mUnit, newItem, errorMsg, selectedItem }
+    return { handleSetMType, createNewItem, SetItemName, SetImageFiles, SetItemDescription, setMUnitFunc, saveSetChecksFunction, saveSetImages, handleOptionDelete, itemName, itemDescription, mUnit, newItem, errorMsg, selectedItem }
 }
 
 export default ItemFormLogic

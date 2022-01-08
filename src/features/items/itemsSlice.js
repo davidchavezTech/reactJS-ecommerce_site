@@ -49,7 +49,6 @@ export const fetchItems = createAsyncThunk('items/fetchItems', async () => {
 	const { data } = await axios.get(`${serverAdress}/items/`)
 	const orderedArray = []
 	while(data.length !== 0) orderedArray.push(data.pop())
-	console.log(data)
 	return orderedArray
 })
 

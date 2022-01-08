@@ -12,7 +12,7 @@ import { getCategories } from '../../categories/categoriesServerRequests';
 
 const ItemForm = ({onFireModal, selectedItem, setToggleModal}) => {
 
-    const { handleSetMType, createNewItem, SetItemName, SetImageFiles, SetItemDescription, setMUnitFunc, itemName, itemDescription, mUnit, newItem, errorMsg } = ItemFormLogic(selectedItem)
+    const { handleSetMType, createNewItem, SetItemName, SetImageFiles, SetItemDescription, setMUnitFunc, saveSetChecksFunction, saveSetImages, handleOptionDelete, itemName, itemDescription, mUnit, newItem, errorMsg } = ItemFormLogic(selectedItem)
     
     return (
 
@@ -23,9 +23,9 @@ const ItemForm = ({onFireModal, selectedItem, setToggleModal}) => {
                 <h6 className="card-subtitle mb-2 text-muted" style={{marginTop:15}}>Nombre</h6>
                 <input onChange={e => SetItemName(e.target.value)} className="form-control" type="text" placeholder="Nombre" value={itemName} />
 
-                <ImagesUpload passImages={images => SetImageFiles(images)} imagesURLs={selectedItem ? selectedItem.imagesFileNames : null} />
+                <ImagesUpload passImages={images => SetImageFiles(images)} saveSetImages={saveSetImages} imagesURLs={selectedItem ? selectedItem.imagesFileNames : null} />
                 
-                <CategorySelector name="Categoría" getListFunction={getCategories} />
+                <CategorySelector name="Categoría" getListFunction={getCategories} saveSetChecksFunction={saveSetChecksFunction} />
 
                 <h6 className="card-subtitle mb-2 text-muted" style={{marginTop:15}}>Descripción</h6>
                 <textarea onChange={e => SetItemDescription(e.target.value)} className="form-control" placeholder="Nombre" rows="4" cols="40" value={itemDescription} />
@@ -37,7 +37,7 @@ const ItemForm = ({onFireModal, selectedItem, setToggleModal}) => {
                 {(mUnit==="volume") && <PerVolume onMType={handleSetMType} priceAndUnits={selectedItem ? selectedItem.priceAndUnits : undefined} />}
 
                 <h6 className="card-subtitle mb-2" style={{marginTop:25}}>Opciones:</h6>
-                {newItem.options.map((option, currentIndex) => <OptionCard key={currentIndex} index={currentIndex} fieldType={option.fieldType} options={option.newOptions} fieldName={option.fieldName} />)}
+                {newItem.options.map((option, currentIndex) => <OptionCard key={currentIndex} index={currentIndex} fieldType={option.fieldType} options={option.newOptions} fieldName={option.fieldName} onDelete={handleOptionDelete} />)}
                 {/* If we are editing an object, use this instead  */}
                 {/* {editItemOptions.map((option, currentIndex) => <OptionCard key={currentIndex} index={currentIndex} fieldType={option.fieldType} options={option.newOptions} fieldName={option.fieldName} />)} */}
 

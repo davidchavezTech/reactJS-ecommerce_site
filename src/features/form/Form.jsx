@@ -23,7 +23,7 @@ const Form = ({ fields, onFormSubmit, passedErrorMsg, onDelete }) => {
         let _imageToBeDeletedURL;
         if(Object.keys(inputFieldValues).length){//Prevent it from runnning on empty object and avoid crash. 
             for(let key in inputFieldValues){//This will prevent img file to be overwritten by the copying we are a bout to do with JSON.parse(...) to convert file to string object, along with...
-                if(inputFieldValues[key].name) {//If it's a file type object, proceed (files are objects AND have a "name" property).
+                if(inputFieldValues[key] && inputFieldValues[key].name) {//If it's a file type object, proceed (files are objects AND have a "name" property).
                     _imageFielObj[key] = inputFieldValues[key]
                     _imageToBeDeletedURL = fields.find(obj => obj.type === "single-image").imageURL
                 }
@@ -40,8 +40,7 @@ const Form = ({ fields, onFormSubmit, passedErrorMsg, onDelete }) => {
                 inputFieldValuesCopy[key] = _imageFielObj[key]
             }
         }
-        if(_imageToBeDeletedURL) inputFieldValuesCopy._imageToBeDeletedURL = _imageToBeDeletedURL
-        console.log(inputFieldValuesCopy)
+        if(_imageToBeDeletedURL) inputFieldValuesCopy._imageToBeDeletedURL = _imageToBeDeletedURL;
         SetInputFieldValues(inputFieldValuesCopy)
     }
 
@@ -53,6 +52,8 @@ const Form = ({ fields, onFormSubmit, passedErrorMsg, onDelete }) => {
                 return SetErrorMsg(`${field.name} no puede estar vacío`)
             }
         }
+        //remove all empty strings from subcategories array
+        if(inputFieldValues.subcategories) inputFieldValues.subcategories = inputFieldValues.subcategories.filter(string => string !== "");
         onFormSubmit(itemID, inputFieldValues)
     }
 
@@ -64,14 +65,14 @@ const Form = ({ fields, onFormSubmit, passedErrorMsg, onDelete }) => {
         if(!fields) return //Check if we are editing or just creating
         const _inputFieldValues = {};//replacement for state variable
         for(const field of fields) {
-            if(field.mandatory && field.type !== "submit"){//If pass condition, then we need to add it to _inputFieldValues
+            if((field.mandatory && field.type !== "submit") || field.type === "autoboxes"){//If pass condition, then we need to add it to _inputFieldValues
                 _inputFieldValues[field.id] = field.value || field.imageURL
             }
         }
         SetInputFieldValues(_inputFieldValues)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-    console.log(fields)
+
     return (
         <>
             {fields.map((inputFieldOptions, index ) =>{
@@ -94,6 +95,7 @@ const Form = ({ fields, onFormSubmit, passedErrorMsg, onDelete }) => {
                                 </button>
                             </div>
                         )
+
                     default:
                         return (
                             <div key={index}>

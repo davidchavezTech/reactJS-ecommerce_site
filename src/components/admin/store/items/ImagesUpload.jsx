@@ -2,11 +2,11 @@ import { useRef, useState, useEffect } from "react"
 import PreviewDivFromFile from "./PreviewDivFromFile";
 import PreviewDivFromURL from "./PreviewDivFromURL";
 import { maxImagesNumber } from "../../../../globalVariables";
-const ImagesUpload = ({passImages, imagesURLs}) => {
+const ImagesUpload = ({passImages, imagesURLs, saveSetImages }) => {
 
     const [images, SetImages] = useState([]);
     const [previewsErrorMessage, SetPreviewsErrorMessage] = useState('');
-
+    saveSetImages(SetImages)
     const fileInputRef = useRef();
 
     const proccessImages = (inputFieldFiles) => {

@@ -3,7 +3,7 @@ import Box from "./box/Box"
 import { useState, useEffect } from "react"
 
 const AutoBoxes = ({value, id, onSetInputValues, inputFieldName}) => {
-    console.log(value)
+
     const [boxes, SetBoxes] = useState([...value, ""]);
 
     const handleOnSetInputValues = (id, values) => {

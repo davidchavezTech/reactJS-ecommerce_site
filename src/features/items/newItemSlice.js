@@ -30,12 +30,15 @@ const newItemReducer = createSlice({
 		},
         optionSet(state, action) {
             state.item.options = action.payload
+        },
+        optionRemoveOne(state, action) {
+            state.item.options.splice(action.payload, 1)
         }
     }
 })
 
 export default newItemReducer.reducer;
 export const selectNewItem = storeState => storeState.newItemState.item
-export const selectOptions = storeState => storeState.newItemState.item.options
+export const selectOptions = storeState => storeState
 
-export const { itemAdded, optionAdded, optionSet } = newItemReducer.actions
+export const { itemAdded, optionAdded, optionSet, optionRemoveOne } = newItemReducer.actions
