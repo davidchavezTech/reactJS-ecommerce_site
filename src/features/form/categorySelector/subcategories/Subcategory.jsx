@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react"
 
-const Subcategory = ({name, onCheck}) => {
+const Subcategory = ({name, checkValue,onCheck}) => {
+    console.log(name, checkValue)
     const _id = Math.floor(Math.random() * 999);
-    const [checkToggle, SetCheckToggle] = useState(false);
-    useEffect(()=> {
-        onCheck(name, checkToggle);// eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [checkToggle])
+
     return  <div className="form-check">
         <label
             style={{fontSize:12}}
@@ -15,12 +13,12 @@ const Subcategory = ({name, onCheck}) => {
             {name}
         </label>
 
-        <input onChange={e => SetCheckToggle(!checkToggle)}
+        <input onChange={e => onCheck(name, !checkValue)}
             className="form-check-input"
             type="checkbox"
             value={name}
             id={_id}
-            checked={checkToggle}
+            checked={checkValue}
         />
     </div> 
     

@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react"
-import Check from "./Check";
+import Check from "./Category";
 
 const CategorySelector = ({name, getListFunction, saveSetChecksFunction}) => {
     const [ categoryOptions, SetCategoryOptions] = useState([]);
     const [ checks, SetChecks ] = useState([]);
     const [ subcats, SetSubcats ] = useState({});
 
-    const createCheck = async (val) => {
+    const createCheck =  (val) => {
         if(checks.some(check => check === val)) return //Prevent selecting same option from generating duplicates
         SetChecks([...checks, val])
     }
